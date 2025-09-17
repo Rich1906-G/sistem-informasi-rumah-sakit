@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="p-4 sm:ml-64 lg:p-0">
 
-        {{-- Header --}}
+        {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg lg:rounded-none">
                 <div class="flex flex-row justify-end items-end mx-8 mt-4">
@@ -51,32 +51,69 @@
                 </div>
             </div>
         </div>
+        {{-- End Header --}}
 
-        <div class="w-full grid grid-cols-2 gap-4 mt-10">
-            <div class="flex mx-6 rounded-sm shadow-2xl bg-slate-800">
-                <div class="grid grid-cols-3">
-                    <select class="rounded-md">
-                        <option value="Kunjungan Sakit">Kunjungan Sakit</option>
-                        <option value="Kunjungan Sehat">Kunjungan Sehat</option>
-                        <option value="Perawat">Perawat</option>
+        {{-- Start Content --}}
+        <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+            {{-- Card Kunjungan Pasien --}}
+            <div class="ml-6 rounded-lg shadow bg-white p-4">
+                {{-- Dropdown Filter --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
+                    <select class="rounded-md border-gray-300 text-sm">
+                        <option value="">Kunjungan Sakit</option>
+                        <option value="">Kunjungan Sehat</option>
+                        <option value="">Perawat</option>
                     </select>
-                    <select class="rounded-md">
-                        <option value="Kunjungan Sakit">Kunjungan Sakit</option>
-                        <option value="Kunjungan Sehat">Kunjungan Sehat</option>
-                        <option value="Perawat">Perawat</option>
+                    <select class="rounded-md border-gray-300 text-sm">
+                        <option value="">Umum</option>
+                        <option value="">Spesialis</option>
                     </select>
-                    <select class="rounded-md">
-                        <option value="Kunjungan Sakit">Kunjungan Sakit</option>
-                        <option value="Kunjungan Sehat">Kunjungan Sehat</option>
-                        <option value="Perawat">Perawat</option>
+                    <select class="rounded-md border-gray-300 text-sm">
+                        <option value="">Bulan</option>
+                        <option value="">Tahun</option>
                     </select>
+                </div>
+
+                {{-- Angka & Info --}}
+                <div class="flex items-center space-x-4 mb-4">
+                    <h1 class="text-4xl font-bold text-gray-800">0</h1>
+                    <div>
+                        <p class="text-green-500 text-sm flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 15l7-7 7 7" />
+                            </svg>
+                            0%
+                        </p>
+                        <p class="text-gray-500 text-xs">dari Bulan lalu</p>
+                    </div>
+                </div>
+
+                {{-- Chart Placeholder --}}
+                <div class="h-auto border rounded-md flex items-center justify-center text-gray-400">
+                    <canvas id="chartKunjungan"></canvas>
                 </div>
             </div>
 
-            <div class="flex mx-6 mt-10 rounded-md shadow-2xl ">
+            {{-- Card Tambahan (misalnya Pasien Baru) --}}
+            <div class="mx-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
+                        <div>Testing</div>
+                    </div>
 
+                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
+                        <div>Testing</div>
+                    </div>
+                </div>
+                {{-- <h2 class="text-lg font-semibold mb-2">Pasien Baru</h2>
+                <p class="text-2xl font-bold">1</p>
+                <p class="text-green-500 text-sm">+100% dari bulan lalu</p> --}}
             </div>
+
         </div>
+        {{-- End Content --}}
 
         {{-- <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
             <div class="grid grid-cols-3 gap-4 mb-4">
@@ -204,6 +241,27 @@
             </div>
         </div> --}}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('chartKunjungan').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Kunjungan Pasien',
+                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    borderColor: 'rgb(59,130,246)',
+                    backgroundColor: 'rgba(59,130,246,0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            }
+        });
+    </script>
+
+
 </x-app-layout>
 
 

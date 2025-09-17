@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 overflow-auto">
         {{-- @include('layouts.navigation') --}}
 
         @include('layouts.sidebar')
@@ -34,7 +34,7 @@
         {{-- @include('layouts.header') --}}
 
         <!-- Page Content -->
-        <main class="bg-white">
+        <main class="">
             {{ $slot }}
         </main>
     </div>

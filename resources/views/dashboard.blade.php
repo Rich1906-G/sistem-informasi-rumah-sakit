@@ -16,11 +16,10 @@
                     </div>
 
                     <div class="flex items-center p-6">
-                        <div class="grid grid-cols-3 gap-x-3 mx-4 items-center">
+                        <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/logo_unpri.png') }}"
                                 alt="foto_bang">
-                            <button class="px-2 py-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
-                            <button class="px-2 py-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">

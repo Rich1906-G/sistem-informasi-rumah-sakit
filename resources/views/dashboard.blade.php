@@ -11,7 +11,7 @@
                         </div>
 
                         <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Klinik Tj. Priok') }}
+                            {{ __('Royal Prima Medan') }}
                         </h2>
                     </div>
 
@@ -98,7 +98,7 @@
                 </div>
 
                 {{-- Ini Rows Kedua --}}
-                <div class="grid grid-cols-[3fr_1fr] gap-4 py-5">
+                <div class="grid grid-cols-2 gap-4 py-5">
                     {{-- Card Total Pasien Klinik --}}
                     <div class="rounded-lg shadow bg-white p-4">
                         {{-- Header Dari Card Total Pasien Klinik --}}
@@ -417,12 +417,80 @@
                 </div>
 
                 {{-- Card Pasien Antri Cepat --}}
-                <div class="mt-5 rounded-lg p-4 flex bg-white">
+                <div class="grid grid-cols-1 mt-5 rounded-lg p-4 bg-white w-full">
+
+                    <div class="p-6 ">
+                        <div class="mb-2">
+                            <h2 class="text-xl font-semibold">Pasien AntriCepat</h2>
+                            <span class="text-gray-400 text-sm">Last Update : -</span>
+                        </div>
+                        <div class="flex justify-end items-center mb-2 space-x-4">
+                            <button class="flex items-center text-gray-600 text-sm hover:text-gray-800">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M3 12h18M9 6l-6 6 6 6" />
+                                </svg>
+                                SORTIR
+                            </button>
+                            <button class="flex items-center text-gray-600 text-sm hover:text-gray-800">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path d="M4 6h16M4 12h8m-8 6h16" />
+                                </svg>
+                                FILTER
+                            </button>
+                        </div>
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b">
+                                    <th class="px-4 py-2 text-gray-500 font-normal">Nama</th>
+                                    <th class="px-4 py-2 text-gray-500 font-normal">Tenaga Medis</th>
+                                    <th class="px-4 py-2 text-gray-500 font-normal">Jadwal</th>
+                                    <th class="px-4 py-2 text-gray-500 font-normal">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-6 text-center text-gray-400" colspan="4"> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="flex justify-between items-center mt-4 text-sm text-gray-500">
+                            <div>
+                                Rows per page:
+                                <select class="border rounded px-2 py-1">
+                                    <option>8</option>
+                                </select>
+                            </div>
+                            <div>
+                                0-0 of 0
+                                <button class="mx-2 text-gray-400" disabled>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button class="mx-2 text-gray-400" disabled>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Header --}}
-                    <div class="flex flex-col items-start">
+                    {{-- <div class="flex flex-col items-start">
                         <label class="font-bold text-xl">Pasien Antri Cepat</label>
                         <label class="font-light text-md text-gray-400">Last Update</label>
                     </div>
+
+                    <div class="mt-5">
+                        <div class="flex items-center justify-end">
+                            <button>SORTIR</button>
+                        </div>
+                    </div> --}}
 
                 </div>
                 {{-- <h2 class="text-lg font-semibold mb-2">Pasien Baru</h2>

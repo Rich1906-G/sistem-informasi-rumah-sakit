@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VitalSign extends Model
 {
@@ -11,9 +12,9 @@ class VitalSign extends Model
 
     protected $table = 'vital_sign';
     protected $primaryKey = 'id_vital_sign';
-    protected $guarded = ['id_vital_sign'];
+    protected $guarded = [];
 
-    public function kunjungan()
+    public function kunjungan(): BelongsTo
     {
         return $this->belongsTo(Kunjungan::class, 'kunjungan_id', 'id_kunjungan');
     }

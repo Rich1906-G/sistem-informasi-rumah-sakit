@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_kunjungan');
             $table->foreignId('pasien_id')->constrained('pasien', 'id_pasien');
             $table->foreignId('tenaga_medis_id')->constrained('tenaga_medis', 'id_tenaga_medis');
+            $table->foreignId('poli_id')->constrained('poli', 'id_poli');
             $table->string('tipe_pasien');
             $table->string('nama_rs_perujuk')->nullable();
             $table->string('nama_dokter_perujuk')->nullable();
@@ -22,9 +23,10 @@ return new class extends Migration
             $table->string('metode_pembayaran')->nullable();
             $table->string('jenis_kunjungan')->nullable();
             $table->string('jenis_perawatan')->nullable();
-            $table->string('poli')->nullable();
             $table->date('tanggal_kunjungan');
             $table->time('jam_kunjungan');
+            $table->dateTime('waktu_mulai_pemeriksaan')->nullable();
+            $table->string('status')->default('Pending');
             $table->string('slot')->nullable();
             $table->integer('lama_durasi_menit')->nullable();
             $table->timestamps();

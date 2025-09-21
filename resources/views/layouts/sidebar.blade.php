@@ -85,7 +85,7 @@
                     </path>
                 </svg>
             </button>
-            <a href="{{ route('dashboard') }}" class="flex ms-2 md:me-24">
+            <a href="{{ route('dashboard.index') }}" class="flex ms-2 md:me-24">
                 <img src="{{ asset('storage/assets/logo_unpri.png') }}" class="h-10 w-auto" alt="FlowBite Logo" />
                 {{-- <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Royal
                     Prima</span> --}}
@@ -97,7 +97,7 @@
     <div class="h-full px-3 py-3 lg:px-5 lg:pl-3 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('dashboard.index') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#666666">

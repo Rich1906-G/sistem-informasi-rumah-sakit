@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\KategoriObat;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,7 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PasienSeeder::class,
             TenagaMedisSeeder::class,
+            KategoriObatSeeder::class,
+            SatuanObatSeeder::class,
             DataObatSeeder::class,
+            PoliSeeder::class,
+            SupplierSeeder::class,
         ]);
 
 
@@ -31,7 +36,11 @@ class DatabaseSeeder extends Seeder
             PengantarSeeder::class,
             JadwalPraktikSeeder::class,
             PembayaranSeeder::class,
+            PembelianObatSeeder::class,
+            DetailPembelianObatSeeder::class,
+            ResepObatSeeder::class,
             DetailPembayaranSeeder::class,
+            TenagaMedisPoliSeeder::class,
         ]);
 
         // User::factory(10)->create();

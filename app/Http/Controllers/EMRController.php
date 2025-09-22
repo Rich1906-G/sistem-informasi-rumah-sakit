@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasien;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // Tambahkan baris ini
 
 class EMRController extends Controller
 {
@@ -106,5 +107,45 @@ class EMRController extends Controller
             'message' => 'Data pasien berhasil diperbarui.',
             'data' => $pasien
         ]);
+    }
+    
+    // Fungsi baru untuk memperbarui foto profil pasien
+    public function updateFotoProfil(Request $request, $id_pasien)
+    {
+        $pasien = Pasien::find($id_pasien);
+
+        if (!$pasien) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data pasien tidak ditemukan.'
+            ], 404);
+        }
+
+        $request->validate([
+            'foto_profil' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file gambar
+        ]);
+
+        if ($request->hasFile('foto_profil')) {
+            // Hapus foto profil lama jika ada
+            if ($pasien->foto_profil) {
+                Storage::delete('public/' . $pasien->foto_profil);
+            }
+
+            // Simpan foto baru di direktori 'foto_profil'
+            $path = $request->file('foto_profil')->store('foto_profil', 'public');
+            $pasien->foto_profil = $path;
+            $pasien->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Foto profil berhasil diperbarui.',
+                'data' => $pasien 
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Tidak ada file yang diunggah.'
+        ], 400);
     }
 }

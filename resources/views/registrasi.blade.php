@@ -30,7 +30,7 @@
 
                     <div class="flex items-center">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/logo_unpri.png') }}"
+                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
@@ -77,6 +77,12 @@
             </div>
         </div>
         {{-- End Header --}}
+
+        <style>
+            [x-cloak] {
+                display: none
+            }
+        </style>
 
         {{-- Start Content --}}
         <div class="grid grid-row-1 h-full">
@@ -164,7 +170,7 @@
                 </div>
 
                 <!-- Content Rawat Jalan Poli-->
-                <div x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan Poli</h2>
 
@@ -306,7 +312,7 @@
                 </div>
 
                 <!-- Content Antri Cepat-->
-                <div x-show="tabAktivitas === 'antriCepat' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'antriCepat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antri Cepat</h2>
 
@@ -396,7 +402,7 @@
                 </div>
 
                 <!-- Content Gawat Darurat-->
-                <div x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
 
@@ -469,7 +475,7 @@
                 </div>
 
                 <!-- Content Kunjungan Sehat-->
-                <div x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
 
@@ -540,7 +546,7 @@
                 </div>
 
                 <!-- Content Promotif Preventif-->
-                <div x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
 
@@ -607,7 +613,7 @@
                 </div>
 
                 <!-- Content Kegiatan Kelompok-->
-                <div x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
 
@@ -687,7 +693,7 @@
                 </div>
 
                 <!-- Content Antrian Awal-->
-                <div x-show="tabAktivitas === 'antrianAwal' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'antrianAwal' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Awal</h2>
@@ -746,7 +752,7 @@
                 </div>
 
                 <!-- Content Screen Antrian-->
-                <div x-show="tabAktivitas === 'screenAntrian' " class="w-full">
+                <div x-cloak="" x-show="tabAktivitas === 'screenAntrian' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Screen Antrian</h2>
@@ -794,11 +800,17 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
-
     {{-- End Content --}}
+
+    <div class="fixed bottom-10 right-10">
+        <button class="bg-blue-700 flex items-center px-4 py-2 rounded-md shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                fill="#FFFFFF">
+                <path
+                    d="m480-320 56-56-64-64h168v-80H472l64-64-56-56-160 160 160 160Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+            </svg>
+        </button>
     </div>
 </x-app-layout>

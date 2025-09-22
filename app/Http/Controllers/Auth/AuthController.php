@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\Account;
 use App\Models\Pasien;
-use Illuminate\Support\Str; // <-- Tambahkan baris ini
+use Illuminate\Support\Str; 
 
 class AuthController extends Controller
 {
@@ -21,7 +21,7 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        // Buat akun baru di tabel 'accounts'
+        
         $account = Account::create([
             'username' => $request->username,
             'email' => $request->email,
@@ -29,10 +29,10 @@ class AuthController extends Controller
             'role' => 'pasien',
         ]);
         
-        // Hasilkan nomor rekam medis unik. Anda bisa menyesuaikan formatnya.
+        
         $nomorRekamMedis = 'RM-' . date('Ymd') . '-' . Str::random(5); 
 
-        // Buat entri pasien baru di tabel 'pasien' dengan nomor_rm yang dihasilkan
+        
         $pasien = Pasien::create([
             'email' => $request->email,
             'nama_lengkap' => $request->username, 

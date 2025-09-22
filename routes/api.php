@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PengantarController;
-use App\Http\Controllers\EMRController; // Pastikan Anda mengimpor EMRController
+use App\Http\Controllers\EMRController; 
 
 /*
 |--------------------------------------------------------------------------

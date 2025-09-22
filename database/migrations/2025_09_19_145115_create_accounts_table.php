@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->string('password'); // <-- BARIS INI HILANG DAN SUDAH DITAMBAHKAN
+            $table->string('password'); 
             $table->string('role')->default('pasien');
             $table->timestamps();
         });

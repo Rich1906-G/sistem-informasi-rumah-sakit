@@ -17,10 +17,22 @@ use App\Http\Controllers\TelekonsultasiController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/',                                     [DashboardController::class, 'index'])->name('index');
+        Route::get('/chart-kunjungan',                      [DashboardController::class, 'getChartKunjungan'])->name('chart.kunjungan');
+        Route::get('/average-waktukonsultasi',              [DashboardController::class, 'getAverageWaktuKonsultasi'])->name('average.waktukonsultasi');
+        Route::get('/getnewpatients',                       [DashboardController::class, 'getNewPatients'])->name('getnewpatients');
+        Route::get('/getregisteredpatients',                [DashboardController::class, 'getRegisteredPatientsSummary'])->name('getregisteredpatients');
+        Route::get('/getaveragewaittime',                   [DashboardController::class, 'getAverageWaitTime'])->name('getaveragewaittime');
+    });
+
+
     Route::get('/rawat-jalan', [RawatJalanController::class, 'index'])->name('rawat.jalan');
     Route::get('/registrasi', [RegistrasiController::class, 'index'])->name('registrasi');
     Route::get('/emr', [EMRController::class, 'index'])->name('emr');

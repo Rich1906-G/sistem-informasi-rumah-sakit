@@ -6,33 +6,46 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
+use App\Models\Pembayaran;
+use App\Models\ResepObat;
 
 class DetailPembayaranSeeder extends Seeder
 {
     public function run(): void
     {
         $faker = Faker::create('id_ID');
-        $pembayaranIds = DB::table('pembayaran')->pluck('id_pembayaran')->toArray();
-        $obatIds = DB::table('data_obat')->pluck('id_obat')->toArray();
 
-        foreach ($pembayaranIds as $pembayaranId) {
-            $jumlahItem = $faker->numberBetween(1, 3);
-            for ($i = 0; $i < $jumlahItem; $i++) {
-                $obatId = $faker->randomElement($obatIds);
-                $jumlahObat = $faker->numberBetween(1, 5);
-                $hargaSatuan = DB::table('data_obat')->where('id_obat', $obatId)->value('harga_jual_umum');
-                $totalHargaItem = $hargaSatuan * $jumlahObat;
+        // Get the IDs of existing payments and prescription items
+        $pembayaranIds = DB::table('pembayaran')->pluck('id_pembayaran');
+        $resepObatIds = DB::table('resep_obat')->pluck('id_resep');
 
-                DB::table('detail_pembayaran')->insert([
-                    'pembayaran_id' => $pembayaranId,
-                    'obat_id' => $obatId,
-                    'jumlah_obat' => $jumlahObat,
-                    'harga_satuan' => $hargaSatuan,
-                    'total_harga_item' => $totalHargaItem,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
+        if ($pembayaranIds->isEmpty() || $resepObatIds->isEmpty()) {
+            $this->command->info('Pembayaran atau resep obat tidak ditemukan. Silakan jalankan seeder terkait terlebih dahulu.');
+            return;
+        }
+
+        for ($i = 0; $i < 20; $i++) {
+            // Get a random prescription record
+            $resepObat = DB::table('resep_obat')->where('id_resep', $faker->randomElement($resepObatIds))->first();
+
+            // Get the drug and quantity from the prescription
+            $obat = DB::table('data_obat')->where('id_obat', $resepObat->obat_id)->first();
+            $jumlahObat = $resepObat->jumlah_obat;
+
+            // Set the unit price from the drug data
+            $hargaSatuan = $obat->harga_jual_umum;
+
+            // Calculate the total item price
+            $totalHargaItem = $hargaSatuan * $jumlahObat;
+
+            DB::table('detail_pembayaran')->insert([
+                'pembayaran_id' => $faker->randomElement($pembayaranIds),
+                'resep_id' => $resepObat->id_resep,
+                'harga_satuan' => $hargaSatuan,
+                'total_harga_item' => $totalHargaItem,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
     }
 }

@@ -13,28 +13,57 @@ class TenagaMedisSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for ($i = 0; $i < 10; $i++) {
+        $jobMedis = ['Dokter', 'Perawat', 'Apoteker', 'Bidan', 'Analis Kesehatan'];
+        $spesialisasi = ['Penyakit Dalam', 'Anak', 'Bedah', 'Kandungan', 'Mata', 'Gigi', 'Umum'];
+        $subspesialisasi = ['Kardiologi', 'Neonatologi', 'Ortopedi', 'Onkologi', 'Endokrinologi', null];
+        $gelarDepan = ['dr.', 'drg.', 'Ns.', 'Apt.', 'AmKeb.'];
+        $gelarBelakang = ['Sp.PD', 'Sp.A', 'Sp.B', 'Sp.OG', 'Sp.M', 'Sp.KG', null];
+        $jenisKelamin = ['Laki-laki', 'Perempuan'];
+
+        for ($i = 0; $i < 20; $i++) {
+            $jenisKelaminAcak = $faker->randomElement($jenisKelamin);
+            $jobMedisAcak = $faker->randomElement($jobMedis);
+            $namaLengkap = ($jenisKelaminAcak === 'Laki-laki') ? $faker->name('male') : $faker->name('female');
+
+            $gelarDepanAcak = null;
+            $spesialisasiAcak = null;
+            $subspesialisasiAcak = null;
+            $gelarBelakangAcak = null;
+
+            if ($jobMedisAcak === 'Dokter') {
+                $gelarDepanAcak = $faker->randomElement(['dr.', 'drg.']);
+                $spesialisasiAcak = $faker->randomElement($spesialisasi);
+                $subspesialisasiAcak = $faker->randomElement($subspesialisasi);
+                $gelarBelakangAcak = $faker->randomElement($gelarBelakang);
+            } elseif ($jobMedisAcak === 'Perawat') {
+                $gelarDepanAcak = 'Ns.';
+            } elseif ($jobMedisAcak === 'Apoteker') {
+                $gelarDepanAcak = 'Apt.';
+            } elseif ($jobMedisAcak === 'Bidan') {
+                $gelarDepanAcak = 'Bd.';
+            }
+
             DB::table('tenaga_medis')->insert([
-                'foto_profile' => 'https://via.placeholder.com/150',
-                'nama_lengkap' => $faker->name,
-                'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
+                'foto_profile' => null,
+                'nama_lengkap' => $namaLengkap,
+                'jenis_kelamin' => $jenisKelaminAcak,
                 'no_tlp' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,
                 'no_ktp' => $faker->unique()->nik(),
-                'lembaga_registrasi_str' => $faker->company,
-                'nomor_registrasi_str' => $faker->randomNumber(9),
-                'masa_berlaku_str' => $faker->date,
-                'lembaga_registrasi_sip' => $faker->company,
-                'nomor_registrasi_sip' => $faker->randomNumber(9),
-                'masa_berlaku_sip' => $faker->date,
-                'gelar_depan' => $faker->randomElement(['dr.', 'drg.']),
-                'gelar_belakang' => $faker->randomElement(['Sp.A', 'Sp.PD', 'Sp.OG']),
-                'job_medis' => $faker->randomElement(['Dokter Umum', 'Dokter Gigi', 'Perawat']),
-                'spesialis' => $faker->randomElement(['Anak', 'Penyakit Dalam', 'Kandungan']),
-                'subspesialis' => null,
-                'kode_antrian' => $faker->unique()->lexify('??-###'),
-                'estimasi_waktu_menit' => $faker->randomElement([15, 20, 30]),
-                'tanda_tangan' => 'https://via.placeholder.com/150',
+                'lembaga_registrasi_str' => 'IDI',
+                'nomor_registrasi_str' => $faker->unique()->uuid(),
+                'masa_berlaku_str' => $faker->dateTimeBetween('+1 year', '+5 years'),
+                'lembaga_registrasi_sip' => 'Dinkes',
+                'nomor_registrasi_sip' => $faker->unique()->uuid(),
+                'masa_berlaku_sip' => $faker->dateTimeBetween('+1 year', '+5 years'),
+                'gelar_depan' => $gelarDepanAcak,
+                'gelar_belakang' => $gelarBelakangAcak,
+                'job_medis' => $jobMedisAcak,
+                'spesialis' => $spesialisasiAcak,
+                'subspesialis' => $subspesialisasiAcak,
+                'kode_antrian' => $faker->lexify('????'),
+                'estimasi_waktu_menit' => $faker->numberBetween(5, 30),
+                'tanda_tangan' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

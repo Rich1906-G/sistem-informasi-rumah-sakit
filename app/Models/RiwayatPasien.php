@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RiwayatPasien extends Model
 {
@@ -11,9 +12,9 @@ class RiwayatPasien extends Model
 
     protected $table = 'riwayat_pasien';
     protected $primaryKey = 'id_riwayat_pasien';
-    protected $guarded = ['id_riwayat_pasien'];
+    protected $guarded = [];
 
-    public function pasien()
+    public function pasien(): BelongsTo
     {
         return $this->belongsTo(Pasien::class, 'pasien_id', 'id_pasien');
     }

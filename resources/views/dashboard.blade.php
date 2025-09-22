@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="p-4 sm:ml-64 lg:p-0">
-
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
@@ -17,7 +16,7 @@
 
                     <div class="flex items-center p-6">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/logo_unpri.png') }}"
+                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
@@ -55,39 +54,52 @@
 
         {{-- Start Content --}}
         <div class="w-full grid grid-cols-1 lg:grid-cols-[2fr_2fr] gap-6 mt-10">
+            <input type="hidden" id="tahunFilter" value="{{ now()->year }}">
             <div class="grid grid-rows-2 gap-6 ml-6">
+
                 {{-- Card Kunjungan Pasien --}} {{-- Ini Rows Pertama --}}
                 <div class="rounded-lg shadow bg-white p-4">
                     {{-- Dropdown Filter --}}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
-                        <select class="rounded-md border-gray-300 text-sm">
-                            <option value="">Kunjungan Sakit</option>
-                            <option value="">Kunjungan Sehat</option>
-                            <option value="">Perawat</option>
+                        <select id="jenisKunjungan" class="rounded-md border-gray-300 text-sm">
+                            @foreach ($jenisKunjungan as $item)
+                                <option value="{{ $item->jenis_kunjungan }}">{{ $item->jenis_kunjungan }}</option>
+                            @endforeach
                         </select>
-                        <select class="rounded-md border-gray-300 text-sm">
-                            <option value="">Umum</option>
-                            <option value="">Spesialis</option>
+
+                        <select id="tipePasien" class="rounded-md border-gray-300 text-sm">
+                            @foreach ($tipePasien as $item)
+                                <option value="{{ $item->tipe_pasien }}">{{ $item->tipe_pasien }}</option>
+                            @endforeach
                         </select>
-                        <select class="rounded-md border-gray-300 text-sm">
-                            <option value="">Bulan</option>
-                            <option value="">Tahun</option>
+
+                        <select id="periodeFilter" class="rounded-md border-gray-300 text-sm">
+                            <option value="bulan">Bulan</option>
+                            <option value="minggu">Minggu</option>
                         </select>
+
+
                     </div>
+
 
                     {{-- Angka & Info --}}
                     <div class="flex items-center space-x-4 mb-4">
-                        <h1 class="text-4xl font-bold text-gray-800">0</h1>
+                        {{-- Total kunjungan --}}
+                        <h1 id="totalKunjungan" class="text-4xl font-bold text-gray-800">0</h1>
+
                         <div>
-                            <p class="text-green-500 text-sm flex items-center">
+                            {{-- Persentase & ikon --}}
+                            <p id="persenWrapper" class="text-green-500 text-sm flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    <path id="arrowIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7" />
                                 </svg>
-                                0%
+                                <span id="persenKunjungan">0%</span>
                             </p>
-                            <p class="text-gray-500 text-xs">dari Bulan lalu</p>
+
+                            {{-- Teks perbandingan --}}
+                            <p id="teksPerbandingan" class="text-gray-500 text-xs">dari Bulan lalu</p>
                         </div>
                     </div>
 
@@ -217,6 +229,7 @@
             {{-- Card Tambahan (misalnya Pasien Baru) --}}
             <div class="mx-6">
                 <div class="grid grid-cols-2 gap-4">
+
                     <div class="w-full  shadow-sm bg-white rounded-lg p-4">
                         <div class="grid grid-cols-1 gap-1">
                             <div class="flex space-x-2 items-center">
@@ -236,6 +249,140 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Konsultasi</label>
+                                <label id="avgTimeDisplay">0 m 0 s</label>
+                                <label id="avgPersenWrapper"
+                                    class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#EA3323" class="">
+                                        <path id="avgArrowIcon" />
+                                    </svg>
+                                    <span id="avgPercentage">0 %</span>
+                                </label>
+                                <label id="avgCompareText" class="text-gray-400"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
+                        <div class="grid grid-cols-1 gap-1">
+                            <div class="flex space-x-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#5985E1">
+                                    <path
+                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
+                                </svg>
+
+                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#000000">
+                                        <path
+                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
+                                <label>Pasien Baru</label>
+                                <label id="newPatientsTotal">0 m 0 s</label>
+                                <label id="newPatientsWrapper"
+                                    class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#EA3323" class="">
+                                        <path id="newPatientsArrow" />
+                                    </svg>
+                                    <span id="newPatientsPercentage">0 %</span>
+                                </label>
+                                <label id="newPatientsCompareText" class="text-gray-400"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
+                        <div class="grid grid-cols-1 gap-1">
+                            <div class="flex space-x-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#5985E1">
+                                    <path
+                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
+                                </svg>
+
+                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#000000">
+                                        <path
+                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
+                                <label>Pasien Terdaftar</label>
+                                <label id="registeredPatientsTotal">0 m 0 s</label>
+                                <label id="registeredPatientsWrapper"
+                                    class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#EA3323" class="">
+                                        <path id="registeredPatientsArrow"
+                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
+                                    </svg>
+                                    <span id="registeredPatientsPercentage">0%</span>
+                                </label>
+                                <label id="registeredPatientsCompareText" class="text-gray-400"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
+                        <div class="grid grid-cols-1 gap-1">
+                            <div class="flex space-x-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#5985E1">
+                                    <path
+                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
+                                </svg>
+
+                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#000000">
+                                        <path
+                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
+                                <label>Rata-Rata Waktu Tunggu Dokter</label>
+                                <label id="waitTimeDisplay">0 m 0 s</label>
+                                <label id="waitTimeWrapper"
+                                    class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#EA3323" class="">
+                                        <path id="waitTimeArrow"
+                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
+                                    </svg>
+                                    <span id="waitTimePercentage">0%</span>
+                                </label>
+                                <label id="waitTimeCompareText" class="text-gray-400">dari bulan September</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
+                        <div class="grid grid-cols-1 gap-1">
+                            <div class="flex space-x-2 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                    width="24px" fill="#5985E1">
+                                    <path
+                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
+                                </svg>
+
+                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#000000">
+                                        <path
+                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
+                                <label>Obat Habis</label>
                                 <label>0 m 0 s</label>
                                 <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -268,139 +415,7 @@
                                 </button>
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
-                                <label>Rata-Rata Waktu Konsultasi</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#EA3323" class="">
-                                        <path
-                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
-                                    </svg>
-                                    <span>0%</span>
-                                </label>
-                                <label class="text-gray-400">dari bulan September</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
-                        <div class="grid grid-cols-1 gap-1">
-                            <div class="flex space-x-2 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                    width="24px" fill="#5985E1">
-                                    <path
-                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
-                                </svg>
-
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
-                                <label>Rata-Rata Waktu Konsultasi</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#EA3323" class="">
-                                        <path
-                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
-                                    </svg>
-                                    <span>0%</span>
-                                </label>
-                                <label class="text-gray-400">dari bulan September</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
-                        <div class="grid grid-cols-1 gap-1">
-                            <div class="flex space-x-2 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                    width="24px" fill="#5985E1">
-                                    <path
-                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
-                                </svg>
-
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
-                                <label>Rata-Rata Waktu Konsultasi</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#EA3323" class="">
-                                        <path
-                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
-                                    </svg>
-                                    <span>0%</span>
-                                </label>
-                                <label class="text-gray-400">dari bulan September</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
-                        <div class="grid grid-cols-1 gap-1">
-                            <div class="flex space-x-2 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                    width="24px" fill="#5985E1">
-                                    <path
-                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
-                                </svg>
-
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
-                                <label>Rata-Rata Waktu Konsultasi</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#EA3323" class="">
-                                        <path
-                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
-                                    </svg>
-                                    <span>0%</span>
-                                </label>
-                                <label class="text-gray-400">dari bulan September</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
-                        <div class="grid grid-cols-1 gap-1">
-                            <div class="flex space-x-2 items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                    width="24px" fill="#5985E1">
-                                    <path
-                                        d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z" />
-                                </svg>
-
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex flex-col gap-1 items-center justify-center font-semibold">
-                                <label>Rata-Rata Waktu Konsultasi</label>
+                                <label>Rata-Rata Waktu Tunggu Apotek</label>
                                 <label>0 m 0 s</label>
                                 <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -500,26 +515,22 @@
 
         </div>
         {{-- End Content --}}
+
+        <div class="fixed bottom-10 right-10">
+            <button class="bg-blue-700 flex items-center px-4 py-2 rounded-md shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                    fill="#FFFFFF">
+                    <path
+                        d="m480-320 56-56-64-64h168v-80H472l64-64-56-56-160 160 160 160Zm0 240q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+                </svg>
+            </button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('chartKunjungan').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Kunjungan Pasien',
-                    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    borderColor: 'rgb(59,130,246)',
-                    backgroundColor: 'rgba(59,130,246,0.1)',
-                    fill: true,
-                    tension: 0.3
-                }]
-            }
-        });
-    </script>
+    @push('scripts')
+        @vite('resources/js/Admin/dashboard.js')
+    @endpush
 
 
 </x-app-layout>

@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('data_obat', function (Blueprint $table) {
             $table->id('id_obat');
+            $table->foreignId('kategori_obat_id')->constrained('kategori_obat', 'id_kategori_obat');
+            $table->foreignId('satuan_obat_id')->constrained('satuan_obat', 'id_satuan_obat');
             $table->string('barcode')->nullable()->unique();
             $table->string('nama_obat');
             $table->string('nama_brand_farmasi')->nullable();
-            $table->string('kategori_obat')->nullable();
             $table->string('jenis')->nullable();
-            $table->string('satuan')->nullable();
-            $table->decimal('dosis', 5, 2)->nullable();
+            $table->decimal('dosis')->nullable();
             $table->integer('stok')->default(0);
-            $table->date('expired_date')->nullable();
-            $table->string('nomor_batch')->nullable();
-            $table->decimal('harga_beli_satuan', 10, 2)->nullable();
-            $table->decimal('harga_jual_umum', 10, 2)->nullable();
+            $table->integer('stok_minimal')->nullable();
+            $table->date('expired_date');
+            $table->string('nomor_batch')->unique();
+            $table->decimal('harga_beli_satuan', 10, 2);
+            $table->decimal('harga_jual_umum', 10, 2);
             $table->text('kandungan')->nullable();
             $table->boolean('is_kunci_harga')->default(false);
             $table->timestamps();

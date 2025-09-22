@@ -174,15 +174,30 @@
                         </ul>
                     </div>
 
-                    <div class="w-64">
-                        Testing
+                    <div class="w-64 bg-white shadow rounded">
+                        <div class="grid p-4">
+                            <div class="flex items-center justify-between">
+                                <label>0</label>
+                                <label>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#434343">
+                                        <path
+                                            d="M40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm720 0v-120q0-44-24.5-84.5T666-434q51 6 96 20.5t84 35.5q36 20 55 44.5t19 53.5v120H760ZM360-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm400-160q0 66-47 113t-113 47q-11 0-28-2.5t-28-5.5q27-32 41.5-71t14.5-81q0-42-14.5-81T544-792q14-5 28-6.5t28-1.5q66 0 113 47t47 113ZM120-240h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0 320Zm0-400Z" />
+                                    </svg>
+                                </label>
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center gap-4">
+                                <label>Total Antrian Hari Ini</label>
+                                <label>0 Sudah Ditangani</label>
+                                <label>0 Sudah Ditangani</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-
-
                 <!-- Content Antrian Hari Ini-->
-                <div x-show="tabAktivitas === 'antrianHariIni' " class="w-full">
+                <div x-show="tabAktivitas === 'antrianHariIni' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Hari Ini</h2>
 
@@ -322,7 +337,7 @@
                 </div>
 
                 <!-- Content Obat -->
-                <div x-show="tabAktivitas === 'obat' " class="w-full">
+                <div x-show="tabAktivitas === 'obat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Data Stok Obat</h2>
 
@@ -410,7 +425,7 @@
                 </div>
 
                 <!-- Content Penggunaan Obat -->
-                <div x-show="tabAktivitas === 'penggunaanObat' " class="w-full">
+                <div x-show="tabAktivitas === 'penggunaanObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Penggunaan Obat</h2>
 
@@ -481,7 +496,7 @@
                 </div>
 
                 <!-- Content Kadaluarsa Obat -->
-                <div x-show="tabAktivitas === 'kadaluarsaObat' " class="w-full">
+                <div x-show="tabAktivitas === 'kadaluarsaObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Warning Kadaluarsa Obat</h2>
 
@@ -550,7 +565,7 @@
                 </div>
 
                 <!-- Content Data Stok Bahan Habis Pakai -->
-                <div x-show="tabAktivitas === 'bahanHabisPakai' " class="w-full">
+                <div x-show="tabAktivitas === 'bahanHabisPakai' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Data Stok Bahan Habis Pakai</h2>
 
@@ -617,7 +632,7 @@
                 </div>
 
                 <!-- Content Penggunaan BHP-->
-                <div x-show="tabAktivitas === 'penggunaanBPH' " class="w-full">
+                <div x-show="tabAktivitas === 'penggunaanBPH' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Penggunaan BHP</h2>
 
@@ -697,7 +712,7 @@
                 </div>
 
                 <!-- Content Kadaluarsa Bahan Habis Pakai-->
-                <div x-show="tabAktivitas === 'kadaluarsaBahanHabisPakai' " class="w-full">
+                <div x-show="tabAktivitas === 'kadaluarsaBahanHabisPakai' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Warning Kadaluarsa Bahan Habis Pakai
@@ -757,7 +772,7 @@
                 </div>
 
                 <!-- Content Resep Obat -->
-                <div x-show="tabAktivitas === 'resepObat' " class="w-full">
+                <div x-show="tabAktivitas === 'resepObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Cetak Resep Obat</h2>
@@ -806,7 +821,7 @@
                 </div>
 
                 <!-- Content Restock & Return -->
-                <div x-show="tabAktivitas === 'reStock' " class="w-full">
+                <div x-show="tabAktivitas === 'reStock' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Restock dan Return</h2>
@@ -855,7 +870,7 @@
                 </div>
 
                 <!-- Content Depot -->
-                <div x-show="tabAktivitas === 'depot' " class="w-full">
+                <div x-show="tabAktivitas === 'depot' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Depot</h2>
@@ -904,7 +919,7 @@
                 </div>
 
                 <!-- Content Pesanan & Stok Masuk -->
-                <div x-show="tabAktivitas === 'pesananStokMasuk' " class="w-full">
+                <div x-show="tabAktivitas === 'pesananStokMasuk' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Pesanan & Stok Masuk</h2>

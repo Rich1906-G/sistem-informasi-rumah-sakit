@@ -11,7 +11,12 @@ class EMRController extends Controller
     public function index()
     {
         $dataPasien = Pasien::all();
-        return view('emr', compact('dataPasien'));
+
+        $pasienSatu = Pasien::firstOrFail();
+
+        // dd($dataPasien);
+
+        return view('emr', compact('dataPasien', 'pasienSatu'));
     }
 
     public function store(Request $request)
@@ -108,7 +113,7 @@ class EMRController extends Controller
             'data' => $pasien
         ]);
     }
-    
+
     // Fungsi baru untuk memperbarui foto profil pasien
     public function updateFotoProfil(Request $request, $id_pasien)
     {
@@ -139,7 +144,7 @@ class EMRController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Foto profil berhasil diperbarui.',
-                'data' => $pasien 
+                'data' => $pasien
             ]);
         }
 

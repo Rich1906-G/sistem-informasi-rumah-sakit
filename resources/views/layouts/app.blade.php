@@ -15,6 +15,12 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <style>
+        [x-cloak] {
+            display: none
+        }
+    </style>
+
 </head>
 
 <body class="font-sans antialiased">

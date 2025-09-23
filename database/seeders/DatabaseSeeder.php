@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // no fk
         $this->call([
+            UserSeeder::class,
             PasienSeeder::class,
             TenagaMedisSeeder::class,
             KategoriObatSeeder::class,

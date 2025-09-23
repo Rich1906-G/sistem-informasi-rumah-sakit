@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PenanggungJawab extends Model
 {
     use HasFactory;
 
-    protected $table = 'penanggung_jawap';
-    protected $primaryKey = 'id_penanggung_jawap';
+    // Baris ini akan menyelesaikan masalah error "Table not found"
+    protected $table = 'penanggung_jawab'; 
+
+    protected $primaryKey = 'id'; 
     protected $guarded = [];
 
     public function pasien(): BelongsTo

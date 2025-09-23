@@ -17,7 +17,7 @@ use App\Http\Controllers\TelekonsultasiController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 

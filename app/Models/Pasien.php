@@ -15,7 +15,7 @@ class Pasien extends Model
     protected $primaryKey = 'id_pasien';
     protected $guarded = [];
 
-    public function penanggungJawap(): HasOne
+    public function penanggungJawab(): HasOne
     {
         return $this->hasOne(PenanggungJawab::class, 'pasien_id', 'id_pasien');
     }

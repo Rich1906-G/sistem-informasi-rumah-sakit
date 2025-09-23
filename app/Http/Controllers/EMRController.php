@@ -25,9 +25,7 @@ class EMRController extends Controller
             'jenis_kelamin' => 'required|string|in:Laki-laki,Perempuan',
             'tanggal_pendaftaran' => 'required|date',
             'no_tlp' => 'required|string|max:20',
-
-            // Validasi untuk kolom opsional
-            'pas_foto' => 'nullable|string', // Asumsi menyimpan path file
+            'pas_foto' => 'nullable|string', 
             'tempat_lahir' => 'nullable|string|max:100',
             'agama' => 'nullable|string|max:50',
             'status' => 'nullable|string|max:50',
@@ -111,41 +109,42 @@ class EMRController extends Controller
     
     // Fungsi baru untuk memperbarui foto profil pasien
     public function updateFotoProfil(Request $request, $id_pasien)
-    {
-        $pasien = Pasien::find($id_pasien);
+{
+    $pasien = Pasien::find($id_pasien);
 
-        if (!$pasien) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Data pasien tidak ditemukan.'
-            ], 404);
-        }
-
-        $request->validate([
-            'foto_profil' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi file gambar
-        ]);
-
-        if ($request->hasFile('foto_profil')) {
-            // Hapus foto profil lama jika ada
-            if ($pasien->foto_profil) {
-                Storage::delete('public/' . $pasien->foto_profil);
-            }
-
-            // Simpan foto baru di direktori 'foto_profil'
-            $path = $request->file('foto_profil')->store('foto_profil', 'public');
-            $pasien->foto_profil = $path;
-            $pasien->save();
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Foto profil berhasil diperbarui.',
-                'data' => $pasien 
-            ]);
-        }
-
+    if (!$pasien) {
         return response()->json([
             'status' => 'error',
-            'message' => 'Tidak ada file yang diunggah.'
-        ], 400);
+            'message' => 'Data pasien tidak ditemukan.'
+        ], 404);
     }
+
+    $request->validate([
+        'foto_profil' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    if ($request->hasFile('foto_profil')) {
+        // Hapus foto profil lama jika ada
+        // Pastikan Anda menghapus file dari storage, bukan dari public folder
+        if ($pasien->foto_profil) {
+            Storage::disk('public')->delete($pasien->foto_profil);
+        }
+
+        
+        $path = $request->file('foto_profil')->store('foto_profil', 'public');
+        $pasien->foto_profil = $path; 
+        $pasien->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Foto profil berhasil diperbarui.',
+            'data' => $pasien
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Tidak ada file yang diunggah.'
+    ], 400);
+}
 }

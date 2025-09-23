@@ -8,6 +8,13 @@ class ApotekController extends Controller
 {
     public function index()
     {
-        return view('apotek');
+        // Contoh data (ini biasanya dari database)
+        $totalAntrian = 10;
+        $sudahDitangani = 4;
+
+        // Hitung persentase progress
+        $progress = $totalAntrian > 0 ? ($sudahDitangani / $totalAntrian) * 100 : 0;
+
+        return view('apotek', compact('totalAntrian', 'sudahDitangani', 'progress'));
     }
 }

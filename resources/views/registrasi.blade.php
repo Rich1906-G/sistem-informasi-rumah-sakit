@@ -170,7 +170,7 @@
                 </div>
 
                 <!-- Content Rawat Jalan Poli-->
-                <div x-cloak="" x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan Poli</h2>
 
@@ -312,7 +312,7 @@
                 </div>
 
                 <!-- Content Antri Cepat-->
-                <div x-cloak="" x-show="tabAktivitas === 'antriCepat' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'antriCepat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antri Cepat</h2>
 
@@ -402,7 +402,7 @@
                 </div>
 
                 <!-- Content Gawat Darurat-->
-                <div x-cloak="" x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
 
@@ -475,7 +475,7 @@
                 </div>
 
                 <!-- Content Kunjungan Sehat-->
-                <div x-cloak="" x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
 
@@ -546,7 +546,7 @@
                 </div>
 
                 <!-- Content Promotif Preventif-->
-                <div x-cloak="" x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
 
@@ -613,7 +613,7 @@
                 </div>
 
                 <!-- Content Kegiatan Kelompok-->
-                <div x-cloak="" x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
 
@@ -693,7 +693,7 @@
                 </div>
 
                 <!-- Content Antrian Awal-->
-                <div x-cloak="" x-show="tabAktivitas === 'antrianAwal' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'antrianAwal' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Awal</h2>
@@ -752,7 +752,7 @@
                 </div>
 
                 <!-- Content Screen Antrian-->
-                <div x-cloak="" x-show="tabAktivitas === 'screenAntrian' " class="w-full">
+                <div x-cloak x-show="tabAktivitas === 'screenAntrian' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Screen Antrian</h2>
@@ -801,8 +801,9 @@
                 </div>
             </div>
         </div>
+        {{-- End Content --}}
+
     </div>
-    {{-- End Content --}}
 
     <div class="fixed bottom-10 right-10">
         <button class="bg-blue-700 flex items-center px-4 py-2 rounded-md shadow-lg">

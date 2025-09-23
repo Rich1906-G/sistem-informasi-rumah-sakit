@@ -183,7 +183,7 @@ function loadRegisteredPatientsSummary() {
             document.getElementById("registeredPatientsPercentage").textContent = res.percentage + "%";
             document.getElementById("registeredPatientsCompareText").textContent = res.compare_text;
 
-            const wrapper = document.getElementById("registeredPatientsWrapper");
+            const wrapper = document.getElementById("waitTimeWrapper");
             const arrow = document.getElementById("registeredPatientsArrow");
 
             
@@ -210,12 +210,11 @@ function loadRegisteredPatientsSummary() {
 }
 loadRegisteredPatientsSummary()
 
-
+// rata tata waktu tunggu
 function loadAverageWaitTime() {
     fetch(`/dashboard/getaveragewaittime`)
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             document.getElementById("waitTimeDisplay").textContent = res.average_time;
             document.getElementById("waitTimePercentage").textContent = res.percentage + "%";
             document.getElementById("waitTimeCompareText").textContent = res.compare_text;
@@ -223,21 +222,26 @@ function loadAverageWaitTime() {
             const wrapper = document.getElementById("waitTimeWrapper");
             const arrow = document.getElementById("waitTimeArrow");
 
-            // Atur ulang kelas warna
-            wrapper.classList.remove("bg-green-300", "bg-red-300");
+            // Hapus semua kelas warna yang mungkin ada
+            wrapper.classList.remove("bg-green-300", "bg-red-300", "bg-gray-300");
 
-            if (res.percentage >= 0) {
+
+            if (res.percentage < 0) {
+                // Rata-rata waktu tunggu menurun (BAIK)
                 wrapper.classList.add("bg-green-300");
-                arrow.setAttribute("d", "M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z");
-                arrow.setAttribute("fill", "#008000");
-            } else {
+                
+                arrow.setAttribute("d", "M640-720v80h104L536-434 376-594 80-296l56 56 240-240 160 160 264-264v104h80v-240H640Z"); // Panah ke atas
+                arrow.setAttribute("fill", "#008000"); // Hijau
+            } else if (res.percentage > 0) {
+                // Rata-rata waktu tunggu meningkat (BURUK)
                 wrapper.classList.add("bg-red-300");
-                arrow.setAttribute("d", "M640-720v80h104L536-434 376-594 80-296l56 56 240-240 160 160 264-264v104h80v-240H640Z");
-                arrow.setAttribute("fill", "#EA3323");
-            }
-            
-            if (res.percentage === 0) {
-                 arrow.setAttribute("d", "M80-480h800v-80H80v80Z");
+                arrow.setAttribute("d", "M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z"); // Panah ke bawah
+                arrow.setAttribute("fill", "#EA3323"); // Merah
+            } else {
+                // Persentase 0 (tidak ada perubahan)
+                wrapper.classList.add("bg-gray-300");
+                arrow.setAttribute("d", "M80-480h800v-80H80v80Z"); // Panah mendatar
+                arrow.setAttribute("fill", "#6B7280"); // Abu-abu
             }
         })
         .catch(err => {
@@ -245,6 +249,101 @@ function loadAverageWaitTime() {
         });
 }
 loadAverageWaitTime();
+
+// jumlah obat habis
+function getObatHabisCount() {
+     fetch(`/dashboard/getobathabiscount`)
+        .then(res => res.json())
+        .then(res => { 
+            document.getElementById("countObatHabis").textContent = res.total_obat_habis;
+            })
+        .catch(err => {
+            console.error('Error fetching new patients summary:', err);
+        });
+}
+getObatHabisCount();
+
+
+// rata tata waktu tunggu apotek
+function getAverageApotekWaitTime() {
+    fetch(`/dashboard/getaverageapotekwaittime`)
+        .then(res => res.json())
+        .then(res => {
+            document.getElementById("waitApotekTimeDisplay").textContent = res.average_time;
+            document.getElementById("waitApotekTimePercentage").textContent = res.percentage + "%";
+            document.getElementById("waitApotekTimeCompareText").textContent = res.compare_text;
+
+            const wrapper = document.getElementById("waitApotekTimeWrapper");
+            const arrow = document.getElementById("waitApotekTimeArrow");
+
+            // Hapus semua kelas warna yang mungkin ada
+            wrapper.classList.remove("bg-green-300", "bg-red-300", "bg-gray-300");
+
+
+            if (res.percentage < 0) {
+                // Rata-rata waktu tunggu menurun (BAIK)
+                wrapper.classList.add("bg-green-300");
+                
+                arrow.setAttribute("d", "M640-720v80h104L536-434 376-594 80-296l56 56 240-240 160 160 264-264v104h80v-240H640Z"); // Panah ke atas
+                arrow.setAttribute("fill", "#008000"); // Hijau
+            } else if (res.percentage > 0) {
+                // Rata-rata waktu tunggu meningkat (BURUK)
+                wrapper.classList.add("bg-red-300");
+                arrow.setAttribute("d", "M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z"); // Panah ke bawah
+                arrow.setAttribute("fill", "#EA3323"); // Merah
+            } else {
+                // Persentase 0 (tidak ada perubahan)
+                wrapper.classList.add("bg-gray-300");
+                arrow.setAttribute("d", "M80-480h800v-80H80v80Z"); // Panah mendatar
+                arrow.setAttribute("fill", "#6B7280"); // Abu-abu
+            }
+        })
+        .catch(err => {
+            console.error('Error fetching average wait time:', err);
+        });
+}
+getAverageApotekWaitTime();
+
+// DataTable Antri Cepat
+function getDataKunjunganAntriCepat () {
+    fetch(`/dashboard/getdatakunjunganantricepat`)
+    .then(res => res.json())
+    .then(data => {
+        // console.log("Fetched Data:", response);
+    //       console.log("Fetched Data:", data); // lihat di console browser
+    // if (!Array.isArray(data)) {
+    //     console.error("Data bukan array! Format harus array of objects");
+    //     return;
+    // }
+        
+        const rows = data.data ? data.data : data; 
+        // const rows = response.data || []; 
+        $('#antriCepatTable').DataTable({
+            data: rows, 
+            columns: [
+                { data: 'nama_pasien' },
+                { data: 'nama_tenaga_medis' },
+                { data: 'waktu_mulai_pemeriksaan' },
+                { data: 'status' } 
+            ],
+            pageLength: 5,
+            lengthChange: false,
+            searching: true,
+            ordering: true,
+            destroy: true, 
+            // responsive: true,
+            language: {
+                emptyTable: "Tidak ada data kunjungan antri cepat"
+            }
+        });
+    })
+    .catch(error => {
+        console.error("Error fetch data:", error);
+    });
+}
+getDataKunjunganAntriCepat();
+
+
 
 
 

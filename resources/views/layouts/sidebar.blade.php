@@ -167,7 +167,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Kasir</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="#"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -177,8 +177,8 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </a>
-            </li>
-            <li>
+            </li> --}}
+            {{-- <li>
                 <a href="{{ route('message.center') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -188,11 +188,11 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">Message Center</span>
                 </a>
-            </li>
+            </li> --}}
 
             <hr class="my-8 border-gray-300 dark:border-gray-700">
 
-            <li>
+            {{-- <li>
                 <a href="{{ route('telekonsultasi') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -202,7 +202,7 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">Telekonsultasi</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ route('office') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -225,7 +225,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Settings</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route('pks') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -235,8 +235,8 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">PKS</span>
                 </a>
-            </li>
-            <li>
+            </li> --}}
+            {{-- <li>
                 <a href="{{ route('pertanyaan') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -246,7 +246,7 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">Pertanyaan</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ route('logout') }}"
                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

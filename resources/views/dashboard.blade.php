@@ -287,9 +287,10 @@
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                                         width="24px" fill="#EA3323" class="">
-                                        <path id="newPatientsArrow" />
+                                        <path id="newPatientsArrow"
+                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
                                     </svg>
-                                    <span id="newPatientsPercentage">0 %</span>
+                                    <span id="newPatientsPercentage">0%</span>
                                 </label>
                                 <label id="newPatientsCompareText" class="text-gray-400"></label>
                             </div>
@@ -330,7 +331,7 @@
                         </div>
                     </div>
 
-                    <div class="w-full shadow-sm bg-white rounded-lg p-4">
+                    <div class="w-full  shadow-sm bg-white rounded-lg p-4">
                         <div class="grid grid-cols-1 gap-1">
                             <div class="flex space-x-2 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -359,7 +360,7 @@
                                     </svg>
                                     <span id="waitTimePercentage">0%</span>
                                 </label>
-                                <label id="waitTimeCompareText" class="text-gray-400">dari bulan September</label>
+                                <label id="waitTimeCompareText" class="text-gray-400"></label>
                             </div>
                         </div>
                     </div>
@@ -383,16 +384,7 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Obat Habis</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#EA3323" class="">
-                                        <path
-                                            d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
-                                    </svg>
-                                    <span>0%</span>
-                                </label>
-                                <label class="text-gray-400">dari bulan September</label>
+                                <h1 id="countObatHabis">0</h1>
                             </div>
                         </div>
                     </div>
@@ -416,16 +408,17 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Tunggu Apotek</label>
-                                <label>0 m 0 s</label>
-                                <label class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
+                                <label id="waitApotekTimeDisplay">0 m 0 s</label>
+                                <label id="waitApotekTimeWrapper"
+                                    class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                                         width="24px" fill="#EA3323" class="">
-                                        <path
+                                        <path id="waitApotekTimeArrow"
                                             d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
                                     </svg>
-                                    <span>0%</span>
+                                    <span id="waitApotekTimePercentage">0%</span>
                                 </label>
-                                <label class="text-gray-400">dari bulan September</label>
+                                <label id="waitApotekTimeCompareText" class="text-gray-400"></label>
                             </div>
                         </div>
                     </div>
@@ -433,29 +426,12 @@
 
                 {{-- Card Pasien Antri Cepat --}}
                 <div class="grid grid-cols-1 mt-5 rounded-lg p-4 bg-white w-full">
-
                     <div class="p-6 ">
                         <div class="mb-2">
-                            <h2 class="text-xl font-semibold">Pasien AntriCepat</h2>
-                            <span class="text-gray-400 text-sm">Last Update : -</span>
+                            <h2 class="text-xl font-semibold">Pasien Antri Cepat</h2>
                         </div>
-                        <div class="flex justify-end items-center mb-2 space-x-4">
-                            <button class="flex items-center text-gray-600 text-sm hover:text-gray-800">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <path d="M3 12h18M9 6l-6 6 6 6" />
-                                </svg>
-                                SORTIR
-                            </button>
-                            <button class="flex items-center text-gray-600 text-sm hover:text-gray-800">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <path d="M4 6h16M4 12h8m-8 6h16" />
-                                </svg>
-                                FILTER
-                            </button>
-                        </div>
-                        <table class="w-full text-left border-collapse">
+
+                        <table id="antriCepatTable" class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b">
                                     <th class="px-4 py-2 text-gray-500 font-normal">Nama</th>
@@ -464,50 +440,11 @@
                                     <th class="px-4 py-2 text-gray-500 font-normal">Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="px-4 py-6 text-center text-gray-400" colspan="4"> </td>
-                                </tr>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
-                        <div class="flex justify-between items-center mt-4 text-sm text-gray-500">
-                            <div>
-                                Rows per page:
-                                <select class="border rounded px-2 py-1">
-                                    <option>8</option>
-                                </select>
-                            </div>
-                            <div>
-                                0-0 of 0
-                                <button class="mx-2 text-gray-400" disabled>
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                </button>
-                                <button class="mx-2 text-gray-400" disabled>
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                                        viewBox="0 0 24 24">
-                                        <path d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
                     </div>
-
-                    {{-- Header --}}
-                    {{-- <div class="flex flex-col items-start">
-                        <label class="font-bold text-xl">Pasien Antri Cepat</label>
-                        <label class="font-light text-md text-gray-400">Last Update</label>
-                    </div>
-
-                    <div class="mt-5">
-                        <div class="flex items-center justify-end">
-                            <button>SORTIR</button>
-                        </div>
-                    </div> --}}
-
                 </div>
+
                 {{-- <h2 class="text-lg font-semibold mb-2">Pasien Baru</h2>
                 <p class="text-2xl font-bold">1</p>
                 <p class="text-green-500 text-sm">+100% dari bulan lalu</p> --}}

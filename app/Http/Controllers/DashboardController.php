@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pasien;
 
+use App\Models\DataObat;
 use App\Models\Kunjungan;
+use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -151,8 +153,6 @@ class DashboardController extends Controller
         $seconds = round(($averageTotal - $minutes) * 60);
         $formattedTime = "{$minutes}m {$seconds}s";
 
-        // dd($formattedTime, $percentage, $compareText);
-
         return response()->json([
             'average_time' => $formattedTime,
             'percentage' => $percentage,
@@ -231,7 +231,7 @@ class DashboardController extends Controller
             ->sum(function ($kunjungan) {
                 $appointmentTime = Carbon::parse($kunjungan->tanggal_kunjungan . ' ' . $kunjungan->jam_kunjungan);
                 $startTime = Carbon::parse($kunjungan->waktu_mulai_pemeriksaan);
-                return $startTime->diffInMinutes($appointmentTime);
+                return abs($startTime->diffInMinutes($appointmentTime));
             });
 
 
@@ -250,7 +250,7 @@ class DashboardController extends Controller
             ->sum(function ($kunjungan) {
                 $appointmentTime = Carbon::parse($kunjungan->tanggal_kunjungan . ' ' . $kunjungan->jam_kunjungan);
                 $startTime = Carbon::parse($kunjungan->waktu_mulai_pemeriksaan);
-                return $startTime->diffInMinutes($appointmentTime);
+                return abs($startTime->diffInMinutes($appointmentTime));
             });
 
         // Hitung total kunjungan valid bulan lalu
@@ -269,6 +269,10 @@ class DashboardController extends Controller
             $percentage = ($averageWaitTime > 0) ? 100 : 0;
         }
 
+        // dd($percentage = round((($averageWaitTime - $averageWaitTimeLast) / $averageWaitTimeLast) * 100, 1));
+
+
+
         // Format waktu ke format m s
         $minutes = floor($averageWaitTime);
         $seconds = round(($averageWaitTime - $minutes) * 60);
@@ -282,6 +286,90 @@ class DashboardController extends Controller
             'average_time' => $formattedTime,
             'percentage' => $percentage,
             'compare_text' => $compareText
+        ]);
+    }
+
+    public function getObatHabisCount()
+    {
+        // Hitung jumlah obat habis secara keseluruhan
+        $totalObatHabis = DataObat::where('stok', 0)->count();
+
+        return response()->json([
+            'total_obat_habis' => $totalObatHabis
+        ]);
+    }
+
+
+    public function getAverageApotekWaitTime()
+    {
+        $baseQuery = Kunjungan::query()
+            ->join('rekam_medis', 'kunjungan.id_kunjungan', '=', 'rekam_medis.kunjungan_id')
+            ->join('pembayaran', 'kunjungan.id_kunjungan', '=', 'pembayaran.kunjungan_id');
+
+        // Hitung rata-rata waktu tunggu apotek bulan ini
+        $averageTotal = (clone $baseQuery)
+            ->whereYear('kunjungan.tanggal_kunjungan', now()->year)
+            ->whereMonth('kunjungan.tanggal_kunjungan', now()->month)
+            ->selectRaw('AVG(TIMESTAMPDIFF(SECOND, rekam_medis.waktu_resep_selesai, pembayaran.waktu_obat_diserahkan)) as average_seconds')
+            ->value('average_seconds');
+
+        // Hitung rata-rata waktu tunggu apotek bulan lalu
+        $averageLast = (clone $baseQuery)
+            ->whereYear('kunjungan.tanggal_kunjungan', now()->subMonth()->year)
+            ->whereMonth('kunjungan.tanggal_kunjungan', now()->subMonth()->month)
+            ->selectRaw('AVG(TIMESTAMPDIFF(SECOND, rekam_medis.waktu_resep_selesai, pembayaran.waktu_obat_diserahkan)) as average_seconds')
+            ->value('average_seconds');
+
+        $previousMonthName = now()->translatedFormat('F');
+        $compareText = "dari bulan " . $previousMonthName;
+
+        if ($averageLast > 0) {
+            $percentage = round((($averageTotal - $averageLast) / $averageLast) * 100, 1);
+        } else {
+            $percentage = ($averageTotal > 0) ? 100 : 0;
+        }
+
+        // Konversi rata-rata detik ke format m s
+        $minutes = floor(($averageTotal ?? 0) / 60);
+        $seconds = floor(($averageTotal ?? 0) % 60);
+        $formattedTime = "{$minutes}m {$seconds}s";
+
+        return response()->json([
+            'average_time' => $formattedTime,
+            'percentage' => $percentage,
+            'compare_text' => $compareText
+        ]);
+    }
+
+    public function getDataKunjunganAntriCepat()
+    {
+
+        $data = Kunjungan::with('pasien', 'tenagaMedis')
+            ->where('jenis_kunjungan', 'Antri Cepat')
+            ->select(
+                'id_kunjungan',
+                'pasien_id',
+                'tenaga_medis_id',
+                'waktu_mulai_pemeriksaan',
+                'jenis_kunjungan',
+                'status'
+            )
+            ->get();
+
+        // Memformat ulang data untuk mendapatkan nama lengkap dari relasi
+        $formattedData = $data->map(function ($item) {
+            return [
+                'id_kunjungan' => $item->id_kunjungan,
+                'jenis_kunjungan' => $item->jenis_kunjungan,
+                'nama_pasien' => optional($item->pasien)->nama_lengkap,
+                'nama_tenaga_medis' => optional($item->tenagaMedis)->nama_lengkap,
+                'waktu_mulai_pemeriksaan' => $item->waktu_mulai_pemeriksaan,
+                'status' => $item->status,
+            ];
+        });
+
+        return response()->json([
+            'data' => $formattedData,
         ]);
     }
 }

@@ -31,7 +31,7 @@ class KunjunganSeeder extends Seeder
         $tipePasien = ['Umum', 'BPJS', 'Rujuk'];
         $penjamin = ['Diri Sendiri', 'Perusahaan', 'Asuransi'];
         $metodePembayaran = ['Tunai', 'Kartu Debit', 'Transfer Bank'];
-        $jenisKunjungan = ['Antri Cepat', ',Kunjungan Sakit', 'Kunjungan Sehat', 'Kunjungan Kontrol', 'Kunjungan Rujukan', 'Kunjungan Gawat Darurat'];
+        $jenisKunjungan = ['Antri Cepat', 'Kunjungan Sakit', 'Kunjungan Sehat', 'Kunjungan Kontrol', 'Kunjungan Rujukan', 'Kunjungan Gawat Darurat'];
         $jenisPerawatan = ['Rawat Jalan', 'Rawat Inap', 'IGD'];
         // $statusKunjungan = ['Antri', 'Diperiksa', 'Selesai', 'Batal']; 
         $slot = ['Pagi', 'Siang', 'Sore', 'Malam'];

@@ -134,39 +134,21 @@
                         {{-- Content Dari Card Total Pasien Klinik --}}
                         <div class="flex flex-row items-center justify-center h-full space-x-32">
                             <div class="flex flex-col gap-1 items-center">
-                                <label class="text-4xl font-bold">0</label>
+                                <label class="text-4xl font-bold">{{ $totalPasien }}</label>
                                 <label class="text-gray-600 mb-4">Pasien</label>
                             </div>
 
 
                             <div class="space-y-2">
-                                <div class="flex items-center justify-between w-40">
-                                    <span class="flex items-center">
-                                        <span class="w-3 h-3 rounded-full bg-blue-900 mr-2"></span> Rawat Jalan
-                                    </span>
-                                    <span>0</span>
-                                </div>
-
-                                <div class="flex items-center justify-between w-40">
-                                    <span class="flex items-center">
-                                        <span class="w-3 h-3 rounded-full bg-blue-700 mr-2"></span> Rawat Inap
-                                    </span>
-                                    <span>0</span>
-                                </div>
-
-                                <div class="flex items-center justify-between w-40">
-                                    <span class="flex items-center">
-                                        <span class="w-3 h-3 rounded-full bg-blue-400 mr-2"></span> Kunjungan Sehat
-                                    </span>
-                                    <span>0</span>
-                                </div>
-
-                                <div class="flex items-center justify-between w-40">
-                                    <span class="flex items-center">
-                                        <span class="w-3 h-3 rounded-full bg-blue-200 mr-2"></span> Apotek
-                                    </span>
-                                    <span>0</span>
-                                </div>
+                                @foreach ($jenisKunjungan as $item)
+                                    <div class="flex items-center justify-between w-40">
+                                        <span class="flex items-center">
+                                            <span class="w-3 h-3 rounded-full bg-blue-900 mr-2"
+                                                value="{{ $item->jenis_kunjungan }}"></span>{{ $item->jenis_kunjungan }}
+                                        </span>
+                                        <span>{{ $item->total }}</span>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -180,18 +162,19 @@
                             {{-- Content Pendapatan Bulan Ini --}}
                             <div class="flex flex-col items-start justify-center h-full">
                                 <div class="flex flex-row space-x-8 items-center">
-                                    <label class="text-4xl font-bold">Rp0</label>
+                                    <label id="totalpendapatan" class="text-4xl font-bold">Rp0</label>
                                     <div class="">
-                                        <label class="flex space-x-2 items-center px-2 bg-green-300 rounded-lg w-20">
+                                        <label id="tandapanahVisualPendapatan"
+                                            class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                                                 viewBox="0 -960 960 960" width="24px" fill="#EA3323"
                                                 class="">
-                                                <path
-                                                    d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
+                                                <path id="indikatorGrafikPendapatan" />
                                             </svg>
-                                            <span>0%</span>
+                                            <span id="pesentasePendapatan">0%</span>
                                         </label>
-                                        <label class="text-gray-400 text-md w-full">dari bulan September</label>
+                                        <label id="pendapatandiBulanSekarang"
+                                            class="text-gray-400 text-md w-full"></label>
                                     </div>
                                 </div>
                             </div>
@@ -205,18 +188,19 @@
                             {{-- Content Pengeluaran Bulan Ini --}}
                             <div class="flex flex-col items-start justify-center h-full">
                                 <div class="flex flex-row space-x-8 items-center">
-                                    <label class="text-4xl font-bold">Rp0</label>
+                                    <label id="totalPengeluaran" class="text-4xl font-bold">Rp0</label>
                                     <div class="">
-                                        <label class="flex space-x-2 items-center px-2 bg-green-300 rounded-lg w-20">
+                                        <label id="tandapanahVisualPengeluaran"
+                                            class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                                                 viewBox="0 -960 960 960" width="24px" fill="#EA3323"
                                                 class="">
-                                                <path
-                                                    d="M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z" />
+                                                <path id="indikatorGrafikPengeluaran" />
                                             </svg>
-                                            <span>0%</span>
+                                            <span id="presantasePengeluaran">0%</span>
                                         </label>
-                                        <label class="text-gray-400 text-md w-full">dari bulan September</label>
+                                        <label id="pengeluarandiBulanSekarang"
+                                            class="text-gray-400 text-md w-full"></label>
                                     </div>
                                 </div>
                             </div>

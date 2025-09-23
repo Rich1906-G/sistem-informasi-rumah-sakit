@@ -146,4 +146,8 @@
             </svg>
         </button>
     </div>
+
+    @push('scripts')
+        @vite('resources/js/Admin/rawat_jalan.js')
+    @endpush
 </x-app-layout>

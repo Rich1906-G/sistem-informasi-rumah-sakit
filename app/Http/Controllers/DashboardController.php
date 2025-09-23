@@ -7,8 +7,10 @@ use App\Models\Pasien;
 
 use App\Models\DataObat;
 use App\Models\Kunjungan;
+use App\Models\Pembayaran;
 use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
+use App\Models\PembelianObat;
 
 class DashboardController extends Controller
 {
@@ -18,12 +20,21 @@ class DashboardController extends Controller
         $title = 'Dashboard';
         $subTitle = 'Royal Prima';
 
-        $jenisKunjungan = Kunjungan::select('jenis_kunjungan')->distinct()->get();
+        // Get the count for each jenis_kunjungan
+        $jenisKunjungan = Kunjungan::select('jenis_kunjungan')
+            ->selectRaw('count(*) as total')
+            ->groupBy('jenis_kunjungan')
+            ->get();
+
+        // You can also get the total patient count for the 'Total Pasien Klinik'
+        $totalPasien = Kunjungan::count();
+
         $tipePasien = Kunjungan::select('tipe_pasien')->distinct()->get();
 
         // Mengirim semua data ke view dashboard
         return view('dashboard', compact(
             'jenisKunjungan',
+            'totalPasien',
             'tipePasien',
             'title',
             'subTitle'
@@ -370,6 +381,64 @@ class DashboardController extends Controller
 
         return response()->json([
             'data' => $formattedData,
+        ]);
+    }
+
+    public function getPendapatanBulanan()
+    {
+        $totalThisMonth = Pembayaran::whereYear('tanggal_pembayaran', now()->year)
+            ->whereMonth('tanggal_pembayaran', now()->month)
+            ->sum('total_biaya');
+
+        // Hitung total pendapatan bulan lalu
+        $totalLastMonth = Pembayaran::whereYear('tanggal_pembayaran', now()->subMonth()->year)
+            ->whereMonth('tanggal_pembayaran', now()->subMonth()->month)
+            ->sum('total_biaya');
+
+
+        // Hitung persentase perubahan
+        if ($totalLastMonth > 0) {
+            $percentage = round((($totalThisMonth - $totalLastMonth) / $totalLastMonth) * 100, 1);
+        } else {
+            $percentage = ($totalThisMonth > 0) ? 100 : 0;
+        }
+        // dd($totalLastMonth, $totalThisMonth, $percentage);
+
+        $currentMonthName = now()->translatedFormat('F');
+        $compareText = "dari bulan " . $currentMonthName;
+
+        return response()->json([
+            'total' => $totalThisMonth,
+            'percentage' => $percentage,
+            'compare_text' => $compareText
+        ]);
+    }
+
+    public function getPengeluaranBulanan()
+    {
+        $totalThisMonth = PembelianObat::whereYear('tanggal_pembelian', now()->year)
+            ->whereMonth('tanggal_pembelian', now()->month)
+            ->sum('total_harga');
+
+        // Hitung total pengeluaran bulan lalu
+        $totalLastMonth = PembelianObat::whereYear('tanggal_pembelian', now()->subMonth()->year)
+            ->whereMonth('tanggal_pembelian', now()->subMonth()->month)
+            ->sum('total_harga');
+
+        // Hitung persentase perubahan
+        if ($totalLastMonth > 0) {
+            $percentage = round((($totalThisMonth - $totalLastMonth) / $totalLastMonth) * 100, 1);
+        } else {
+            $percentage = ($totalThisMonth > 0) ? 100 : 0;
+        }
+        // dd($totalLastMonth, $totalThisMonth, $percentage);
+        $currentMonthName = now()->translatedFormat('F');
+        $compareText = "dari bulan " . $currentMonthName;
+
+        return response()->json([
+            'total' => $totalThisMonth,
+            'percentage' => $percentage,
+            'compare_text' => $compareText
         ]);
     }
 }

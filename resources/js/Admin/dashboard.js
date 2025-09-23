@@ -343,6 +343,90 @@ function getDataKunjunganAntriCepat () {
 }
 getDataKunjunganAntriCepat();
 
+// Pendapatan Bulanan
+
+const rupiahFormat = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0
+});
+function getPendapatanBulanan() {
+    fetch(`/dashboard/getpendapatanbulanan`)
+    .then(res => res.json())
+    .then(res => {
+        // console.log(res);
+        document.getElementById("totalpendapatan").textContent = rupiahFormat.format(res.total);
+        document.getElementById("pesentasePendapatan").textContent = res.percentage + "%";
+        document.getElementById("pendapatandiBulanSekarang").textContent = res.compare_text;
+        
+
+        const wrapper = document.getElementById("tandapanahVisualPendapatan");
+        const arrow = document.getElementById("indikatorGrafikPendapatan");
+
+         // Atur ulang kelas warna
+        wrapper.classList.remove("bg-green-300", "bg-red-300");
+
+            if (res.percentage > 0) {
+            wrapper.classList.add("bg-green-300");
+            arrow.setAttribute("d", "M640-720v80h104L536-434 376-594 80-296l56 56 240-240 160 160 264-264v104h80v-240H640Z"); // Panah ke atas
+            arrow.setAttribute("fill", "#008000"); // Warna hijau
+        } else {
+            wrapper.classList.add("bg-red-300");
+            arrow.setAttribute("d", "M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z"); // Panah ke bawah
+            arrow.setAttribute("fill", "#EA3323"); // Warna merah
+        }
+        
+        // Tambahan: jika persentase 0, panah mendatar
+        if (res.percentage === 0) {
+                arrow.setAttribute("d", "M80-480h800v-80H80v80Z");
+        }
+    })
+    .catch(err => {
+        console.error('Error fetching average consultation time:', err);
+    });
+ }
+ getPendapatanBulanan()
+
+
+ // Pendapatan Bulanan
+function getPengeluaranBulanan() {
+    fetch(`/dashboard/getpengeluaranbulanan`)
+    .then(res => res.json())
+    .then(res => {
+        // console.log(res);
+        document.getElementById("totalPengeluaran").textContent = rupiahFormat.format(res.total);
+        document.getElementById("presantasePengeluaran").textContent = res.percentage + "%";
+        document.getElementById("pengeluarandiBulanSekarang").textContent = res.compare_text;
+        
+
+        const wrapper = document.getElementById("tandapanahVisualPengeluaran");
+        const arrow = document.getElementById("indikatorGrafikPengeluaran");
+
+         // Atur ulang kelas warna
+        wrapper.classList.remove("bg-green-300", "bg-red-300");
+
+            if (res.percentage > 0) {
+            wrapper.classList.add("bg-green-300");
+            arrow.setAttribute("d", "M640-720v80h104L536-434 376-594 80-296l56 56 240-240 160 160 264-264v104h80v-240H640Z"); // Panah ke atas
+            arrow.setAttribute("fill", "#008000"); // Warna hijau
+        } else {
+            wrapper.classList.add("bg-red-300");
+            arrow.setAttribute("d", "M640-240v-80h104L536-526 376-366 80-664l56-56 240 240 160-160 264 264v-104h80v240H640Z"); // Panah ke bawah
+            arrow.setAttribute("fill", "#EA3323"); // Warna merah
+        }
+        
+        // Tambahan: jika persentase 0, panah mendatar
+        if (res.percentage === 0) {
+                arrow.setAttribute("d", "M80-480h800v-80H80v80Z");
+        }
+    })
+    .catch(err => {
+        console.error('Error fetching average consultation time:', err);
+    });
+ }
+ getPengeluaranBulanan()
+
+
 
 
 

@@ -315,6 +315,8 @@ class DashboardController extends Controller
             ->join('rekam_medis', 'kunjungan.id_kunjungan', '=', 'rekam_medis.kunjungan_id')
             ->join('pembayaran', 'kunjungan.id_kunjungan', '=', 'pembayaran.kunjungan_id');
 
+
+
         // Hitung rata-rata waktu tunggu apotek bulan ini
         $averageTotal = (clone $baseQuery)
             ->whereYear('kunjungan.tanggal_kunjungan', now()->year)

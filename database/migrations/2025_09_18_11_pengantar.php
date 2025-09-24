@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_pengantar');
             $table->foreignId('kunjungan_id')->constrained('kunjungan', 'id_kunjungan');
             $table->string('nama_lengkap')->nullable();
-            $table->string('hubungan_dengan_pasien')->nullable();
+            $table->enum('hubungan_dengan_pasien', ['Orang Tua', 'Pasangan', 'Anak', 'Saudara Kandung', 'Teman', 'Lainnya'])->nullable();
             $table->string('alamat')->nullable();
             $table->string('no_tlp')->nullable();
             $table->timestamps();

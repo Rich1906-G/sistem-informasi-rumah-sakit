@@ -73,7 +73,6 @@
                         </h2>
                     </div>
 
-
                     <div class="flex gap-4">
                         {{-- Pending --}}
                         <div class="flex items-center gap-1">
@@ -162,7 +161,6 @@
                             }
                         }
                     </script>
-
                 </div>
             </div>
         </div>
@@ -185,8 +183,8 @@
                             @foreach ($dataDokter as $dokter)
                                 <li>
                                     <button @click="tabAktivitas = (tabAktivitas === 'antriCepat') ? '' : 'antriCepat' "
-                                        :class="tabAktivitas === 'antriCepat'
-                                            ?
+                                        class="w-full text-start px-4 py-3"
+                                        :class="tabAktivitas === 'antriCepat' && {{ $dokter->nama_lengkap }} ?
                                             'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
                                             'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium '">
                                         {{ $dokter->nama_lengkap }}
@@ -893,109 +891,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="p-6" x-data="calendar({
-                        dataDokter: @json($dataDokter),
-                        jadwalPraktik: @json($jadwalPraktik),
-                        currentDate: '{{ $tanggal }}'
-                    })">
-
-                        <!-- Header -->
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-xl font-bold">Rawat Jalan</h2>
-                            <div class="flex items-center space-x-2">
-                                <button @click="prevDay" class="px-3 py-1 bg-gray-200 rounded">&#60;</button>
-                                <span class="font-semibold" x-text="formattedDate"></span>
-                                <button @click="nextDay" class="px-3 py-1 bg-gray-200 rounded">&#62;</button>
-                                <button @click="goToday" class="ml-2 px-3 py-1 bg-blue-500 text-white rounded">HARI
-                                    INI</button>
-                            </div>
-                        </div>
-
-                        <!-- Table -->
-                        <div class="grid" :style="`grid-template-columns: 200px repeat(${dataDokter.length}, 1fr)`">
-                            <!-- Header -->
-                            <div class="bg-gray-100 font-bold p-2 border">All dataDokter</div>
-                            <template x-for="doctor in dataDokter" :key="doctor.id">
-                                <div class="bg-blue-500 text-white font-bold p-2 border" x-text="doctor.name"></div>
-                            </template>
-
-                            <!-- Body -->
-                            <template x-for="time in times" :key="time">
-                                <template>
-                                    <!-- Jam -->
-                                    <div class="p-2 border font-medium" x-text="time + ' WIB'"></div>
-                                    <!-- Isi jadwal tiap dokter -->
-                                    <template x-for="doctor in dataDokter" :key="doctor.id">
-                                        <div class="p-2 border text-center"
-                                            :class="getStatusClass(getSchedule(doctor.id, time))"
-                                            x-text="getSchedule(doctor.id, time)?.status ?? '-'">
-                                        </div>
-                                    </template>
-                                </template>
-                            </template>
-                        </div>
-                    </div>
-
-                    <script>
-                        function calendar({
-                            dataDokter,
-                            jadwalPraktik,
-                            currentDate
-                        }) {
-                            return {
-                                dataDokter,
-                                jadwalPraktik,
-                                currentDate,
-
-                                times: ['13:45', '14:00', '14:15', '14:30'],
-
-                                get formattedDate() {
-                                    return new Date(this.currentDate).toLocaleDateString('id-ID', {
-                                        weekday: 'long',
-                                        day: 'numeric',
-                                        month: 'long',
-                                        year: 'numeric'
-                                    });
-                                },
-
-                                getSchedule(doctorId, time) {
-                                    return this.jadwalPraktik.find(s => s.doctor_id == doctorId && s.time == time);
-                                },
-
-                                getStatusClass(schedule) {
-                                    if (!schedule) return '';
-                                    return {
-                                        'Pending': 'bg-yellow-100 text-yellow-800',
-                                        'Confirmed': 'bg-green-100 text-green-800',
-                                        'Waiting': 'bg-purple-100 text-purple-800',
-                                        'Engaged': 'bg-blue-100 text-blue-800',
-                                        'Succeed': 'bg-gray-100 text-gray-800',
-                                        'Tidak Praktek': 'text-gray-400 italic'
-                                    } [schedule.status] || '';
-                                },
-
-                                prevDay() {
-                                    let d = new Date(this.currentDate);
-                                    d.setDate(d.getDate() - 1);
-                                    this.currentDate = d.toISOString().split('T')[0];
-                                    window.location.search = `?date=${this.currentDate}`;
-                                },
-
-                                nextDay() {
-                                    let d = new Date(this.currentDate);
-                                    d.setDate(d.getDate() + 1);
-                                    this.currentDate = d.toISOString().split('T')[0];
-                                    window.location.search = `?date=${this.currentDate}`;
-                                },
-
-                                goToday() {
-                                    this.currentDate = new Date().toISOString().split('T')[0];
-                                    window.location.search = `?date=${this.currentDate}`;
-                                }
-                            }
-                        }
-                    </script>
 
                 </div>
             </div>

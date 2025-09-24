@@ -35,7 +35,7 @@ class DetailPembelianObatSeeder extends Seeder
             DB::table('detail_pembelian_obat')->insert([
                 'pembelian_obat_id' => $faker->randomElement($pembelianObatIds),
                 'obat_id' => $faker->randomElement($obatIds),
-                'jumlah' => $jumlah,
+                'jumlah' => $totalHarga,
                 'harga_beli' => $hargaBeli,
                 'created_at' => now(),
                 'updated_at' => now(),

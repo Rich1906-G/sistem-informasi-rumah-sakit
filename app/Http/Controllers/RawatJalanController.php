@@ -10,12 +10,38 @@ class RawatJalanController extends Controller
 {
     public function index(Request $request)
     {
-        $dataDokter = TenagaMedis::get();
 
+        $dataDokter = TenagaMedis::where('job_medis', 'Dokter');
         $tanggal = $request->query('date', now()->toDateString());
 
-        $jadwalPraktik = JadwalPraktik::whereDate('hari_praktik', $tanggal)->date();
+        $namaHari = \Carbon\Carbon::parse($tanggal)->isoFormat('dddd');
+
+        $jadwalPraktik = JadwalPraktik::with('tenagaMedis')
+            ->where('hari_praktik', $namaHari)
+            ->get();
 
         return view('rawat_jalan', compact('dataDokter', 'tanggal', 'jadwalPraktik'));
+    }
+
+    public function getJadwalDokter(Request $request)
+    {
+
+        // Get all medical staff
+        $tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')
+            ->select('id_tenaga_medis', 'nama_lengkap', 'job_medis')
+            ->get();
+
+        $jadwalPraktik = JadwalPraktik::with('tenagaMedis')
+            ->get()
+            ->groupBy('tenaga_medis_id');
+
+
+
+        // // Prepare data to be sent to the view
+        $data = [
+            'tenagaMedis' => $tenagaMedis,
+            'jadwalPraktik' => $jadwalPraktik,
+        ];
+        return response()->json($data);
     }
 }

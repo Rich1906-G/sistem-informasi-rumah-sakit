@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('nomor_ktp')->nullable();
-            $table->string('jenis_kelamin')->nullable();
-            $table->string('agama')->nullable();
-            $table->string('status')->nullable();
-            $table->string('golongan_darah')->nullable();
-            $table->string('pendidikan_terakhir')->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
+            $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
+            $table->enum('status', ['Belum Menikah', 'Menikah', 'Cerai Hidup', 'Cerai Mati'])->nullable();
+            $table->enum('golongan_darah', ['A', 'B', 'AB', 'O'])->nullable();
+            $table->enum('pendidikan_terakhir', ['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister'])->nullable();
             $table->string('pekerjaan')->nullable();
             $table->string('no_tlp')->nullable();
             $table->string('email')->nullable();

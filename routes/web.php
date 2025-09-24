@@ -46,10 +46,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/getaverageapotekwaittime',             [DashboardController::class, 'getAverageApotekWaitTime'])->name('getaverageapotekwaittime');
         Route::get('/getdatakunjunganantricepat',           [DashboardController::class, 'getDataKunjunganAntriCepat'])->name('getdatakunjunganantricepat');
         Route::get('/getpendapatanbulanan',                 [DashboardController::class, 'getPendapatanBulanan'])->name('getpendapatanbulanan');
-        Route::get('/getpengeluaranbulanan',                 [DashboardController::class, 'getPengeluaranBulanan'])->name('getpengeluaranbulanan');
+        Route::get('/getpengeluaranbulanan',                [DashboardController::class, 'getPengeluaranBulanan'])->name('getpengeluaranbulanan');
     });
 
-    Route::get('/rawat-jalan', [RawatJalanController::class, 'index'])->name('rawat.jalan');
+    Route::prefix('rawat_jalan')->name('rawat_jalan.')->group(function () {
+        Route::get('/',                                     [RawatJalanController::class, 'index'])->name('index');
+        Route::get('/getjadwaldokter',                      [RawatJalanController::class, 'getJadwalDokter'])->name('getjadwaldokter');
+    });
+
+    Route::prefix('registrasi')->name('registrasi.')->group(function () {
+        Route::get('/',                                     [RegistrasiController::class, 'index'])->name('index');
+        Route::get('/getdatarawatjalanpoli',                [RegistrasiController::class, 'getDataRawatJalanPoli'])->name('getdatarawatjalanpoli');
+    });
+
+
     Route::get('/registrasi', [RegistrasiController::class, 'index'])->name('registrasi');
     Route::get('/emr', [EMRController::class, 'index'])->name('emr');
     Route::get('/apotek', [ApotekController::class, 'index'])->name('apotek');

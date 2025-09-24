@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('jadwal_praktik', function (Blueprint $table) {
             $table->id('id_jadwal');
             $table->foreignId('tenaga_medis_id')->constrained('tenaga_medis', 'id_tenaga_medis');
-            $table->string('hari_praktik');
+            $table->enum('hari_praktik', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->timestamps();

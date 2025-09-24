@@ -24,7 +24,7 @@ class JadwalPraktikSeeder extends Seeder
         }
 
         // List of days of the week
-        $hariPraktik = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        $hariPraktik = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
 
         // Create 20 dummy records
         for ($i = 0; $i < 20; $i++) {

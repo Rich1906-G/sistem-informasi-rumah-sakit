@@ -22,7 +22,7 @@ class PenanggungJawabSeeder extends Seeder
 
         foreach ($pasienIds as $pasienId) {
             $jenisKelaminAcak = $faker->randomElement($jenisKelamin);
-            $namaLengkap = ($jenisKelaminAcak === 'Laki-laki') ? $faker->name('male') : $faker->name('female');
+            $namaLengkap = ($jenisKelaminAcak === 'Laki-laki') ? $faker->name('Laki-laki') : $faker->name('Perempuan');
 
             // 50% kemungkinan alamat sama dengan pasien
             $alamatSama = $faker->boolean(50);

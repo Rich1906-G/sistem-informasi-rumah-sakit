@@ -9,7 +9,7 @@ use Faker\Factory as Faker;
 use App\Models\Pembayaran;
 use App\Models\ResepObat;
 
-class DetailPembayaranSeeder extends Seeder
+class DetailPembayaranObatSeeder extends Seeder
 {
     public function run(): void
     {
@@ -38,7 +38,7 @@ class DetailPembayaranSeeder extends Seeder
             // Calculate the total item price
             $totalHargaItem = $hargaSatuan * $jumlahObat;
 
-            DB::table('detail_pembayaran')->insert([
+            DB::table('detail_pembayaran_obat')->insert([
                 'pembayaran_id' => $faker->randomElement($pembayaranIds),
                 'resep_id' => $resepObat->id_resep,
                 'harga_satuan' => $hargaSatuan,

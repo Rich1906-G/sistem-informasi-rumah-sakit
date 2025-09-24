@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('nama_dokter_perujuk')->nullable();
             $table->enum('penjamin', ['Diri Sendiri', 'Perusahaan', 'Asuransi'])->nullable();
             $table->enum('metode_pembayaran', ['Tunai', 'Kartu Debit', 'Transfer Bank'])->nullable();
-            $table->enum('jenis_kunjungan', ['Antri Cepat', 'Kunjungan Sakit', 'Kunjungan Sehat', 'Kunjungan Kontrol', 'Kunjungan Rujukan', 'Kunjungan Gawat Darurat'])->nullable();
+            $table->enum('jenis_kunjungan', ['Rawat Jalan Poli', 'Antri Cepat', 'Gawat Darurat', 'Kunjungan Sehat', 'Promotif Preventif'])->nullable();
             $table->enum('jenis_perawatan', ['Rawat Jalan', 'Rawat Inap', 'IGD'])->nullable();
             $table->date('tanggal_kunjungan');
             $table->time('jam_kunjungan');

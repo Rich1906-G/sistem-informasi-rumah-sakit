@@ -31,7 +31,7 @@ class KunjunganSeeder extends Seeder
         $tipePasien = ['Umum', 'BPJS', 'Rujuk'];
         $penjamin = ['Diri Sendiri', 'Perusahaan', 'Asuransi'];
         $metodePembayaran = ['Tunai', 'Kartu Debit', 'Transfer Bank'];
-        $jenisKunjungan = ['Antri Cepat', 'Kunjungan Sakit', 'Kunjungan Sehat', 'Kunjungan Kontrol', 'Kunjungan Rujukan', 'Kunjungan Gawat Darurat'];
+        $jenisKunjungan = ['Rawat Jalan Poli', 'Antri Cepat', 'Gawat Darurat', 'Kunjungan Sehat', 'Promotif Preventif'];
         $jenisPerawatan = ['Rawat Jalan', 'Rawat Inap', 'IGD'];
         $statusKunjungan = ['Pending', 'Confirmed', 'Waiting', 'Engaged', 'Succeed'];
         $slot = ['Pagi', 'Siang', 'Sore', 'Malam'];
@@ -57,7 +57,14 @@ class KunjunganSeeder extends Seeder
 
             // Hitung durasi
             $lamaDurasiMenit = Carbon::parse($waktuMulaiPemeriksaan)->diffInMinutes($waktuResepSelesai);
-            $status = ($waktuObatDiserahkan < now()) ? 'Succeed' : 'Pending';
+
+            if ($waktuObatDiserahkan < now()) {
+
+                $status = 'Succeed';
+            } else {
+
+                $status = $faker->randomElement($statusKunjungan);
+            }
             $namaRsPerujuk = ($currentTipePasien === 'Rujuk') ? $faker->company() : null;
             $namaDokterPerujuk = ($currentTipePasien === 'Rujuk') ? $faker->name() : null;
 

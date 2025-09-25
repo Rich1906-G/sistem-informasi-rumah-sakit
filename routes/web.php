@@ -17,9 +17,19 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TelekonsultasiController;
 use App\Models\User;
 
+// testing jimy
+use App\Http\Controllers\Testing\TestingController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+// testing jimy
+Route::prefix('testing')->name('testing.')->group(function () {
+    Route::get('/',                                     [TestingController::class, 'index'])->name('index');
+    Route::get('/getjadwaldokter',                      [TestingController::class, 'getJadwalDokter'])->name('getjadwaldokter');
+    Route::get('/getdetailjadwaldokter/{id}',           [TestingController::class, 'getDetailJadwalDokter'])->name('getdetailjadwaldokter');
+});
 
 // Route::get('/testing', function () {
 //     $user = User::get();

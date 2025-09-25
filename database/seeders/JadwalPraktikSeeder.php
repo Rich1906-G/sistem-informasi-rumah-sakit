@@ -54,7 +54,6 @@ class JadwalPraktikSeeder extends Seeder
         $faker = Faker::create('id_ID');
 
         // Ambil semua ID dan Job Medis dari tabel tenaga_medis
-        // Job Medis diperlukan untuk membuat jadwal yang lebih realistis (misalnya dokter = 3-5 hari, perawat = 5-7 hari)
         $tenagaMedisData = DB::table('tenaga_medis')
             ->select('id_tenaga_medis', 'job_medis')
             ->get();
@@ -64,63 +63,78 @@ class JadwalPraktikSeeder extends Seeder
             return;
         }
 
-        $hariPraktik = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
         $jadwalData = [];
+        // Rentang waktu pembuatan dummy data (Hari ini hingga 30 hari ke depan)
+        $jumlahHariKeDepan = 30;
+        $tanggalMulai = Carbon::today();
 
-        // Loop melalui SETIAP tenaga medis untuk membuat jadwal yang unik
+        $this->command->info("Membuat jadwal praktik dari {$tanggalMulai->format('d M')} hingga {$tanggalMulai->copy()->addDays($jumlahHariKeDepan)->format('d M')}...");
+
+        // Loop melalui SETIAP tenaga medis
         foreach ($tenagaMedisData as $tenagaMedis) {
             $id = $tenagaMedis->id_tenaga_medis;
             $job = $tenagaMedis->job_medis;
-            $jadwalPerluDibuat = 0;
 
-            // Logika realistis untuk jumlah hari praktik:
+            // Tentukan jumlah hari praktik yang direncanakan per minggu (sebagai pola)
             if (str_contains($job, 'Dokter')) {
                 // Dokter/Spesialis: 3-5 hari seminggu
-                $jadwalPerluDibuat = $faker->numberBetween(3, 5);
+                $hariPraktikPerMinggu = $faker->numberBetween(3, 5);
             } else {
-                // Tenaga Medis lain (Perawat/Bidan): 5-7 hari seminggu (termasuk shift)
-                $jadwalPerluDibuat = $faker->numberBetween(5, 7);
+                // Tenaga Medis lain (Perawat/Bidan): 5-7 hari seminggu
+                $hariPraktikPerMinggu = $faker->numberBetween(5, 7);
             }
 
-            $hariYangSudahDipakai = [];
+            // Randomly pilih hari-hari dalam seminggu yang akan menjadi "pola" jadwal dokter ini
+            $hariPola = $faker->randomElements(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], $hariPraktikPerMinggu);
 
-            for ($j = 0; $j < $jadwalPerluDibuat; $j++) {
-                // 1. Pilih hari yang UNIK
-                do {
-                    $hari = $faker->randomElement($hariPraktik);
-                } while (in_array($hari, $hariYangSudahDipakai));
+            // Tentukan shift dan durasi jam untuk tenaga medis ini
+            $shiftPola = $faker->randomElement(['Pagi', 'Siang', 'Malam']);
+            $jamMulaiPola = null;
+            $durasiJamPola = 0;
 
-                $hariYangSudahDipakai[] = $hari;
+            if ($shiftPola === 'Pagi') {
+                $jamMulaiPola = $faker->dateTimeBetween('07:00', '09:00')->format('H:i:s');
+                $durasiJamPola = $faker->numberBetween(3, 5);
+            } elseif ($shiftPola === 'Siang') {
+                $jamMulaiPola = $faker->dateTimeBetween('13:00', '15:00')->format('H:i:s');
+                $durasiJamPola = $faker->numberBetween(3, 4);
+            } else { // Malam
+                $jamMulaiPola = $faker->dateTimeBetween('19:00', '21:00')->format('H:i:s');
+                $durasiJamPola = $faker->numberBetween(4, 8);
+            }
 
-                // 2. Tentukan jam praktik realistis (Pagi, Siang, atau Malam)
-                $shift = $faker->randomElement(['Pagi', 'Siang', 'Malam']);
+            // Loop melalui setiap hari dalam rentang 30 hari
+            for ($i = 0; $i <= $jumlahHariKeDepan; $i++) {
+                $tanggalSaatIni = $tanggalMulai->copy()->addDays($i);
+                $namaHariInggris = $tanggalSaatIni->format('l'); // 'Monday', 'Tuesday', dll.
 
-                if ($shift === 'Pagi') {
-                    $jamMulai = Carbon::createFromTime($faker->numberBetween(7, 9), 0, 0);
-                    $durasiJam = $faker->numberBetween(3, 5); // Durasi 3-5 jam
-                } elseif ($shift === 'Siang') {
-                    $jamMulai = Carbon::createFromTime($faker->numberBetween(13, 15), 0, 0);
-                    $durasiJam = $faker->numberBetween(3, 4); // Durasi 3-4 jam
-                } else { // Malam (khusus staf non-Dokter atau IGD)
-                    $jamMulai = Carbon::createFromTime($faker->numberBetween(19, 21), 0, 0);
-                    $durasiJam = $faker->numberBetween(4, 8); // Shift malam lebih panjang (4-8 jam)
+                // Cek apakah hari saat ini termasuk dalam pola hari praktik dokter ini
+                if (in_array($namaHariInggris, $hariPola)) {
+                    // Jadwal didasarkan pada pola yang sudah ditetapkan
+                    $jamMulai = Carbon::parse($jamMulaiPola);
+                    $jamSelesai = Carbon::parse($jamMulai)->addHours($durasiJamPola);
+
+                    // Tambahkan variasi jam mulai (misalnya 50% kemungkinan) agar terlihat lebih acak
+                    if ($faker->boolean(50)) {
+                        $jamMulai->addMinutes($faker->randomElement([0, 15, 30]));
+                        $jamSelesai->addMinutes($faker->randomElement([0, 15, 30]));
+                    }
+
+                    $jadwalData[] = [
+                        'tenaga_medis_id' => $id,
+                        // GUNAKAN KOLOM BARU TANGGAL PRAKTIK
+                        'tanggal_praktik' => $tanggalSaatIni->toDateString(),
+                        'jam_mulai' => $jamMulai->format('H:i:s'),
+                        'jam_selesai' => $jamSelesai->format('H:i:s'),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
                 }
-
-                $jamSelesai = Carbon::parse($jamMulai)->addHours($durasiJam);
-
-                $jadwalData[] = [
-                    'tenaga_medis_id' => $id,
-                    'hari_praktik' => $hari,
-                    'jam_mulai' => $jamMulai->format('H:i:s'),
-                    'jam_selesai' => $jamSelesai->format('H:i:s'),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
             }
         }
 
         // Insert semua data sekaligus
         DB::table('jadwal_praktik')->insert($jadwalData);
-        $this->command->info('Berhasil membuat ' . count($jadwalData) . ' jadwal praktik yang realistis.');
+        $this->command->info('Berhasil membuat ' . count($jadwalData) . ' jadwal praktik spesifik tanggal.');
     }
 }

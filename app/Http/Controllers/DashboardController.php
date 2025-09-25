@@ -16,7 +16,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
         $title = 'Dashboard';
         $subTitle = 'Royal Prima';
 
@@ -38,7 +37,6 @@ class DashboardController extends Controller
             'tipePasien',
             'title',
             'subTitle'
-
         ));
     }
 
@@ -316,6 +314,8 @@ class DashboardController extends Controller
         $baseQuery = Kunjungan::query()
             ->join('rekam_medis', 'kunjungan.id_kunjungan', '=', 'rekam_medis.kunjungan_id')
             ->join('pembayaran', 'kunjungan.id_kunjungan', '=', 'pembayaran.kunjungan_id');
+
+
 
         // Hitung rata-rata waktu tunggu apotek bulan ini
         $averageTotal = (clone $baseQuery)

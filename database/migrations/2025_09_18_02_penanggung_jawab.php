@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('id_penanggung_jawab');
             $table->foreignId('pasien_id')->constrained('pasien', 'id_pasien');
             $table->string('nama_lengkap');
-            $table->string('hubungan_dengan_pasien')->nullable();
-            $table->string('jenis_kelamin')->nullable();
-            $table->string('golongan_darah')->nullable();
+            $table->enum('hubungan_dengan_pasien', ['Orang Tua', 'Pasangan', 'Anak', 'Saudara Kandung', 'Lainnya'])->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
+            $table->enum('golongan_darah', ['A', 'B', 'AB', 'O'])->nullable();
             $table->string('pekerjaan')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('no_tlp')->nullable();

@@ -10,7 +10,7 @@ class DetailPembayaran extends Model
 {
     use HasFactory;
 
-    protected $table = 'detail_pembayaran';
+    protected $table = 'detail_pembayaran_obat';
     protected $primaryKey = 'id_detail';
     protected $guarded = [];
 

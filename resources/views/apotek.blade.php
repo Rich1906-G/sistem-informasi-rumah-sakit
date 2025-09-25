@@ -936,7 +936,65 @@
                                 </div>
                             </div>
 
+                            <div class="relative z-0 w-full mb-5 group">
+                                <input type="email" name="floating_email" id="floating_email"
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_email"
+                                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+                            </div>
 
+                            <!-- Input Search Cari Pasien -->
+                            <div class="w-full grid grid-cols-3 gap-4">
+                                <!-- Search Pasien -->
+                                <div class="relative">
+                                    <input type="text" placeholder="Cari Pasien"
+                                        class="w-full border border-gray-300 rounded-md px-10 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" />
+                                    <!-- Icon Search -->
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+                                    </svg>
+                                </div>
+
+                                <!-- Input Singatura -->
+                                <div class="relative z-0 group">
+                                    <input type="text" name="singatura" id="singatura"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                   border-gray-300 appearance-none focus:outline-none focus:ring-0 
+                   focus:border-blue-600 peer"
+                                        placeholder=" " required />
+                                    <label for="singatura"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform 
+                   -translate-y-6 scale-75 top-3 -z-10 origin-[0] 
+                   peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                   peer-focus:scale-75 peer-focus:-translate-y-6">Singatura</label>
+                                </div>
+
+                                <!-- Input Detur -->
+                                <div class="relative z-0 group">
+                                    <input type="text" name="detur" id="detur"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 
+                   border-gray-300 appearance-none focus:outline-none focus:ring-0 
+                   focus:border-blue-600 peer"
+                                        placeholder=" " required />
+                                    <label for="detur"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform 
+                   -translate-y-6 scale-75 top-3 -z-10 origin-[0] 
+                   peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                   peer-focus:scale-75 peer-focus:-translate-y-6">Detur</label>
+                                </div>
+                            </div>
+
+                            <div class="my-4 flex items-center justify-between">
+                                <button class="px-5 py-2.5 rounded-md text-center text-primary-500">
+                                    + Tambah Obat
+                                </button>
+
+                                <button class="px-5 py-2.5 bg-red-400 text-white rounded-md">PRINT</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -944,40 +1002,74 @@
                 <!-- Content Restock & Return -->
                 <div x-show="tabAktivitas === 'reStock' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-2xl font-semibold mb-4 text-blue-600">Restock dan Return</h2>
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 ">
+                            <!-- Bagian Judul dan Last Update -->
+                            <div class="flex flex-col">
+                                <h1 class="text-blue-600 font-semibold text-lg md:text-xl">Restok Dan Return
+                                </h1>
+                                <span class="text-gray-500 text-sm">Last Create</span>
+                            </div>
 
-                            <div class="flex gap-4 items-center">
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z" />
-                                    </svg>
-                                </button>
+                            <!-- Bagian Search Bar -->
+                            <div class="flex flex-1 md:max-w-md relative">
+                                <input type="text" placeholder="Cari kode, nama obat atau kategori"
+                                    class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z" />
+                                </svg>
+                            </div>
 
+                            <!-- Bagian Tombol -->
+                            <div class="flex gap-4">
                                 <button
-                                    class="px-2 py-4 bg-green-700 hover:bg-green-600 text-white rounded-md font-semibold text-md">
-                                    <span>TAMBAH SCREEN ANTRIAN</span>
+                                    class="bg-green-700 hover:bg-green-800 text-white font-medium rounded-md px-4 py-2 flex items-center justify-center gap-2"><svg
+                                        xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+                                    </svg>
+                                    Resep Dan Return Obat / Barang</button>
+                                <button
+                                    class="bg-green-700 hover:bg-green-800 text-white font-medium rounded-md px-4 py-2 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+                                        width="24px" fill="#FFFFFF">
+                                        <path
+                                            d="M640-640v-120H320v120h-80v-200h480v200h-80Zm-480 80h640-640Zm560 100q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Zm80-240v-160q0-17-11.5-28.5T760-560H200q-17 0-28.5 11.5T160-520v160h80v-80h480v80h80Z" />
+                                    </svg>
                                 </button>
                             </div>
                         </div>
-
 
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto my-5">
                             <table class="min-w-full text-sm">
                                 <thead class="bg-blue-100">
                                     <tr>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Nama Screen Antrian</th>
-                                        <th class="px-4 py-2 text-left">Jenis Antrian</th>
-                                        <th class="px-4 py-2 text-left">Poli/loket</th>
-                                        <th class="px-4 py-2 text-left">Actions</th>
+                                        <th class="px-4 py-2 text-left">Kode</th>
+                                        <th class="px-4 py-2 text-left">No Faktur</th>
+                                        <th class="px-4 py-2 text-left">Jenis Pemesanan</th>
+                                        <th class="px-4 py-2 text-left">Tanggal Pengiriman</th>
+                                        <th class="px-4 py-2 text-left">Tanggal Pembuatan</th>
+                                        <th class="px-4 py-2 text-left">Suplier</th>
+                                        <th class="px-4 py-2 text-left">Nama Obat</th>
+                                        <th class="px-4 py-2 text-left">Jumlah</th>
+                                        <th class="px-4 py-2 text-left">Diaprove Oleh</th>
+                                        <th class="px-4 py-2 text-left">Total Harga</th>
+                                        <th class="px-4 py-2 text-left">Tempo Pembayaran</th>
+                                        <th class="px-4 py-2 text-left">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
@@ -993,23 +1085,14 @@
                 <!-- Content Depot -->
                 <div x-show="tabAktivitas === 'depot' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
+                        <div class="grid items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Depot</h2>
+                            <label class="text-justify">Depot merupakan fitur untuk maintenance jumlah obat yang
+                                tersebar di Klinik.
 
-                            <div class="flex gap-4 items-center">
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z" />
-                                    </svg>
-                                </button>
-
-                                <button
-                                    class="px-2 py-4 bg-green-700 hover:bg-green-600 text-white rounded-md font-semibold text-md">
-                                    <span>TAMBAH SCREEN ANTRIAN</span>
-                                </button>
-                            </div>
+                                Pemilik Klinik atau Apoteker bisa mengetahui jumlah obat yang terdapat di Apotek, Ruang
+                                Dokter, Gudang, dan lain-lain.
+                            </label>
                         </div>
 
 
@@ -1018,20 +1101,33 @@
                             <table class="min-w-full text-sm">
                                 <thead class="bg-blue-100">
                                     <tr>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Nama Screen Antrian</th>
-                                        <th class="px-4 py-2 text-left">Jenis Antrian</th>
-                                        <th class="px-4 py-2 text-left">Poli/loket</th>
-                                        <th class="px-4 py-2 text-left">Actions</th>
+                                        <th class="px-4 py-2 text-left">Nama Depot</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2 grid grid-cols-2 gap-10 text-lg font-medium items-center">
+                                            <div class="flex items-center justify-between text-center">
+                                                <span class="text-gray-400 font-normal w-auto">Apotek (Apotek)</span>
+
+                                                <button
+                                                    class="px-5 py-2.5 bg-green-500 rounded-md text-white hover:bg-green-600 ww-auto">
+                                                    Show Obat
+                                                </button>
+                                            </div>
+
+                                            <div class="flex gap-10">
+                                                <button
+                                                    class="px-5 py-2.5 bg-green-500 rounded-md text-white hover:bg-green-600 ww-auto">
+                                                    Stok Opname Obat
+                                                </button>
+
+                                                <button
+                                                    class="px-5 py-2.5 bg-green-500 rounded-md text-white hover:bg-green-600 ww-auto">
+                                                    Stok Opname BHP
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1045,19 +1141,15 @@
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Pesanan & Stok Masuk</h2>
 
-                            <div class="flex gap-4 items-center">
-                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                                        width="24px" fill="#000000">
-                                        <path
-                                            d="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z" />
-                                    </svg>
-                                </button>
-
-                                <button
-                                    class="px-2 py-4 bg-green-700 hover:bg-green-600 text-white rounded-md font-semibold text-md">
-                                    <span>TAMBAH SCREEN ANTRIAN</span>
-                                </button>
+                            <div class="flex flex-1 md:max-w-md relative">
+                                <input type="text" placeholder="Cari nama obat, kode transaksi atau jenis transaksi"
+                                    class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z" />
+                                </svg>
                             </div>
                         </div>
 
@@ -1067,15 +1159,21 @@
                             <table class="min-w-full text-sm">
                                 <thead class="bg-blue-100">
                                     <tr>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Nama Screen Antrian</th>
-                                        <th class="px-4 py-2 text-left">Jenis Antrian</th>
-                                        <th class="px-4 py-2 text-left">Poli/loket</th>
-                                        <th class="px-4 py-2 text-left">Actions</th>
+                                        <th class="px-4 py-2 text-left">Kode Transaksi</th>
+                                        <th class="px-4 py-2 text-left"> Tanggal Purchase Order</th>
+                                        <th class="px-4 py-2 text-left">Supplier</th>
+                                        <th class="px-4 py-2 text-left">PIC</th>
+                                        <th class="px-4 py-2 text-left">Telepon</th>
+                                        <th class="px-4 py-2 text-left">Nama Obat / Bahan Habis Pakai</th>
+                                        <th class="px-4 py-2 text-left">Jumlah</th>
+                                        <th class="px-4 py-2 text-left">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>

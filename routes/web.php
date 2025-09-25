@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\ApotekController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,15 +16,39 @@ use App\Http\Controllers\RawatJalanController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TelekonsultasiController;
-use App\Http\Controllers\APIController;
-use App\Http\Controllers\TestingController;
-
-
+use App\Models\TenagaMedis;
 use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('home')->middleware('guestRedirectToLogin');
+
+Route::middleware('API')->group(function () {
+    Route::prefix('api')->group(function () {
+        Route::get('/getDataDokter', [APIController::class, 'getDataDokter'])->name('get.data.dokter');
+        Route::get('/getDataPasien', [APIController::class, 'getDataPasien'])->name('get.data.pasien');
+    });
+});
+
+
+Route::get('/kunjungan', [RawatJalanController::class, 'kunjungan'])->name('kunjungan');
+Route::get('/kunjungan-store', [RawatJalanController::class, 'kunjungan'])->name('kunjungan.store');
+Route::get('/testing', function () {
+    $tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')->get();
+
+    // mapping yang aman: pake getKey() untuk dapat primary key apapun namanya
+    $dataDokter = $tenagaMedis->map(function ($medis) {
+        return [
+            'id'   => $medis->getKey(), // lebih aman daripada $medis->job_medis->id
+            'nama' => $medis->nama_lengkap
+                ?? $medis->nama_tenaga_medis
+                ?? $medis->name
+                ?? 'Dokter ' . $medis->getKey()
+        ];
+    })->values()->toArray(); // ke array biar blade/js lebih predictable
+
+    return view('testing', compact('dataDokter'));
+});
 
 Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
 
@@ -41,7 +66,6 @@ Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('test
 Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');
 
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
@@ -55,10 +79,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/getaverageapotekwaittime',             [DashboardController::class, 'getAverageApotekWaitTime'])->name('getaverageapotekwaittime');
         Route::get('/getdatakunjunganantricepat',           [DashboardController::class, 'getDataKunjunganAntriCepat'])->name('getdatakunjunganantricepat');
         Route::get('/getpendapatanbulanan',                 [DashboardController::class, 'getPendapatanBulanan'])->name('getpendapatanbulanan');
-        Route::get('/getpengeluaranbulanan',                 [DashboardController::class, 'getPengeluaranBulanan'])->name('getpengeluaranbulanan');
+        Route::get('/getpengeluaranbulanan',                [DashboardController::class, 'getPengeluaranBulanan'])->name('getpengeluaranbulanan');
     });
 
-    Route::get('/rawat-jalan', [RawatJalanController::class, 'index'])->name('rawat.jalan');
+    Route::prefix('rawat_jalan')->name('rawat_jalan.')->group(function () {
+        Route::get('/',                                     [RawatJalanController::class, 'index'])->name('index');
+        Route::get('/getjadwaldokter',                      [RawatJalanController::class, 'getJadwalDokter'])->name('getjadwaldokter');
+    });
+
+    Route::prefix('registrasi')->name('registrasi.')->group(function () {
+        Route::get('/',                                     [RegistrasiController::class, 'index'])->name('index');
+        Route::get('/getdatarawatjalanpoli',                [RegistrasiController::class, 'getDataRawatJalanPoli'])->name('getdatarawatjalanpoli');
+    });
+
+
     Route::get('/registrasi', [RegistrasiController::class, 'index'])->name('registrasi');
     Route::get('/emr', [EMRController::class, 'index'])->name('emr');
     Route::get('/apotek', [ApotekController::class, 'index'])->name('apotek');

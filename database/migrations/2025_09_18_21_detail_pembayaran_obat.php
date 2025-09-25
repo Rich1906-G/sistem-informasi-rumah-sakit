@@ -11,7 +11,7 @@
          */
         public function up(): void
         {
-            Schema::create('detail_pembayaran', function (Blueprint $table) {
+            Schema::create('detail_pembayaran_obat', function (Blueprint $table) {
                 $table->id('id_detail');
                 $table->foreignId('pembayaran_id')->constrained('pembayaran', 'id_pembayaran')->cascadeOnDelete();
                 $table->foreignId('resep_id')->constrained('resep_obat', 'id_resep')->cascadeOnDelete();
@@ -26,6 +26,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('detail_pembayaran');
+            Schema::dropIfExists('detail_pembayaran_obat');
         }
     };

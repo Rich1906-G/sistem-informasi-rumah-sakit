@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\KategoriObat;
 use App\Models\User;
+use App\Models\KategoriObat;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             KategoriObatSeeder::class,
             SatuanObatSeeder::class,
             DataObatSeeder::class,
+            DataLayananSeeder::class,
             PoliSeeder::class,
             SupplierSeeder::class,
         ]);
@@ -40,7 +42,8 @@ class DatabaseSeeder extends Seeder
             PembelianObatSeeder::class,
             DetailPembelianObatSeeder::class,
             ResepObatSeeder::class,
-            DetailPembayaranSeeder::class,
+            DetailPembayaranObatSeeder::class,
+            DetailPembayaranLayananSeeder::class,
             TenagaMedisPoliSeeder::class,
         ]);
 

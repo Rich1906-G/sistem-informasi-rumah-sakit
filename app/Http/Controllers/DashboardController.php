@@ -16,7 +16,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
         $title = 'Dashboard';
         $subTitle = 'Royal Prima';
 
@@ -38,7 +37,6 @@ class DashboardController extends Controller
             'tipePasien',
             'title',
             'subTitle'
-
         ));
     }
 

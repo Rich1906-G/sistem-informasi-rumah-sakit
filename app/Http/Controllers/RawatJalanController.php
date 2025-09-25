@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use Carbon\Carbon;
+=======
+use App\Models\JadwalPraktik;
+use App\Models\Kunjungan;
+>>>>>>> 0ada33c40adead0809502099d2b60dbcbc23992c
 use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
 use App\Models\JadwalPraktik;
@@ -11,8 +16,8 @@ class RawatJalanController extends Controller
 {
     public function index(Request $request)
     {
+        $dataDokter = TenagaMedis::where('job_medis', 'Dokter')->get();
 
-        $dataDokter = TenagaMedis::where('job_medis', 'Dokter');
         $tanggal = $request->query('date', now()->toDateString());
 
         $namaHari = \Carbon\Carbon::parse($tanggal)->isoFormat('dddd');

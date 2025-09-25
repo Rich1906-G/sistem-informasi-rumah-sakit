@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('pasien_id')->constrained('pasien', 'id_pasien');
             $table->foreignId('tenaga_medis_id')->constrained('tenaga_medis', 'id_tenaga_medis');
             $table->foreignId('poli_id')->constrained('poli', 'id_poli');
+            $table->string('kode_antrian')->nullable();
             $table->enum('tipe_pasien', ['Umum', 'BPJS', 'Rujuk']);
             $table->string('nama_rs_perujuk')->nullable();
             $table->string('nama_dokter_perujuk')->nullable();

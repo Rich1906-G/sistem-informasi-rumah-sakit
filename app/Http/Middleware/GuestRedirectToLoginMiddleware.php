@@ -19,7 +19,7 @@ class GuestRedirectToLoginMiddleware
         if (!Auth::check()) {
             return redirect()->route('login');
         } elseif (Auth::check()) {
-            return redirect()->route('index');
+            return redirect()->route('dashboard.index');
         }
 
         return $next($request);

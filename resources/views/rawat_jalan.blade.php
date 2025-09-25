@@ -186,7 +186,7 @@
                                         class="w-full text-start px-4 py-3"
                                         :class="tabAktivitas === 'antriCepat' && {{ $dokter->nama_lengkap }} ?
                                             'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
-                                            'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium '">
+                                            'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium ' ">
                                         {{ $dokter->nama_lengkap }}
                                     </button>
                                 </li>

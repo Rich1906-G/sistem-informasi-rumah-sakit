@@ -13,7 +13,6 @@ class RawatJalanController extends Controller
     {
         $dataDokter = TenagaMedis::where('job_medis', 'Dokter')->get();
 
-        $dataDokter = TenagaMedis::where('job_medis', 'Dokter');
         $tanggal = $request->query('date', now()->toDateString());
 
         $namaHari = \Carbon\Carbon::parse($tanggal)->isoFormat('dddd');

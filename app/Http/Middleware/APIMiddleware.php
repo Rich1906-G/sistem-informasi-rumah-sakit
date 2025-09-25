@@ -21,7 +21,7 @@ class APIMiddleware
         // }
 
         if (!Auth::check()) {
-            abort(403, 'NGAPAIN KAU KESINI KONTOLLLLLL ???!!!');
+            abort(403, 'FORBBIDEN');
         }
 
         return $next($request);

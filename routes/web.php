@@ -21,7 +21,7 @@ use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home')->middleware('guest');
+})->name('home')->middleware('guestRedirectToLogin');
 
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {

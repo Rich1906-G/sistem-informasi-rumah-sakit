@@ -15,11 +15,19 @@ use App\Http\Controllers\RawatJalanController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TelekonsultasiController;
+use App\Http\Controllers\APIController;
+use App\Http\Controllers\TestingController;
+
+
 use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+
+
 
 // Route::get('/testing', function () {
 //     $user = User::get();
@@ -29,8 +37,9 @@ Route::get('/', function () {
 //     return view('testing', compact('user'));
 // })->name('testing');
 
-// Route::get('/testing', [UserController::class, 'testing'])->name('testing');
-// Route::post('/testing-lempar-data', [UserController::class, 'lemparData'])->name('test.lempar.data');
+Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('testing');
+Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');
+
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -61,8 +70,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pks', [PKSController::class, 'index'])->name('pks');
     Route::get('/pertanyaan', [PertanyaanController::class, 'index'])->name('pertanyaan');
 });
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

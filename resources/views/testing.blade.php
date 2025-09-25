@@ -10,16 +10,14 @@
 
 <body>
 
-    {{ $user }}
-
     <form action="{{ route('test.lempar.data') }}" class="p-10" method="post">
         @csrf
-        @method('POST')
+
         <label>
             test
         </label>
 
-        <input type="text" name="test">
+        <input type="text" name="ferdi">
     </form>
 
 </body>

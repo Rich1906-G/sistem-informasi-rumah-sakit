@@ -1142,7 +1142,8 @@
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Pesanan & Stok Masuk</h2>
 
                             <div class="flex flex-1 md:max-w-md relative">
-                                <input type="text" placeholder="Cari nama obat, kode transaksi atau jenis transaksi"
+                                <input type="text"
+                                    placeholder="Cari nama obat, kode transaksi atau jenis transaksi"
                                     class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"

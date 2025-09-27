@@ -26,12 +26,14 @@ class DatabaseSeeder extends Seeder
             DataLayananSeeder::class,
             PoliSeeder::class,
             SupplierSeeder::class,
+            DataPenjaminSeeder::class,
         ]);
 
 
         $this->call([
             PenanggungJawabSeeder::class,
             KunjunganSeeder::class,
+            DetailPenjaminanKunjunganSeeder::class,
             RekamMedisSeeder::class,
             VitalSignSeeder::class,
             RiwayatPasienSeeder::class,

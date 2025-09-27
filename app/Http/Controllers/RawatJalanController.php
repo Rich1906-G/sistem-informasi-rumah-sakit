@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use Carbon\Carbon;
-=======
 use App\Models\JadwalPraktik;
 use App\Models\Kunjungan;
->>>>>>> 0ada33c40adead0809502099d2b60dbcbc23992c
 use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
-use App\Models\JadwalPraktik;
 
 class RawatJalanController extends Controller
 {

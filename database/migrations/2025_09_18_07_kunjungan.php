@@ -17,11 +17,10 @@ return new class extends Migration
             $table->foreignId('tenaga_medis_id')->constrained('tenaga_medis', 'id_tenaga_medis');
             $table->foreignId('poli_id')->constrained('poli', 'id_poli');
             $table->string('kode_antrian')->nullable();
-            $table->enum('tipe_pasien', ['Umum', 'BPJS', 'Rujuk']);
+            $table->enum('tipe_pasien', ['Rujuk', 'Non Rujuk']);
             $table->string('nama_rs_perujuk')->nullable();
             $table->string('nama_dokter_perujuk')->nullable();
-            $table->enum('penjamin', ['Diri Sendiri', 'Perusahaan', 'Asuransi'])->nullable();
-            $table->enum('metode_pembayaran', ['Tunai', 'Kartu Debit', 'Transfer Bank'])->nullable();
+            $table->foreignId('penjamin_id')->nullable()->constrained('data_penjamin', 'id_penjamin')->nullOnDelete();
             $table->enum('jenis_kunjungan', ['Rawat Jalan Poli', 'Antri Cepat', 'Gawat Darurat', 'Kunjungan Sehat', 'Promotif Preventif'])->nullable();
             $table->enum('jenis_perawatan', ['Rawat Jalan', 'Rawat Inap', 'IGD'])->nullable();
             $table->date('tanggal_kunjungan');

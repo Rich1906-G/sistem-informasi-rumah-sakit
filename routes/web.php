@@ -22,9 +22,12 @@ use App\Models\User;
 // testing jimy
 use App\Http\Controllers\Testing\TestingController;
 
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 })->name('home')->middleware('guestRedirectToLogin');
+
+
 
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {
@@ -53,7 +56,7 @@ Route::get('/testing', function () {
     return view('testing', compact('dataDokter'));
 });
 
-Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+Route::get('/getDataTenagaMedis', [APIController::class, 'getDataTenagaMedis']);
 
 
 

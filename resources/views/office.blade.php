@@ -319,92 +319,727 @@
 
                 <!-- Content Laporan -->
                 <div x-cloak x-show="tabAktivitas === 'laporan' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antri Cepat</h2>
+                    <div class="bg-white p-4 rounded-md w-full" x-data="{ activeTab: 'operasional' }">
+                        <!-- Tabs -->
+                        <div class="flex space-x-2 mb-4 border-b">
+                            <button @click="activeTab = 'operasional'"
+                                :class="activeTab === 'operasional' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Operasional
+                            </button>
+                            <button @click="activeTab = 'keuangan'"
+                                :class="activeTab === 'keuangan' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Keuangan
+                            </button>
+                            <button @click="activeTab = 'bpjs'"
+                                :class="activeTab === 'bpjs' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                BPJS
+                            </button>
+                            <button @click="activeTab = 'grafik'"
+                                :class="activeTab === 'grafik' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Grafik
+                            </button>
+                        </div>
 
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
+                        <!-- Content: Operasional -->
+                        <div x-show="activeTab === 'operasional'" class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                                <!-- Item Daftar Appointment Pasien -->
+                                <div
+                                    class="border-b border-cyan-600 pb-2 grid grid-cols-2 justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Daftar Appointment Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data semua pasien rawat jalan di klinik ini.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
                                 </div>
 
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                                <!-- Item Daftar Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Daftar Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data semua pasien rawat jalan di klinik ini.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
                                 </div>
 
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
+                                <!-- Item Laporan Diagnosa Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Diagnosa Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Jumlah diagnosa dari semua pasien.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
                                 </div>
 
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
-                            </div>
+                                <!-- Item Laporan Prosedur Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Prosedur Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Jumlah tindakan yang dilakukan pada tiap
+                                            pasien.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
 
-                            <div class="w-40">
-                                <label class="block text-sm text-gray-600">Poli</label>
-                                <select class="w-full mt-1 border rounded-md p-2 items-center">
-                                    <option selected>Semua Poli</option>
-                                    <option value="umum">Umum</option>
-                                    <option value="kecantikan">Kecantikan</option>
-                                </select>
+                                <!-- Item Laporan Peresepan Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Peresepan Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Jumlah resep yang diberikan pada tiap pasien.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Penjualan Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Penjualan Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Penjualan obat langsung dari apotek.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Coret Tindakan -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Coret Tindakan
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan tindakan yang dicoret.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Kunjungan Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Kunjungan Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Kunjungan Pasien Baru dan Lama Setiap
+                                            Bulan</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Pasien Rujukan -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Pasien Rujukan
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan pasien yang dirujukkan ke klinik lain
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Pasien Dirujuk -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Pasien Dirujuk
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan pasien yang dirujukkan ke klinik anda
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Kunjungan Sehat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Kunjungan Sehat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan kunjungan sehat pasien</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Promotif Preventif -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Promotif Preventif
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan promotif preventif pasien</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Kegiatan Kelompok -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Kegiatan Kelompok
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Kegiatan Kelompok
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Stock Adjustment -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Stock Adjustment
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Stock Adjustment</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Hasil Survei -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Hasil Survei
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Hasil Survei</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Rata-Rata Waktu Tunggu Apotek -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Rata-Rata Waktu Tunggu Apotek
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data laporan waktu tunggu apotek</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Rekap EMR -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Rekap EMR
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Rekap EMR yang mencatat data rekam
+                                            medis pasien per kunjungan
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Mutasi Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Mutasi Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Mutasi Obat
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Mutasi BHP -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Mutasi BHP
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Mutasi BHP</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Survei Keputusan Masyarakat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Survei Keputusan Masyarakat
+                                        </button>
+                                        <p class="text-sm text-gray-600">JLaporan Survei Kepuasan Masyarakat</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Waktu Pendaftaran -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Waktu Pendaftaran
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Waktu Pendaftaran
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Stok Opname Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Stok Opname Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Detail Stock Opname Obat</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan OHI-S -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan OHI-S
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan OHI-S</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Global Stok Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Global Stok Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Global Stock Obat</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Stok Opname BHP -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Stok Opname BHP
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Detail Stock Opname BHP</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan KB -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan KB
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Pencatatan KB</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Ibu Hamil -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Ibu Hamil
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Ibu Hamil</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal Kunjungan</th>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Poli</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Rencana Tindakan</th>
-                                        <th class="px-4 py-2 text-left">Rencana Paket</th>
-                                        <th class="px-4 py-2 text-left">Tenaga Medis</th>
-                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
-                                        <th class="px-4 py-2 text-left">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Content: Keuangan -->
+                        <div x-show="activeTab === 'keuangan'" class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Item Total Transaksi per Dokter -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Total Transaksi per Dokter
+                                        </button>
+                                        <p class="text-sm text-gray-600">Total transaksi obat dan tindakan per dokter.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Detail Transaksi per Dokter -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Detail Transaksi per Dokter
+                                        </button>
+                                        <p class="text-sm text-gray-600">Detail transaksi obat dan tindakan per dokter.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Tindakan Dokter -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Tindakan Dokter
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data tindakan yang dilakukan dokter.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Obat Dokter -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Obat Dokter
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data obat keluar dari dokter.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-10 h-[2px] bg-black">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Item Data Transaksi EMR -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Data Transaksi EMR
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data transaksi pasien.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Penjualan Obat Langsung -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Penjualan Obat Langsung
+                                        </button>
+                                        <p class="text-sm text-gray-600">Transaksi penjualan obat langsung dari apotek.
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Pembelian Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Pembelian Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Transaksi pembelian obat kepada supplier.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Pendapatan Hutang Piutang -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Pendapatan Hutang Piutang
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data pendapatan dari hutang piutang</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Biaya Penggunaan Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Biaya Penggunaan Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Total Biaya Penggunaan Obat per bulan
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Biaya Penggunaan BHP -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Biaya Penggunaan BHP
+                                        </button>
+                                        <p class="text-sm text-gray-600">Total Biaya Penggunaan BHP per bulan</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Penjualan Jenis Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Penjualan Jenis Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan penjualan obat berdasarkan jenis obat
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Tuslah Embalase -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Tuslah Embalase
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data transaksi tuslah & embalase.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Persediaan Obat -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Persediaan Obat
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Jumlah Obat yang tersedia di depot
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Persediaan BHP -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Persediaan BHP
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Jumlah BHP yang tersedia di depot</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Pendapatan per Perawatan -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Pendapatan per Perawatan
+                                        </button>
+                                        <p class="text-sm text-gray-600">Pendapatan per perawatan.</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Content: BPJS -->
+                        <div x-show="activeTab === 'bpjs'" class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Item Laporan Penggunaan Obat BPJS -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Penggunaan Obat BPJS
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data Laporan Penggunaan Obat BPJS di klinik
+                                            ini
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Rujukan BPJS -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Rujukan BPJS
+                                        </button>
+                                        <p class="text-sm text-gray-600">Data Laporan Rujukan BPJS di klinik ini
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content: Grafik -->
+                        <div x-show="activeTab === 'grafik'" class="p-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Item Rata-Rata Waktu Tunggu Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Rata-Rata Waktu Tunggu Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan rata-rata waktu tunggu pasien di ruang
+                                            tunggu</p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Rata-Rata Waktu Konsultasi -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Rata-Rata Waktu Konsultasi
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan rata-rata waktu pasien konsultasi
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Rata-Rata Waktu Tunggu Apotek -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Rata-Rata Waktu Tunggu Apotek
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan rata-rata waktu pasien menunggu obat
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Laporan Kunjungan Pasien -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Laporan Kunjungan Pasien
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Kunjungan Pasien Baru dan Lama Setiap
+                                            Bulan
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Item Grafik Tipe Pasien Kunjungan Klinik -->
+                                <div class="border-b border-cyan-600 pb-2 flex justify-between items-center">
+                                    <div>
+                                        <button class="text-cyan-700 font-semibold hover:underline cursor-pointer">
+                                            Grafik Tipe Pasien Kunjungan Klinik
+                                        </button>
+                                        <p class="text-sm text-gray-600">Laporan Tipe Metode bayar yang dipakai pasien
+                                            selama rentang waktu tertentu, selama pasien tersebut sudah bayar
+                                        </p>
+                                    </div>
+                                    <div class="text-cyan-700 flex justify-end ">
+                                        <button type="button">&gt;</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- Content Pasien -->

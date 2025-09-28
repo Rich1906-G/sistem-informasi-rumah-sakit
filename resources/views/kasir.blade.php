@@ -9,7 +9,7 @@
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
-                            </div>
+                        </div>
 
                         <div class="grid grid-cols-3 gap-10">
                             <button class="bg-white hover:bg-slate-300 rounded-full">
@@ -303,83 +303,111 @@
                             </button>
                         </div>
 
-                        <div class="flex flex-wrap items-center gap-4 p-4 bg-white shadow rounded-lg">
-                            <!-- Search Pasien -->
-                            <div class="flex items-center border-b border-gray-300 focus-within:border-green-500">
-                                <input type="text" placeholder="Cari nama pasien"
-                                    class="outline-none px-2 py-1 w-48 text-sm" />
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
-                                </svg>
-                            </div>
+                        <div class="w-full bg-white p-4 rounded shadow">
+                            <form class="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
 
-                            <!-- Dropdown Dokter -->
-                            <div class="flex flex-col">
-                                <label class="text-xs text-gray-600">Dokter *</label>
-                                <select
-                                    class="border-b border-gray-300 focus:border-green-500 outline-none text-sm py-1">
-                                    <option>Pilih Dokter</option>
-                                    <option>Dr. Andi</option>
-                                    <option>Dr. Sinta</option>
-                                </select>
-                            </div>
+                                <!-- Cari nama pasien -->
+                                <div class="col-span-2">
+                                    <label for="nama" class="block text-sm font-medium text-gray-700">Cari nama
+                                        pasien</label>
+                                    <div class="relative mt-1">
+                                        <input type="text" id="nama" placeholder="Cari nama pasien"
+                                            class="w-full rounded border border-gray-300 pl-3 pr-10 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                                        <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+                                            🔍
+                                        </span>
+                                    </div>
+                                </div>
 
-                            <!-- Dropdown Keterangan -->
-                            <div class="flex flex-col">
-                                <label class="text-xs text-gray-600">Keterangan *</label>
-                                <select
-                                    class="border-b border-gray-300 focus:border-green-500 outline-none text-sm py-1 w-40">
-                                    <option>Schedule</option>
-                                    <option>Checkup</option>
-                                    <option>Operasi</option>
-                                </select>
-                            </div>
+                                <!-- Dokter -->
+                                <div>
+                                    <label for="dokter" class="block text-sm font-medium text-gray-700">Dokter
+                                        *</label>
+                                    <select id="dokter"
+                                        class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                        <option value="">Pilih Dokter</option>
+                                        <option>Dr. A</option>
+                                        <option>Dr. B</option>
+                                    </select>
+                                </div>
 
-                            <!-- Dari Tanggal -->
-                            <div class="flex flex-col">
-                                <label class="text-xs text-gray-600">Dari Tanggal</label>
-                                <input type="date"
-                                    class="border-b border-gray-300 focus:border-green-500 outline-none text-sm py-1" />
-                            </div>
+                                <!-- Schedule -->
+                                <div>
+                                    <label for="schedule"
+                                        class="block text-sm font-medium text-gray-700">Schedule</label>
+                                    <select id="schedule"
+                                        class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                        <option value="">Pilih Schedule</option>
+                                        <option>Pagi</option>
+                                        <option>Siang</option>
+                                        <option>Malam</option>
+                                    </select>
+                                </div>
 
-                            <!-- Sampai Tanggal -->
-                            <div class="flex flex-col">
-                                <label class="text-xs text-gray-600">Sampai Tanggal</label>
-                                <input type="date"
-                                    class="border-b border-gray-300 focus:border-green-500 outline-none text-sm py-1" />
-                            </div>
+                                <!-- Status -->
+                                <div>
+                                    <label for="status" class="block text-sm font-medium text-gray-700">Status
+                                        *</label>
+                                    <select id="status"
+                                        class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                        <option value="">Pilih Status</option>
+                                        <option>Aktif</option>
+                                        <option>Selesai</option>
+                                    </select>
+                                </div>
 
-                            <!-- Dropdown Status -->
-                            <div class="flex flex-col">
-                                <label class="text-xs text-gray-600">Status *</label>
-                                <select
-                                    class="border-b border-gray-300 focus:border-green-500 outline-none text-sm py-1 w-32">
-                                    <option>Pilih Status</option>
-                                    <option>Aktif</option>
-                                    <option>Selesai</option>
-                                    <option>Dibatalkan</option>
-                                </select>
-                            </div>
+                                <!-- Keterangan -->
+                                <div>
+                                    <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan
+                                        *</label>
+                                    <select id="keterangan"
+                                        class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                        <option value="">Pilih Keterangan</option>
+                                        <option>Konsultasi</option>
+                                        <option>Rawat Inap</option>
+                                    </select>
+                                </div>
+
+                                <!-- Dari & Sampai Tanggal -->
+                                <div class="col-span-2 grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="dari" class="block text-sm font-medium text-gray-700">Dari
+                                            Tanggal</label>
+                                        <input type="date" id="dari" value="2025-09-01"
+                                            class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                                    </div>
+                                    <div>
+                                        <label for="sampai" class="block text-sm font-medium text-gray-700">Sampai
+                                            Tanggal</label>
+                                        <input type="date" id="sampai" value="2025-09-30"
+                                            class="w-full mt-1 rounded border border-gray-300 py-2 px-3 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
-
 
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto mb-5">
                             <table class="min-w-full text-sm">
                                 <thead class="bg-blue-100">
                                     <tr>
-                                        <th class="px-4 py-2 text-left">Nama Obat</th>
-                                        <th class="px-4 py-2 text-left">Penggunaan Obat Umum</th>
-                                        <th class="px-4 py-2 text-left">Nominal Obat Umum</th>
-                                        <th class="px-4 py-2 text-left">Penggunaan Obat BPJS</th>
-                                        <th class="px-4 py-2 text-left">Nominal Obat BPJS</th>
-                                        <th class="px-4 py-2 text-left">Sisa Obat</th>
+                                        <th class="px-4 py-2 text-left">No</th>
+                                        <th class="px-4 py-2 text-left">Tanggal Bayar</th>
+                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
+                                        <th class="px-4 py-2 text-left">Dokter</th>
+                                        <th class="px-4 py-2 text-left">Schedule</th>
+                                        <th class="px-4 py-2 text-left">Status Admin</th>
+                                        <th class="px-4 py-2 text-left">Biaya Booking</th>
+                                        <th class="px-4 py-2 text-left">Keterangan</th>
+                                        <th class="px-4 py-2 text-left">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>
                                         <td class="px-4 py-2">-</td>

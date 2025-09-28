@@ -66,22 +66,12 @@ Route::get('/testing', function () {
 
 Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
 
-
-
 // testing jimy
 Route::prefix('testing')->name('testing.')->group(function () {
     Route::get('/',                                     [TestingController::class, 'index'])->name('index');
     Route::get('/getjadwaldokter',                      [TestingController::class, 'getJadwalDokter'])->name('getjadwaldokter');
     Route::get('/getdetailjadwaldokter/{id}',           [TestingController::class, 'getDetailJadwalDokter'])->name('getdetailjadwaldokter');
 });
-
-// Route::get('/testing', function () {
-//     $user = User::get();
-
-//     dd($user);
-
-//     return view('testing', compact('user'));
-// })->name('testing');
 
 Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('testing');
 Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');

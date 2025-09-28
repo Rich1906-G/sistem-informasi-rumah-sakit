@@ -1044,295 +1044,317 @@
 
                 <!-- Content Pasien -->
                 <div x-cloak x-show="tabAktivitas === 'pasien' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
+                    <div class="bg-white p-4 rounded-md w-full" x-data="{ activeTab: 'summary' }">
+                        <!-- Tabs -->
+                        <div class="flex space-x-2 mb-4 border-b">
+                            <button @click="activeTab = 'summary'"
+                                :class="activeTab === 'summary' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Summary
+                            </button>
+                            <button @click="activeTab = 'dataPasien'"
+                                :class="activeTab === 'dataPasien' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Data Pasien
+                            </button>
+                        </div>
 
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                        <!-- Content: Ikhtisar -->
+                        <div x-show="activeTab === 'summary'" class="space-y-6">
+                            <!-- Statistic Cards -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                <div class="border rounded-md shadow p-4 text-center bg-white">
+                                    <h3 class="text-sm font-medium text-gray-600">Pasien Terdaftar</h3>
+                                    <p class="text-xl font-bold text-blue-600">1 Pasien</p>
                                 </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
+                                <div class="border rounded-md shadow p-4 text-center bg-white">
+                                    <h3 class="text-sm font-medium text-gray-600">Pasien Baru Bulan Ini</h3>
+                                    <p class="text-xl font-bold text-blue-600">1 Pasien</p>
+                                </div>
+                                <div class="border rounded-md shadow p-4 text-center bg-white">
+                                    <h3 class="text-sm font-medium text-gray-600">Pasien Walk In Hari Ini</h3>
+                                    <p class="text-xl font-bold text-blue-600">0 Pasien</p>
+                                </div>
                             </div>
 
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                            <!-- Charts Grid -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                                <!-- Chart 1 -->
+                                <div class="border rounded-md shadow p-4 bg-white">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Agama</h4>
+                                    <canvas id="chartAgama" class="h-48"></canvas>
                                 </div>
 
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
+                                <!-- Chart 2 -->
+                                <div class="border rounded-md shadow p-4 bg-white">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Golongan Darah</h4>
+                                    <canvas id="chartDarah" class="h-48"></canvas>
                                 </div>
 
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
+                                <!-- Chart 3 -->
+                                <div class="border rounded-md shadow p-4 bg-white">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Pendidikan Terakhir</h4>
+                                    <canvas id="chartPendidikan" class="h-48"></canvas>
+                                </div>
+
+                                <!-- Chart 4 -->
+                                <div class="border rounded-md shadow p-4 bg-white">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Pekerjaan</h4>
+                                    <canvas id="chartPekerjaan" class="h-48"></canvas>
+                                </div>
+
+                                <!-- Chart 4 -->
+                                <div class="border rounded-md shadow p-4 bg-white">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Pekerjaan</h4>
+                                    <canvas id="chartPekerjaan" class="h-48"></canvas>
+                                </div>
+
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Traise</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Pulang</th>
-                                        <th class="px-4 py-2 text-left">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Content: Ikhtisar -->
+                        <div x-show="activeTab === 'dataPasien'" class="space-y-6">
+                            <!-- Search + Button -->
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="relative w-1/2">
+                                    <input type="text" placeholder="Search"
+                                        class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                                </div>
+                                <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                                    + Pasien Baru
+                                </button>
+                            </div>
+
+                            <div class="overflow-x-auto bg-white rounded shadow">
+                                <table class="w-full border-collapse text-sm">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-left text-gray-600">
+                                            <th class="p-3 border"><input type="checkbox"></th>
+                                            <th class="p-3 border">Nama Pasien</th>
+                                            <th class="p-3 border">Nomor RM</th>
+                                            <th class="p-3 border">Tanggal Lahir</th>
+                                            <th class="p-3 border">No. HP</th>
+                                            <th class="p-3 border">Alamat</th>
+                                            <th class="p-3 border text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="p-3 border text-center"><input type="checkbox"></td>
+                                            <td class="p-3 border">Tn. Contoh</td>
+                                            <td class="p-3 border text-blue-600 font-medium">12345</td>
+                                            <td class="p-3 border">01 Sep 2000</td>
+                                            <td class="p-3 border">********7890</td>
+                                            <td class="p-3 border">*******************************</td>
+                                            <td class="p-3 border text-center space-x-3">
+                                                <button class="text-blue-500 hover:text-blue-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="#000000">
+                                                        <path
+                                                            d="M120-120v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm584-528 56-56-56-56-56 56 56 56Z" />
+                                                    </svg>
+                                                </button>
+                                                <button class="text-gray-500 hover:text-gray-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="#000000">
+                                                        <path
+                                                            d="M720-680H240v-160h480v160Zm0 220q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Z" />
+                                                    </svg>
+                                                </button>
+                                                <button class="text-red-500 hover:text-red-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                                                        viewBox="0 -960 960 960" width="24px" fill="#ff0000">
+                                                        <path
+                                                            d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm80-160h80v-360h-80v360Zm160 0h80v-360h-80v360Z" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- Content Akun -->
                 <div x-cloak x-show="tabAktivitas === 'akun' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
-
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
+                    <div class="bg-white p-4 rounded-md">
+                        <!-- Header -->
+                        <div class="flex justify-between items-center mb-4">
+                            <button class="p-3 bg-gray-200 rounded hover:bg-gray-300 text-sm">
+                                EDIT AKUN
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <input type="date" value="2025-09-01" class="border rounded px-2 py-1 text-sm">
+                                <span>-</span>
+                                <input type="date" value="2025-09-30" class="border rounded px-2 py-1 text-sm">
+                                <button class="p-1 rounded hover:bg-gray-100">
+                                    🔄
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Aktivitas</th>
-                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Card Wrapper -->
+                        <div class="flex gap-4">
+                            <!-- Card Kas -->
+                            <div class="flex-1 bg-white rounded shadow p-4 text-center">
+                                <h3 class="text-green-500 font-semibold">Kas</h3>
+                                <p class="text-red-500">Rp0</p>
+                                <p><span class="text-green-600">+Rp0</span> / <span class="text-red-500">-Rp0</span>
+                                </p>
+                            </div>
+
+                            <!-- Card Cover BPJS -->
+                            <div class="flex-1 bg-white rounded shadow p-4 text-center">
+                                <h3 class="text-blue-500 font-semibold">Cover BPJS</h3>
+                                <p class="text-red-500">Rp0</p>
+                                <p><span class="text-green-600">+Rp0</span> / <span class="text-red-500">-Rp0</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info bawah -->
+                        <div class="text-center text-gray-500 mt-6">
+                            Tidak ada data grafik
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- Content Warning -->
                 <div x-cloak x-show="tabAktivitas === 'warning' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
+                    <div class="bg-white p-4 rounded-md w-full" x-data="{ activeTab: 'pembayaranRestokObat' }">
+                        <!-- Tabs -->
+                        <div class="flex space-x-2 mb-4 border-b">
+                            <button @click="activeTab = 'pembayaranRestokObat'"
+                                :class="activeTab === 'pembayaranRestokObat' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Pembayaran Restok Obat
+                            </button>
+                            <button @click="activeTab = 'sipDanSTRTenagaMedis'"
+                                :class="activeTab === 'sipDanSTRTenagaMedis' ? 'text-blue-600 border-blue-600' :
+                                    'text-gray-600 border-transparent'"
+                                class="px-4 py-2 text-sm font-medium border-b-2">
+                                Sip Dan STR Tenaga Medis
+                            </button>
+                        </div>
 
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
+                        <!-- Content: Ikhtisar -->
+                        <div x-show="activeTab === 'pembayaranRestokObat'" class="space-y-6">
+                            <div class="overflow-x-auto bg-white rounded shadow">
+                                <table class="w-full border-collapse text-sm">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-left text-gray-600">
+                                            <th class="p-3 border">Kode</th>
+                                            <th class="p-3 border">Supplier</th>
+                                            <th class="p-3 border">Detail Item</th>
+                                            <th class="p-3 border">Jumlah</th>
+                                            <th class="p-3 border">Total Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="p-3 border">-</td>
+                                            <td class="p-3 border ">-</td>
+                                            <td class="p-3 border">-</td>
+                                            <td class="p-3 border">-</td>
+                                            <td class="p-3 border">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Content: Ikhtisar -->
+                        <div x-show="activeTab === 'sipDanSTRTenagaMedis'" class="space-y-6">
+                            <div class="overflow-x-auto bg-white rounded shadow">
+                                <table class="w-full border-collapse text-sm">
+                                    <thead>
+                                        <tr class="bg-gray-100 text-left text-gray-600">
+                                            <th class="p-3 border">Dokter</th>
+                                            <th class="p-3 border">STR</th>
+                                            <th class="p-3 border">SIP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="p-3 border">-</td>
+                                            <td class="p-3 border">-</td>
+                                            <td class="p-3 border">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Content Merge Rekam Medis -->
                 <div x-cloak x-show="tabAktivitas === 'mergeRekamMedis' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
+                    <div class="bg-white px-6 py-4 rounded-md" x-data="{ pasien: [1] }">
+                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Merge Rekam Medis</h2>
 
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
-                            </div>
-
-                            <div>
-                                <button
-                                    class="px-2 py-4 bg-green-700 hover:bg-green-500 text-white rounded-md font-semibold text-md">
-                                    <span>+ TAMBAH KEGIATAN BARU</span>
-                                </button>
+                        <!-- Pasien Tujuan Merge -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-blue-600 mb-1">
+                                Pasien Tujuan Merge
+                            </label>
+                            <div class="flex items-center border-b border-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+                                </svg>
+                                <input type="text" placeholder="Cari Pasien"
+                                    class="w-full focus:outline-none py-2 text-sm">
                             </div>
                         </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal Dibuat</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Pelaksaan</th>
-                                        <th class="px-4 py-2 text-left">Nama Club</th>
-                                        <th class="px-4 py-2 text-left">Pembicara</th>
-                                        <th class="px-4 py-2 text-left">Biaya</th>
-                                        <th class="px-4 py-2 text-left">Jumlah Peserta</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <!-- Pasien Yang Ingin Dimerge (dinamis) -->
+                        <template x-for="(item, index) in pasien" :key="index">
+                            <div class="mb-6 relative">
+                                <label class="block text-sm font-medium text-blue-600 mb-1">
+                                    Pasien Yang Ingin Dimerge
+                                </label>
+                                <div class="flex items-center border-b border-gray-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+                                    </svg>
+                                    <input type="text" placeholder="Cari Pasien"
+                                        class="w-full focus:outline-none py-2 text-sm">
+                                </div>
+                                <!-- Tombol X hanya muncul di kolom tambahan -->
+                                <template x-if="index > 0">
+                                    <button @click="pasien.splice(index, 1)"
+                                        class="absolute top-0 right-0 text-red-500 hover:text-red-700 text-sm font-bold">
+                                        ❌
+                                    </button>
+                                </template>
+                            </div>
+                        </template>
+
+                        <!-- Tambah Pasien -->
+                        <button @click="pasien.push(pasien.length + 1)"
+                            class="text-blue-600 text-sm cursor-pointer mb-8">
+                            + Tambah Pasien Yang Ingin Dimerge
+                        </button>
+
+                        <!-- Tombol Merge -->
+                        <div class="flex justify-end">
+                            <button
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-bold px-4 py-2 rounded">
+                                MERGE
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </x-app-layout>

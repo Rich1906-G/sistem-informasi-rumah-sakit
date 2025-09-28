@@ -15,7 +15,8 @@ class JadwalPraktik extends Model
     protected $guarded = [];
 
     public function tenagaMedis(): BelongsTo
-    {
-        return $this->belongsTo(TenagaMedis::class, 'tenaga_medis_id', 'id_tenaga_medis');
-    }
+{
+    return $this->belongsTo(TenagaMedis::class, 'tenaga_medis_id', 'id_tenaga_medis');
+}
+
 }

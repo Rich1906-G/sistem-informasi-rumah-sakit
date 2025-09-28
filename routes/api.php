@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\PengantarController;
 use App\Http\Controllers\EMRController; 
 
@@ -10,22 +11,24 @@ use App\Http\Controllers\EMRController;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
 */
 
 // --------- ROUTES UNTUK AUTENTIKASI (LOGIN & REGISTER) ---------
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Endpoint yang dilindungi, hanya bisa diakses setelah login
+// --------- ROUTES PUBLIK (TANPA AUTH) ---------
+Route::get('/getDataTenagaMedis', [APIController::class, 'getDataTenagaMedis']);
+Route::get('/getSpecialties', [APIController::class, 'getSpecialties']);
+
+// --------- ROUTES YANG MEMBUTUHKAN AUTENTIKASI ---------
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    // Booking schedule endpoint
+    Route::post('/book-schedule', [APIController::class, 'bookSchedule']);
 
     // --------- ROUTES UNTUK DATA PENGANTAR (CRUD) ---------
     Route::resource('pengantars', PengantarController::class)->only(['index', 'store']);
@@ -38,4 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --------- Rute baru untuk memperbarui foto profil pasien ---------
     Route::post('/pasien/{id_pasien}/update-foto-profil', [EMRController::class, 'updateFotoProfil']);
+
+    // --------- Rute untuk rekam medis ---------
+    Route::get('/rekam-medis/{id_kunjungan}', [APIController::class, 'getDataRekamMedis']);
 });

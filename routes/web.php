@@ -31,10 +31,18 @@ Route::get('/', function () {
 
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {
-        Route::get('/getDataDokter', [APIController::class, 'getDataDokter'])->name('get.data.dokter');
-        Route::get('/getDataPasien', [APIController::class, 'getDataPasien'])->name('get.data.pasien');
+        // Route::get('/getSpecialties', [APIController::class, 'getSpecialties']);
     });
 });
+
+// // tes ke lfutter 
+//     Route::get('/getDataDokter', [APIController::class, 'getDataDokter'])->name('get.data.dokter');
+//     Route::get('/getDataPasien', [APIController::class, 'getDataPasien'])->name('get.data.pasien');
+//     Route::get('/getSpecialties', [APIController::class, 'getSpecialties'])->name('get.specialties');
+//     Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+//     Route::get('/rekam-medis/{id_kunjungan}', [APIController::class, 'getDataRekamMedis']); 
+//     // Route::get('/getDataRekamMedis', [APIController::class, 'getDataRekamMedis']);
+//     Route::post('/book-schedule', [APIController::class, 'postFormPasien'])->name('api.book.schedule');  // Ubah nama route, tanpa hyphen
 
 
 Route::get('/kunjungan', [RawatJalanController::class, 'kunjungan'])->name('kunjungan');
@@ -56,7 +64,7 @@ Route::get('/testing', function () {
     return view('testing', compact('dataDokter'));
 });
 
-Route::get('/getDataTenagaMedis', [APIController::class, 'getDataTenagaMedis']);
+Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
 
 
 

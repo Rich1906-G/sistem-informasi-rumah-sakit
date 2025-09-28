@@ -303,64 +303,7 @@
                                 </button>
                             </div>
                         </div>
-
-
-
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Kode</th>
-                                        <th class="px-4 py-2 text-left">Nama Obat</th>
-                                        <th class="px-4 py-2 text-left">Farmasi</th>
-                                        <th class="px-4 py-2 text-left">Jenis Kategori</th>
-                                        <th class="px-4 py-2 text-left">Stok</th>
-                                        <th class="px-4 py-2 text-left">
-                                            <div class="flex items-center">
-                                                <label class="">Harga Umum</label>
-                                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                                        viewBox="0 -960 960 960" width="24px" fill="#000000">
-                                                        <path
-                                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </th>
-                                        <th class="px-4 py-2 text-left ">
-                                            <div class="flex items-center">
-                                                <label>Harga Beli</label>
-                                                <button class="hover:bg-slate-200 hover:rounded-full p-1">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                                                        viewBox="0 -960 960 960" width="24px" fill="#000000">
-                                                        <path
-                                                            d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </th>
-                                        <th class="px-4 py-2 text-left">Avg HPP</th>
-                                        <th class="px-4 py-2 text-left">Harga OTC</th>
-                                        <th class="px-4 py-2 text-left">Margin Profit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -1142,7 +1085,8 @@
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Pesanan & Stok Masuk</h2>
 
                             <div class="flex flex-1 md:max-w-md relative">
-                                <input type="text" placeholder="Cari nama obat, kode transaksi atau jenis transaksi"
+                                <input type="text"
+                                    placeholder="Cari nama obat, kode transaksi atau jenis transaksi"
                                     class="w-full border border-gray-300 rounded-md py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5 absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -1187,8 +1131,8 @@
                 </div>
             </div>
         </div>
+        {{-- End Content --}}
     </div>
-    {{-- End Content --}}
 
     <div class="fixed bottom-10 right-10">
         <button class="bg-blue-700 flex items-center px-4 py-2 rounded-md shadow-lg">

@@ -37,7 +37,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'nama_lengkap' => $request->username, 
             'tanggal_pendaftaran' => now(), 
-            'nomor_rm' => $nomorRekamMedis, // <-- BARIS BARU: Tambahkan nomor_rm
+            'nomor_rm' => $nomorRekamMedis, 
         ]);
 
         $token = $account->createToken('authToken')->plainTextToken;

@@ -16,7 +16,7 @@
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-white">
             <a href="https://www.cbn.id/en/cbn-fiber"
                 class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="h-32 w-32" src="{{ asset('storage/assets/royal_klinik.png') }}" alt="Your Company">
+                <img class="h-32 w-32" src="{{ asset('storage/assets/royal_klinik.svg') }}" alt="Your Company">
             </a>
             <div
                 class="w-full bg-white rounded-lg ring-2 inset-ring-2 inset-ring-gray-500 shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">

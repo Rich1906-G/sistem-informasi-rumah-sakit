@@ -86,7 +86,7 @@
                 </svg>
             </button>
             <a href="{{ route('dashboard.index') }}" class="flex ms-2 md:me-24">
-                <img src="{{ asset('storage/assets/royal_klinik.png') }}" class="h-10 w-auto" alt="FlowBite Logo" />
+                <img src="{{ asset('storage/assets/royal_klinik.svg') }}" class="h-10 w-auto" alt="FlowBite Logo" />
                 {{-- <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Royal
                     Prima</span> --}}
             </a>

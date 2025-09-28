@@ -16,13 +16,13 @@ class APIMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (!Auth::guard('accounts')->check()) {
-        //     abort(403, 'Anda tidak punya akses.');
-        // }
-
-        if (!Auth::check()) {
-            abort(403, 'FORBBIDEN');
+        if (!Auth::guard('accounts')->check()) {
+            abort(403, 'Anda tidak punya akses.');
         }
+
+        // if (!Auth::check()) {
+        //     abort(403, 'FORBBIDEN');
+        // }
 
         return $next($request);
     }

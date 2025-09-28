@@ -19,16 +19,30 @@ use App\Http\Controllers\TelekonsultasiController;
 use App\Models\TenagaMedis;
 use App\Models\User;
 
+// testing jimy
+use App\Http\Controllers\Testing\TestingController;
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 })->name('home')->middleware('guestRedirectToLogin');
+
+
 
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {
-        Route::get('/getDataDokter', [APIController::class, 'getDataDokter'])->name('get.data.dokter');
-        Route::get('/getDataPasien', [APIController::class, 'getDataPasien'])->name('get.data.pasien');
+        // Route::get('/getSpecialties', [APIController::class, 'getSpecialties']);
     });
 });
+
+// // tes ke lfutter 
+//     Route::get('/getDataDokter', [APIController::class, 'getDataDokter'])->name('get.data.dokter');
+//     Route::get('/getDataPasien', [APIController::class, 'getDataPasien'])->name('get.data.pasien');
+//     Route::get('/getSpecialties', [APIController::class, 'getSpecialties'])->name('get.specialties');
+//     Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+//     Route::get('/rekam-medis/{id_kunjungan}', [APIController::class, 'getDataRekamMedis']); 
+//     // Route::get('/getDataRekamMedis', [APIController::class, 'getDataRekamMedis']);
+//     Route::post('/book-schedule', [APIController::class, 'postFormPasien'])->name('api.book.schedule');  // Ubah nama route, tanpa hyphen
 
 
 Route::get('/kunjungan', [RawatJalanController::class, 'kunjungan'])->name('kunjungan');
@@ -50,6 +64,17 @@ Route::get('/testing', function () {
     return view('testing', compact('dataDokter'));
 });
 
+Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+
+
+
+// testing jimy
+Route::prefix('testing')->name('testing.')->group(function () {
+    Route::get('/',                                     [TestingController::class, 'index'])->name('index');
+    Route::get('/getjadwaldokter',                      [TestingController::class, 'getJadwalDokter'])->name('getjadwaldokter');
+    Route::get('/getdetailjadwaldokter/{id}',           [TestingController::class, 'getDetailJadwalDokter'])->name('getdetailjadwaldokter');
+});
+
 // Route::get('/testing', function () {
 //     $user = User::get();
 
@@ -58,8 +83,9 @@ Route::get('/testing', function () {
 //     return view('testing', compact('user'));
 // })->name('testing');
 
-// Route::get('/testing', [UserController::class, 'testing'])->name('testing');
-// Route::post('/testing-lempar-data', [UserController::class, 'lemparData'])->name('test.lempar.data');
+Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('testing');
+Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -99,8 +125,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pks', [PKSController::class, 'index'])->name('pks');
     Route::get('/pertanyaan', [PertanyaanController::class, 'index'])->name('pertanyaan');
 });
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -15,13 +15,16 @@ class TenagaMedis extends Model
     protected $primaryKey = 'id_tenaga_medis';
     protected $guarded = [];
 
-    public function poli(): BelongsToMany
-    {
-        return $this->belongsToMany(Poli::class, 'tenaga_medis_poli', 'tenaga_medis_id', 'poli_id');
-    }
-
     public function jadwalPraktik(): HasMany
-    {
-        return $this->hasMany(JadwalPraktik::class, 'tenaga_medis_id', 'id_tenaga_medis');
-    }
+{
+    // 'tenaga_medis_id' = nama kolom foreign key di tabel jadwal_praktik
+    // 'id_tenaga_medis' = primary key di tabel tenaga_medis
+    return $this->hasMany(JadwalPraktik::class, 'tenaga_medis_id', 'id_tenaga_medis');
+}
+
+public function poli(): BelongsToMany
+{
+    return $this->belongsToMany(Poli::class, 'tenaga_medis_poli', 'tenaga_medis_id', 'poli_id');
+}
+
 }

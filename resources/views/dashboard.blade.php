@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="p-4 sm:ml-64 lg:p-0">
+
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
@@ -77,10 +78,7 @@
                             <option value="bulan">Bulan</option>
                             <option value="minggu">Minggu</option>
                         </select>
-
-
                     </div>
-
 
                     {{-- Angka & Info --}}
                     <div class="flex items-center space-x-4 mb-4">
@@ -137,7 +135,6 @@
                                 <label class="text-4xl font-bold">{{ $totalPasien }}</label>
                                 <label class="text-gray-600 mb-4">Pasien</label>
                             </div>
-
 
                             <div class="space-y-2">
                                 @foreach ($jenisKunjungan as $item)
@@ -206,14 +203,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
             {{-- Card Tambahan (misalnya Pasien Baru) --}}
             <div class="mx-6">
                 <div class="grid grid-cols-2 gap-4">
-
                     <div class="w-full  shadow-sm bg-white rounded-lg p-4">
                         <div class="grid grid-cols-1 gap-1">
                             <div class="flex space-x-2 items-center">
@@ -429,7 +424,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         {{-- End Content --}}
 

@@ -27,8 +27,6 @@ Route::get('/', function () {
     return view('login');
 })->name('home')->middleware('guestRedirectToLogin');
 
-
-
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {
         // Route::get('/getSpecialties', [APIController::class, 'getSpecialties']);

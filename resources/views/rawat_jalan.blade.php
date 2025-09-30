@@ -5,7 +5,7 @@
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
 
                 <div class="flex items-center justify-between p-6 w-full">
-                    <div class="flex w-full max-w-2xl space-x-4">
+                    <div class="flex w-full max-w-3xl space-x-4">
                         <div class="relative w-full max-w-md">
                             <input type="serach" placeholder="Cari Pasien / No MR / NO Ktp / No Asuransi . . . "
                                 class="w-full pl-4 pr-10 py-2 border border-slate-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
@@ -18,19 +18,2175 @@
                             </span>
                         </div>
 
-                        <div class="relative">
-                            <button class="bg-orange-400 text-white px-4 py-2 w-full rounded-md font-semibold">
-                                <span class="flex items-center hover:bg-opacity-5">Pendaftar
-                                    Baru</span>
+                        <div x-data="{ openDropdown: false, selected: 'Pendaftaran Baru', openModal: null }" class="inline-flex relative">
+                            <!-- Tombol Utama -->
+                            <button @click="openModal = selected"
+                                class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-l">
+                                <span x-text="selected"></span>
                             </button>
 
+                            <!-- Tombol Panah -->
+                            <button @click="openDropdown = !openDropdown"
+                                class="bg-orange-400 hover:bg-orange-500 text-white px-3 rounded-r">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <!-- Dropdown -->
+                            <div x-show="openDropdown" @click.away="openDropdown = false" x-cloak x-transition
+                                class="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10">
+                                <a href="#" @click.prevent="selected = 'Pendaftaran Baru'; openDropdown = false"
+                                    class="block px-4 py-2 hover:bg-gray-100">Pendaftaran Baru</a>
+                                <a href="#" @click.prevent="selected = 'Pasien Baru'; openDropdown = false"
+                                    class="block px-4 py-2 hover:bg-gray-100">Pasien Baru</a>
+                                <a href="#" @click.prevent="selected = 'Blok Kalender'; openDropdown = false"
+                                    class="block px-4 py-2 hover:bg-gray-100">Blok Kalender</a>
+                            </div>
+
+                            <!-- Modal Pendaftaran Baru -->
+                            <div x-show="openModal === 'Pendaftaran Baru'" x-cloak x-transition
+                                class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                                x-transition>
+                                <div
+                                    class="bg-white w-full max-w-6xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+                                    <!-- Header -->
+                                    <div class="flex justify-between items-center px-6 pt-6 pb-3 w-full">
+                                        <h2 class="text-xl font-semibold text-blue-700">Daftar Kunjungan</h2>
+                                        <h2 class="text-lg font-semibold text-yellow-500">Tanda * wajib diisi!</h2>
+                                        <button @click="openModal = false"
+                                            class="text-red-500 hover:text-red-700 text-xl">&times;</button>
+                                    </div>
+
+                                    <div class="px-6 py-3 grid grid-cols-2 col-span-2 gap-4 w-full">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari
+                                                Data Pasien </label>
+                                        </div>
+
+                                        <div>
+                                            <button class="px-2 py-3 bg-blue-600 rounded-md text-white text-md">Adv.
+                                                Search</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 py-3 w-full">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Tipe Pasien</label>
+                                            <select class="p-2 rounded-md border-blue-600">
+                                                <option selected>Pasien Non Rujuk</option>
+                                                <option>Pasien Rujukan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Penjamin</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Penjamin</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Metode Pembayaran</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Tunai</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Kunjungan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Kunjungan Sakit</option>
+                                                <option>Perawatan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Perawatan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Rawat Jalan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nomor
+                                                    HP </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat
+                                                    Email</label>
+
+                                                <div class="flex items-center mt-4">
+                                                    <input disabled
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="default-checkbox"
+                                                        class="ms-2 text-sm font-medium text-gray-200">Nontifikasi
+                                                        Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Poli</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Umum</option>
+                                                <option>Gawat Darurat</option>
+                                                <option>Kecantikan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-red-600 text-md">Tenaga Medis</label>
+                                            <select class="p-2 rounded-md border-red-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter, silahkan
+                                                lengkapi Informasi Tenaga Medis di Settings</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 flex items-center mb-6">
+                                        <input id="default-checkbox" type="checkbox" value=""
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-checkbox"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nomor
+                                            Antrean</label>
+                                    </div>
+
+                                    <div class="px-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Tanggal</label>
+                                            <input type="date" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Dokter praktek hari ini</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Slot</label>
+                                            <select disabled class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label>Pilih slot jadwal dokter</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Jam</label>
+                                            <input type="time" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Harus diisi</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400 pb-3">
+                                            <label class="text-md">Lama Diskusi</label>
+                                            <!-- Input dengan satuan -->
+                                            <div
+                                                class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                <input disabled type="number" value="0"
+                                                    class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                <span class="text-gray-600 text-sm">menit</span>
+                                            </div>
+                                            <!-- Keterangan -->
+                                            <p class="text-xs text-gray-400 mt-1">Maks. Menit</p>
+                                        </div>
+
+                                        <div class="pb-8">
+                                            <button class="text-blue-500 hover:text-blue-400 text-md">+ Rencana
+                                                Tindakan</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keluhan</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prosedur
+                                                Rencana</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Informasi
+                                                Kondisi Pasien</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Accordion Wrapper -->
+                                    <div class="mt-2 space-y-3 px-6">
+
+                                        <!-- Vital Sign -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Vital Sign
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-3 gap-4 text-sm">
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Tinggi Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">kg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Berat Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">°C</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Suhu</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">bpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Denyut Jantung</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">rpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Frekuensi Pernapasan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Sistolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Diastolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Lingkar Perut</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mg/dL</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Gula Darah</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">SPO2</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Saturasi Oksigen</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Identitas Pengantar -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Identitas Pengantar
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-2 gap-4 text-sm">
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama
+                                                            Lengkap</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hubungan
+                                                            Antar Pasien</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No
+                                                            Hp</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Riwayat Alergi -->
+                                        <div x-data="alergiApp()" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Riwayat Alergi
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-3 text-sm">
+
+                                                <!-- Input pencarian alergi -->
+                                                <div class="w-full">
+                                                    <label class="block text-sm text-blue-600 mb-1">
+                                                        Riwayat Alergi
+                                                    </label>
+
+                                                    <div class="relative">
+                                                        <!-- Icon Search -->
+                                                        <span
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" />
+                                                            </svg>
+                                                        </span>
+
+                                                        <!-- Input Cari -->
+                                                        <input type="text" x-model="search"
+                                                            placeholder="Cari nama alergi"
+                                                            class="w-full border-b border-gray-400 pl-8 pr-2 py-1 text-gray-700 focus:outline-none focus:border-blue-500 rounded-md" />
+
+                                                        <!-- Dropdown hasil pencarian -->
+                                                        <div class="absolute w-full bg-white border border-gray-200 mt-1 rounded-lg shadow z-10"
+                                                            x-show="filteredList().length > 0 && search.length > 0"
+                                                            @click.away="search=''">
+                                                            <template x-for="item in filteredList()"
+                                                                :key="item">
+                                                                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                    @click="selectAlergi(item)">
+                                                                    <span x-text="item"></span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="mt-1 text-xs text-gray-500">Cari nama alergi</p>
+                                                </div>
+
+                                                <!-- Chips -->
+                                                <div class="flex items-center flex-wrap gap-2">
+                                                    <template x-for="(item, index) in selected" :key="index">
+                                                        <div
+                                                            class="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+                                                            <span x-text="item"></span>
+                                                            <button class="ml-2 text-gray-600 hover:text-red-500"
+                                                                @click="remove(index)">✕</button>
+                                                        </div>
+                                                    </template>
+                                                    <button
+                                                        class="bg-gray-200 px-3 py-1 rounded-full text-sm text-gray-600 hover:bg-gray-300 ">+
+                                                        Add</button>
+                                                </div>
+                                                <label class="block text-sm text-gray-600 mb-1">Ketik nama
+                                                    alergi</label>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Pasien</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Keluarga</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penggunaan Obat</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function alergiApp() {
+                                                return {
+                                                    open: false,
+                                                    search: '',
+                                                    alergiList: ["Rumput bermuda", "Debu", "Susu sapi", "Kacang tanah", "Udang"],
+                                                    selected: [],
+                                                    inputAlergi: '',
+
+                                                    filteredList() {
+                                                        return this.alergiList.filter(a =>
+                                                            a.toLowerCase().includes(this.search.toLowerCase())
+                                                        );
+                                                    },
+
+                                                    selectAlergi(item) {
+                                                        if (!this.selected.includes(item)) {
+                                                            this.selected.push(item);
+                                                        }
+                                                        this.inputAlergi = item; // isi input bawah
+                                                        this.search = '';
+                                                    },
+
+                                                    remove(index) {
+                                                        this.selected.splice(index, 1);
+                                                    }
+                                                }
+                                            }
+                                        </script>
+
+                                        <!-- Psikososial - Spiritual -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Psikososial - Spiritual
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-5 text-sm">
+
+                                                <!-- Kondisi Psikologis -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Psikologis
+                                                            :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Normal</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Tidak Semangat</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Merasa Bersalah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Konsentrasi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Tidur</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cemas</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Berbicara</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cepat Lelah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Depresi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Rasa Tertekan</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih Lebih
+                                                                dari Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Status Menikah -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Sosial & Ekonomi Status Menikah :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Belum Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Janda/Duda</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Tinggal Dengan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Tinggal Dengan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sendiri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Orang Tua</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Suami/Istri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Pekerjaan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Pekerjaan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Wiraswasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Swasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> PNS/TNI/POLRI</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Status Spiritual -->
+                                                <div>
+                                                    <label class="block font-medium mb-1 text-blue-400">Status Spiritual</label>
+                                                </div>
+
+                                                <!-- Kegiatan Keagamaan -->
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Keagamaan yang Biasa Dilakukan</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Kegiatan Spiritual Selama Perawatan -->
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Spiritual yang Dibutuhkan Selama Perawatan</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex justify-end gap-3 p-6">
+                                        <button @click="openModal = false"
+                                            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">BATAL</button>
+                                        <button
+                                            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">SIMPAN</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Pasien Baru -->
+                            <div x-show="openModal === 'Pasien Baru'" x-cloak x-transition
+                                class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                                x-transition>
+                                <div
+                                    class="bg-white w-full max-w-6xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+                                    <!-- Header -->
+                                    <div class="flex justify-between items-center px-6 py-3 w-full">
+                                        <h2 class="text-xl font-semibold text-blue-700">Tambah Pasien Baru</h2>
+                                        <h2 class="text-xl font-semibold text-yellow-500">Tanda * wajib diisi!</h2>
+                                        <button @click="openModal = false"
+                                            class="text-red-500 hover:text-red-700 text-xl">&times;</button>
+                                    </div>
+
+                                    <div class="px-6 py-3 grid grid-cols-2 col-span-2 gap-4 w-full">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari
+                                                Data Pasien </label>
+                                        </div>
+
+                                        <div>
+                                            <button class="px-2 py-3 bg-blue-600 rounded-md text-white text-md">Adv.
+                                                Search</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 py-3 w-full">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Tipe Pasien</label>
+                                            <select class="p-2 rounded-md border-blue-600">
+                                                <option selected>Pasien Non Rujuk</option>
+                                                <option>Pasien Rujukan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Penjamin</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Penjamin</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Metode Pembayaran</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Tunai</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Kunjungan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Kunjungan Sakit</option>
+                                                <option>Perawatan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Perawatan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Rawat Jalan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nomor
+                                                    HP </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat
+                                                    Email</label>
+
+                                                <div class="flex items-center mt-4">
+                                                    <input disabled
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="default-checkbox"
+                                                        class="ms-2 text-sm font-medium text-gray-200">Nontifikasi
+                                                        Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Poli</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Umum</option>
+                                                <option>Gawat Darurat</option>
+                                                <option>Kecantikan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-red-600 text-md">Tenaga Medis</label>
+                                            <select class="p-2 rounded-md border-red-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter, silahkan
+                                                lengkapi Informasi Tenaga Medis di Settings</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 flex items-center mb-6">
+                                        <input id="default-checkbox" type="checkbox" value=""
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-checkbox"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nomor
+                                            Antrean</label>
+                                    </div>
+
+                                    <div class="px-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Tanggal</label>
+                                            <input type="date" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Dokter praktek hari ini</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Slot</label>
+                                            <select disabled class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label>Pilih slot jadwal dokter</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Jam</label>
+                                            <input type="time" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Harus diisi</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400 pb-3">
+                                            <label class="text-md">Lama Diskusi</label>
+                                            <!-- Input dengan satuan -->
+                                            <div
+                                                class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                <input disabled type="number" value="0"
+                                                    class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                <span class="text-gray-600 text-sm">menit</span>
+                                            </div>
+                                            <!-- Keterangan -->
+                                            <p class="text-xs text-gray-400 mt-1">Maks. Menit</p>
+                                        </div>
+
+                                        <div class="pb-8">
+                                            <button class="text-blue-500 hover:text-blue-400 text-md">+ Rencana
+                                                Tindakan</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keluhan</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prosedur
+                                                Rencana</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Informasi
+                                                Kondisi Pasien</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Accordion Wrapper -->
+                                    <div class="mt-2 space-y-3 px-6">
+
+                                        <!-- Vital Sign -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Vital Sign
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-3 gap-4 text-sm">
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Tinggi Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">kg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Berat Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">°C</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Suhu</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">bpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Denyut Jantung</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">rpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Frekuensi Pernapasan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Sistolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Diastolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Lingkar Perut</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mg/dL</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Gula Darah</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">SPO2</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Saturasi Oksigen</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Identitas Pengantar -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Identitas Pengantar
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-2 gap-4 text-sm">
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama
+                                                            Lengkap</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hubungan
+                                                            Antar Pasien</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No
+                                                            Hp</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Riwayat Alergi -->
+                                        <div x-data="alergiApp()" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Riwayat Alergi
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-3 text-sm">
+
+                                                <!-- Input pencarian alergi -->
+                                                <div class="w-full">
+                                                    <label class="block text-sm text-blue-600 mb-1">
+                                                        Riwayat Alergi
+                                                    </label>
+
+                                                    <div class="relative">
+                                                        <!-- Icon Search -->
+                                                        <span
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" />
+                                                            </svg>
+                                                        </span>
+
+                                                        <!-- Input Cari -->
+                                                        <input type="text" x-model="search"
+                                                            placeholder="Cari nama alergi"
+                                                            class="w-full border-b border-gray-400 pl-8 pr-2 py-1 text-gray-700 focus:outline-none focus:border-blue-500 rounded-md" />
+
+                                                        <!-- Dropdown hasil pencarian -->
+                                                        <div class="absolute w-full bg-white border border-gray-200 mt-1 rounded-lg shadow z-10"
+                                                            x-show="filteredList().length > 0 && search.length > 0"
+                                                            @click.away="search=''">
+                                                            <template x-for="item in filteredList()"
+                                                                :key="item">
+                                                                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                    @click="selectAlergi(item)">
+                                                                    <span x-text="item"></span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="mt-1 text-xs text-gray-500">Cari nama alergi</p>
+                                                </div>
+
+                                                <!-- Chips -->
+                                                <div class="flex items-center flex-wrap gap-2">
+                                                    <template x-for="(item, index) in selected" :key="index">
+                                                        <div
+                                                            class="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+                                                            <span x-text="item"></span>
+                                                            <button class="ml-2 text-gray-600 hover:text-red-500"
+                                                                @click="remove(index)">✕</button>
+                                                        </div>
+                                                    </template>
+                                                    <button
+                                                        class="bg-gray-200 px-3 py-1 rounded-full text-sm text-gray-600 hover:bg-gray-300 ">+
+                                                        Add</button>
+                                                </div>
+                                                <label class="block text-sm text-gray-600 mb-1">Ketik nama
+                                                    alergi</label>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Pasien</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Keluarga</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penggunaan Obat</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function alergiApp() {
+                                                return {
+                                                    open: false,
+                                                    search: '',
+                                                    alergiList: ["Rumput bermuda", "Debu", "Susu sapi", "Kacang tanah", "Udang"],
+                                                    selected: [],
+                                                    inputAlergi: '',
+
+                                                    filteredList() {
+                                                        return this.alergiList.filter(a =>
+                                                            a.toLowerCase().includes(this.search.toLowerCase())
+                                                        );
+                                                    },
+
+                                                    selectAlergi(item) {
+                                                        if (!this.selected.includes(item)) {
+                                                            this.selected.push(item);
+                                                        }
+                                                        this.inputAlergi = item; // isi input bawah
+                                                        this.search = '';
+                                                    },
+
+                                                    remove(index) {
+                                                        this.selected.splice(index, 1);
+                                                    }
+                                                }
+                                            }
+                                        </script>
+
+                                        <!-- Psikososial - Spiritual -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Psikososial - Spiritual
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-5 text-sm">
+
+                                                <!-- Kondisi Psikologis -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Psikologis
+                                                            :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Normal</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Tidak Semangat</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Merasa Bersalah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Konsentrasi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Tidur</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cemas</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Berbicara</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cepat Lelah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Depresi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Rasa Tertekan</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih Lebih
+                                                                dari Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Status Menikah -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Sosial & Ekonomi Status Menikah :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Belum Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Janda/Duda</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Tinggal Dengan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Tinggal Dengan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sendiri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Orang Tua</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Suami/Istri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Pekerjaan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Pekerjaan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Wiraswasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Swasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> PNS/TNI/POLRI</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Status Spiritual -->
+                                                <div>
+                                                    <label class="block font-medium mb-1 text-blue-400">Status Spiritual</label>
+                                                </div>
+
+                                                <!-- Kegiatan Keagamaan -->
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Keagamaan yang Biasa Dilakukan</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Kegiatan Spiritual Selama Perawatan -->
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Spiritual yang Dibutuhkan Selama Perawatan</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex justify-end gap-3 p-6">
+                                        <button @click="open = false"
+                                            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">BATAL</button>
+                                        <button
+                                            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">SIMPAN</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Blok Kalender -->
+                            <div x-show="openModal === 'Blok Kalender'" x-cloak x-transition
+                                class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                                x-transition>
+                                <div
+                                    class="bg-white w-full max-w-6xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+                                    <!-- Header -->
+                                    <div class="flex justify-between items-center px-6 py-3 w-full">
+                                        <h2 class="text-xl font-semibold text-blue-700">Blok Kalender</h2>
+                                        <h2 class="text-xl font-semibold text-yellow-500">Tanda * wajib diisi!</h2>
+                                        <button @click="openModal = false"
+                                            class="text-red-500 hover:text-red-700 text-xl">&times;</button>
+                                    </div>
+
+                                    <div class="px-6 py-3 grid grid-cols-2 col-span-2 gap-4 w-full">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari
+                                                Data Pasien </label>
+                                        </div>
+
+                                        <div>
+                                            <button class="px-2 py-3 bg-blue-600 rounded-md text-white text-md">Adv.
+                                                Search</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 py-3 w-full">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Tipe Pasien</label>
+                                            <select class="p-2 rounded-md border-blue-600">
+                                                <option selected>Pasien Non Rujuk</option>
+                                                <option>Pasien Rujukan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Penjamin</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Penjamin</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Metode Pembayaran</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Tunai</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Kunjungan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Kunjungan Sakit</option>
+                                                <option>Perawatan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Jenis Perawatan</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Rawat Jalan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nomor
+                                                    HP </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="py-3">
+                                            <div class="relative z-0 w-full group">
+                                                <input
+                                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                    placeholder=" " required />
+                                                <label for="floating_email"
+                                                    class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat
+                                                    Email</label>
+
+                                                <div class="flex items-center mt-4">
+                                                    <input disabled
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="default-checkbox"
+                                                        class="ms-2 text-sm font-medium text-gray-200">Nontifikasi
+                                                        Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-blue-600 text-md">Poli</label>
+                                            <select class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected>Umum</option>
+                                                <option>Gawat Darurat</option>
+                                                <option>Kecantikan</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2">
+                                            <label class="text-red-600 text-md">Tenaga Medis</label>
+                                            <select class="p-2 rounded-md border-red-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter, silahkan
+                                                lengkapi Informasi Tenaga Medis di Settings</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="px-6 flex items-center mb-6">
+                                        <input id="default-checkbox" type="checkbox" value=""
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="default-checkbox"
+                                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nomor
+                                            Antrean</label>
+                                    </div>
+
+                                    <div class="px-6 grid grid-cols-2 gap-4">
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Tanggal</label>
+                                            <input type="date" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Dokter praktek hari ini</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Slot</label>
+                                            <select disabled class="p-2 rounded-md border-blue-600 w-full">
+                                                <option selected></option>
+                                            </select>
+                                            <label>Pilih slot jadwal dokter</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400">
+                                            <label class="text-md">Jam</label>
+                                            <input type="time" class="p-2 rounded-md border-b w-full"></input>
+                                            <label>Harus diisi</label>
+                                        </div>
+
+                                        <div class="flex flex-col gap-2 text-gray-400 pb-3">
+                                            <label class="text-md">Lama Diskusi</label>
+                                            <!-- Input dengan satuan -->
+                                            <div
+                                                class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                <input disabled type="number" value="0"
+                                                    class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                <span class="text-gray-600 text-sm">menit</span>
+                                            </div>
+                                            <!-- Keterangan -->
+                                            <p class="text-xs text-gray-400 mt-1">Maks. Menit</p>
+                                        </div>
+
+                                        <div class="pb-8">
+                                            <button class="text-blue-500 hover:text-blue-400 text-md">+ Rencana
+                                                Tindakan</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Keluhan</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prosedur
+                                                Rencana</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="py-4 px-6">
+                                        <div class="relative z-0 w-full group">
+                                            <input type="email" name="floating_email" id="floating_email"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " required />
+                                            <label for="floating_email"
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Informasi
+                                                Kondisi Pasien</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Accordion Wrapper -->
+                                    <div class="mt-2 space-y-3 px-6">
+
+                                        <!-- Vital Sign -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Vital Sign
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-3 gap-4 text-sm">
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Tinggi Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">kg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Berat Badan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">°C</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Suhu</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">bpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Denyut Jantung</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">rpm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Frekuensi Pernapasan</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Sistolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mmHg</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Diastolik</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">cm</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Lingkar Perut</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">mg/dL</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Gula Darah</p>
+                                                </div>
+
+                                                <div class="flex flex-col gap-2 text-gray-400 py-3">
+                                                    <!-- Input dengan satuan -->
+                                                    <div
+                                                        class="flex items-center border-b border-gray-300 focus-within:border-blue-500">
+                                                        <input disabled type="number" value="0"
+                                                            class="flex-1 appearance-none bg-transparent border-none focus:outline-none text-gray-700 py-2 text-sm">
+                                                        <span class="text-gray-600 text-sm">SPO2</span>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Saturasi Oksigen</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Identitas Pengantar -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Identitas Pengantar
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t grid grid-cols-2 gap-4 text-sm">
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nama
+                                                            Lengkap</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hubungan
+                                                            Antar Pasien</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No
+                                                            Hp</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Riwayat Alergi -->
+                                        <div x-data="alergiApp()" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Riwayat Alergi
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-3 text-sm">
+
+                                                <!-- Input pencarian alergi -->
+                                                <div class="w-full">
+                                                    <label class="block text-sm text-blue-600 mb-1">
+                                                        Riwayat Alergi
+                                                    </label>
+
+                                                    <div class="relative">
+                                                        <!-- Icon Search -->
+                                                        <span
+                                                            class="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                                fill="none" viewBox="0 0 24 24"
+                                                                stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z" />
+                                                            </svg>
+                                                        </span>
+
+                                                        <!-- Input Cari -->
+                                                        <input type="text" x-model="search"
+                                                            placeholder="Cari nama alergi"
+                                                            class="w-full border-b border-gray-400 pl-8 pr-2 py-1 text-gray-700 focus:outline-none focus:border-blue-500 rounded-md" />
+
+                                                        <!-- Dropdown hasil pencarian -->
+                                                        <div class="absolute w-full bg-white border border-gray-200 mt-1 rounded-lg shadow z-10"
+                                                            x-show="filteredList().length > 0 && search.length > 0"
+                                                            @click.away="search=''">
+                                                            <template x-for="item in filteredList()"
+                                                                :key="item">
+                                                                <div class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                                                                    @click="selectAlergi(item)">
+                                                                    <span x-text="item"></span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="mt-1 text-xs text-gray-500">Cari nama alergi</p>
+                                                </div>
+
+                                                <!-- Chips -->
+                                                <div class="flex items-center flex-wrap gap-2">
+                                                    <template x-for="(item, index) in selected" :key="index">
+                                                        <div
+                                                            class="flex items-center bg-gray-200 px-3 py-1 rounded-full text-sm">
+                                                            <span x-text="item"></span>
+                                                            <button class="ml-2 text-gray-600 hover:text-red-500"
+                                                                @click="remove(index)">✕</button>
+                                                        </div>
+                                                    </template>
+                                                    <button
+                                                        class="bg-gray-200 px-3 py-1 rounded-full text-sm text-gray-600 hover:bg-gray-300 ">+
+                                                        Add</button>
+                                                </div>
+                                                <label class="block text-sm text-gray-600 mb-1">Ketik nama
+                                                    alergi</label>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Pasien</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penyakit Keluarga</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Riwayat
+                                                            Penggunaan Obat</label>
+                                                    </div>
+                                                    <!-- Keterangan -->
+                                                    <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function alergiApp() {
+                                                return {
+                                                    open: false,
+                                                    search: '',
+                                                    alergiList: ["Rumput bermuda", "Debu", "Susu sapi", "Kacang tanah", "Udang"],
+                                                    selected: [],
+                                                    inputAlergi: '',
+
+                                                    filteredList() {
+                                                        return this.alergiList.filter(a =>
+                                                            a.toLowerCase().includes(this.search.toLowerCase())
+                                                        );
+                                                    },
+
+                                                    selectAlergi(item) {
+                                                        if (!this.selected.includes(item)) {
+                                                            this.selected.push(item);
+                                                        }
+                                                        this.inputAlergi = item; // isi input bawah
+                                                        this.search = '';
+                                                    },
+
+                                                    remove(index) {
+                                                        this.selected.splice(index, 1);
+                                                    }
+                                                }
+                                            }
+                                        </script>
+
+                                        <!-- Psikososial - Spiritual -->
+                                        <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
+                                            <button @click="open = !open"
+                                                class="flex justify-between w-full px-4 py-2 text-left text-blue-600 font-medium">
+                                                Psikososial - Spiritual
+                                                <span x-text="open ? '-' : '+'"></span>
+                                            </button>
+                                            <div x-show="open" x-cloak x-transition
+                                                class="px-4 py-3 border-t space-y-5 text-sm">
+
+                                                <!-- Kondisi Psikologis -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Psikologis
+                                                            :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Normal</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Tidak Semangat</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Merasa Bersalah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Konsentrasi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Tidur</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cemas</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sulit Berbicara</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Cepat Lelah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Depresi</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Rasa Tertekan</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih Lebih
+                                                                dari Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Status Menikah -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Kondisi Sosial & Ekonomi Status Menikah :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Belum Menikah</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Janda/Duda</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Tinggal Dengan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Tinggal Dengan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Sendiri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Orang Tua</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Suami/Istri</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Pekerjaan -->
+                                                <div>
+                                                    <div class="grid grid-cols-[1fr_3fr] gap-2">
+                                                        <!-- Label -->
+                                                        <span class="whitespace-nowrap font-medium text-blue-400">Pekerjaan :</span>
+
+                                                        <!-- Opsi + Helper -->
+                                                        <div>
+                                                            <!-- Checkbox list -->
+                                                            <div class="flex flex-wrap gap-4">
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Wiraswasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Swasta</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> PNS/TNI/POLRI</label>
+                                                                <label class="flex items-center gap-1"><input
+                                                                        type="checkbox"> Lainnya</label>
+                                                            </div>
+
+                                                            <!-- Helper text -->
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Status Spiritual -->
+                                                <div>
+                                                    <label class="block font-medium mb-1 text-blue-400">Status Spiritual</label>
+                                                </div>
+
+                                                <!-- Kegiatan Keagamaan -->
+                                                <div class="pt-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Keagamaan yang Biasa Dilakukan</label>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Kegiatan Spiritual Selama Perawatan -->
+                                                <div class="py-4">
+                                                    <div class="relative z-0 w-full group">
+                                                        <input type="email" name="floating_email"
+                                                            id="floating_email"
+                                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                            placeholder=" " required />
+                                                        <label for="floating_email"
+                                                            class="peer-focus:font-medium absolute text-md text-blue-600 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-800 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Kegiatan Spiritual yang Dibutuhkan Selama Perawatan</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="flex justify-end gap-3 p-6">
+                                        <button @click="open = false"
+                                            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">BATAL</button>
+                                        <button
+                                            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">SIMPAN</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex items-center">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
-                                alt="foto_bang">
+                            <img class="rounded-md h-[70px] w-auto"
+                                src="{{ asset('storage/assets/royal_klinik.png') }}" alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
 
@@ -182,11 +2338,12 @@
                             </li>
                             @foreach ($dataDokter as $dokter)
                                 <li>
-                                    <button @click="tabAktivitas = (tabAktivitas === 'antriCepat') ? '' : 'antriCepat' "
+                                    <button
+                                        @click="tabAktivitas = (tabAktivitas === 'antriCepat') ? '' : 'antriCepat' "
                                         class="w-full text-start px-4 py-3"
                                         :class="tabAktivitas === 'antriCepat' && {{ $dokter->nama_lengkap }} ?
                                             'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
-                                            'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium ' ">
+                                            'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium '">
                                         {{ $dokter->nama_lengkap }}
                                     </button>
                                 </li>
@@ -921,8 +3078,4 @@
             </svg>
         </button>
     </div>
-
-    @push('scripts')
-        @vite('resources/js/Admin/rawat_jalan.js')
-    @endpush
 </x-app-layout>

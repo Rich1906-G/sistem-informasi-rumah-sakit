@@ -26,8 +26,6 @@ Route::get('/', function () {
     return view('login');
 })->name('home')->middleware('guestRedirectToLogin');
 
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {

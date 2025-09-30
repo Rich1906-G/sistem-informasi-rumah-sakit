@@ -78,12 +78,6 @@
         </div>
         {{-- End Header --}}
 
-        <style>
-            [x-cloak] {
-                display: none
-            }
-        </style>
-
         {{-- Start Content --}}
         <div class="grid grid-row-1 h-full">
 

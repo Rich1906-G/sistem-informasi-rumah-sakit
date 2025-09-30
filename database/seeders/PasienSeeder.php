@@ -12,8 +12,8 @@ class PasienSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create('id_ID');
-        $jenisKelamin = ['Laki-laki', 'Perempuan'];
-        $agama = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
+        $jenisKelamin = ['Laki-laki', 'Perempu1an'];
+        $agama = ['Islam', 'Kristen Katholik', 'Kristen Protestan', 'Hindu', 'Buddha', 'Konghucu'];
         $statusKawin = ['Belum Menikah', 'Menikah', 'Cerai Hidup', 'Cerai Mati'];
         $golonganDarah = ['A', 'B', 'AB', 'O'];
         $pendidikan = ['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister'];

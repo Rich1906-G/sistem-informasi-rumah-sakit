@@ -49,4 +49,8 @@ class Kunjungan extends Model
     {
         return $this->hasOne(Pembayaran::class, 'kunjungan_id', 'id_kunjungan');
     }
+    public function detailPenjaminan(): HasOne
+    {
+        return $this->hasOne(DetailPenjaminanKunjungan::class, 'kunjungan_id', 'id_kunjungan');
+    }
 }

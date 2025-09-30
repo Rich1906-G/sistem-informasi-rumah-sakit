@@ -16,11 +16,10 @@ use App\Http\Controllers\RawatJalanController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TelekonsultasiController;
+use App\Http\Controllers\TestingController;
 use App\Models\TenagaMedis;
 use App\Models\User;
 
-// testing jimy
-use App\Http\Controllers\Testing\TestingController;
 
 
 Route::get('/', function () {
@@ -44,11 +43,11 @@ Route::middleware('API')->group(function () {
 //     // Route::get('/getDataRekamMedis', [APIController::class, 'getDataRekamMedis']);
 //     Route::post('/book-schedule', [APIController::class, 'postFormPasien'])->name('api.book.schedule');  // Ubah nama route, tanpa hyphen
 
+Route::get('/initesyadariferdi/{kunjunganId}', [TestingController::class, 'getEmrPasien'])->name('getDataEmr');
 
 Route::get('/kunjungan', [RawatJalanController::class, 'kunjungan'])->name('kunjungan');
 Route::get('/kunjungan-store', [RawatJalanController::class, 'kunjungan'])->name('kunjungan.store');
-Route::get('/testing', function () {
-    $tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')->get();
+Route::get('/testing', function () {$tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')->get();
 
     // mapping yang aman: pake getKey() untuk dapat primary key apapun namanya
     $dataDokter = $tenagaMedis->map(function ($medis) {

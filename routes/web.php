@@ -20,13 +20,9 @@ use App\Http\Controllers\TestingController;
 use App\Models\TenagaMedis;
 use App\Models\User;
 
-
-
 Route::get('/', function () {
     return view('login');
 })->name('home')->middleware('guestRedirectToLogin');
-
-
 
 Route::middleware('API')->group(function () {
     Route::prefix('api')->group(function () {
@@ -85,7 +81,6 @@ Route::prefix('testing')->name('testing.')->group(function () {
 Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('testing');
 Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
@@ -104,12 +99,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('rawat_jalan')->name('rawat_jalan.')->group(function () {
         Route::get('/',                                     [RawatJalanController::class, 'index'])->name('index');
-        Route::get('/getjadwaldokter',                      [RawatJalanController::class, 'getJadwalDokter'])->name('getjadwaldokter');
     });
 
     Route::prefix('registrasi')->name('registrasi.')->group(function () {
         Route::get('/',                                     [RegistrasiController::class, 'index'])->name('index');
         Route::get('/getdatarawatjalanpoli',                [RegistrasiController::class, 'getDataRawatJalanPoli'])->name('getdatarawatjalanpoli');
+        Route::get('/getdataantricepat',                    [RegistrasiController::class, 'getDataAntriCepat'])->name('getdataantricepat');
     });
 
 

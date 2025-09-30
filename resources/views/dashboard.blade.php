@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="p-4 sm:ml-64 lg:p-0">
+
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
@@ -16,7 +17,7 @@
 
                     <div class="flex items-center p-6">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
+                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.svg') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
@@ -77,10 +78,7 @@
                             <option value="bulan">Bulan</option>
                             <option value="minggu">Minggu</option>
                         </select>
-
-
                     </div>
-
 
                     {{-- Angka & Info --}}
                     <div class="flex items-center space-x-4 mb-4">
@@ -137,7 +135,6 @@
                                 <label class="text-4xl font-bold">{{ $totalPasien }}</label>
                                 <label class="text-gray-600 mb-4">Pasien</label>
                             </div>
-
 
                             <div class="space-y-2">
                                 @foreach ($jenisKunjungan as $item)
@@ -206,14 +203,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
             {{-- Card Tambahan (misalnya Pasien Baru) --}}
             <div class="mx-6">
                 <div class="grid grid-cols-2 gap-4">
-
                     <div class="w-full  shadow-sm bg-white rounded-lg p-4">
                         <div class="grid grid-cols-1 gap-1">
                             <div class="flex space-x-2 items-center">
@@ -409,13 +404,14 @@
                 </div>
 
                 {{-- Card Pasien Antri Cepat --}}
-                <div class="grid grid-cols-1 mt-5 rounded-lg p-4 bg-white w-full">
-                    <div class="p-6 ">
+                <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                    <div class="p-4">
                         <div class="mb-2">
                             <h2 class="text-xl font-semibold">Pasien Antri Cepat</h2>
                         </div>
 
-                        <table id="antriCepatTable" class="w-full text-left border-collapse">
+                        <table id="antriCepatTabel" class="table table-bordered"
+                            data-url="{{ route('dashboard.getdatakunjunganantricepat') }}">
                             <thead>
                                 <tr class="border-b">
                                     <th class="px-4 py-2 text-gray-500 font-normal">Nama</th>
@@ -428,12 +424,7 @@
                         </table>
                     </div>
                 </div>
-
-                {{-- <h2 class="text-lg font-semibold mb-2">Pasien Baru</h2>
-                <p class="text-2xl font-bold">1</p>
-                <p class="text-green-500 text-sm">+100% dari bulan lalu</p> --}}
             </div>
-
         </div>
         {{-- End Content --}}
 
@@ -450,27 +441,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @push('scripts')
-        @vite('resources/js/Admin/dashboard.js')
+        @vite(['resources/js/Admin/dashboard.js'])
     @endpush
 
-
 </x-app-layout>
-
-
-{{-- <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-    </div>
-</x-app-layout> --}}

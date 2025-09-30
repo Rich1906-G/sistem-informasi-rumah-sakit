@@ -11,6 +11,7 @@ export default defineConfig({
                 //view
                 'resources/js/Admin/dashboard.js',
                 'resources/js/Admin/rawat_jalan.js',
+                'resources/js/Admin/registrasi.js',
             ],
             refresh: true,
         }),

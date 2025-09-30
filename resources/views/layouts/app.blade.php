@@ -13,22 +13,19 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js']);
 
     <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.tailwindcss.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.material.css"> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.1/css/responsive.dataTables.css">
 
-    <!-- datatabels -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.tailwindcss.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- DataTables Responsive -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <style>
+        [x-cloak] {
+            display: none
+        }
+    </style>
 
 </head>
 
@@ -41,7 +38,7 @@
         <!-- Page Heading -->
         {{-- @isset($header)
             <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
@@ -56,5 +53,11 @@
     </div>
     @stack('scripts')
 </body>
+<script src="https://cdn.datatables.net/responsive/3.0.1/js/dataTables.responsive.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/14.0.0/material-components-web.min.js">
+</script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.3.4/js/dataTables.material.js"></script>
 
 </html>

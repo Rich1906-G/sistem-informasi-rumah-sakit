@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div x-data="{ tabAktivitas: '' }" class="p-4 sm:ml-64 lg:p-0 ">
+    <div x-data="{ tabAktivitas: '', dataRawatJalan: [], }" class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
@@ -87,7 +87,7 @@
                 <div class="w-64 bg-white shadow rounded">
                     <ul class="divide-y divide-gray-200">
                         <li>
-                            <button @click="tabAktivitas = (tabAktivitas === 'rawatJalanPoli') ? '' : 'rawatJalanPoli'"
+                            <button @click="tabAktivitas = (tabAktivitas === 'rawatJalanPoli') ? '' : 'rawatJalanPoli';"
                                 :class="tabAktivitas === 'rawatJalanPoli'
                                     ?
                                     'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
@@ -287,16 +287,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
+                                    @php $no = 1; @endphp
+                                    @foreach ($dataKunjungan as $items)
+                                        <tr class="border-t">
+                                            <td class="px-4 py-2">{{ $items->status }}</td>
+                                            <td class="px-4 py-2">{{ $items->tanggal_kunjungan }}</td>
+                                            <td class="px-4 py-2">{{ $items->tanggal_kunjungan }}</td>
+                                            <td class="px-4 py-2">{{ $items->kode_antrian }}</td>
+                                            <td class="px-4 py-2">{{ $items-> }}</td>
+                                            <td class="px-4 py-2">{{ $items-> }}</td>
+                                            <td class="px-4 py-2">{{ $items-> }}</td>
+                                            <td class="px-4 py-2">{{ $items-> }}</td>
+                                            
+                                        </tr>
+                                    @endForeach
                                 </tbody>
                             </table>
                         </div>

@@ -5,19 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\Kunjungan;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\json;
+
 class RegistrasiController extends Controller
 {
     public function index()
     {
-        return view('registrasi');
+        $kunjunganData = Kunjungan::with([
+            'pasien',
+            'tenagaMedis',
+            'poli',
+            'rekamMedis',
+            'vitalSign',
+            'pengantar',
+            'pembayaran',
+
+        ])->get();
+
+        $responJson = @json_decode($kunjunganData);
+
+        // dd($responJson);
+        return view('registrasi', ['dataKunjungan' => $responJson]);
     }
 
-    public function getDataRawatJalanPoli()
+    public function getAllKunjunganData()
     {
+        $kunjunganData = Kunjungan::with([
+            'pasien',
+            'tenagaMedis',
+            'poli',
+            'rekamMedis',
+            'vitalSign',
+            'pengantar',
+            'pembayaran',
 
-        $dataRawatJalanPoli = Kunjungan::query()
-            ->join('rekam_medis', 'kunjungan.id_kunjungan', '=', 'rekam_medis.kunjungan_id');
+        ])->get();
 
-        return response()->json($dataRawatJalanPoli);
+
+        return response()->json($kunjunganData);
     }
 }

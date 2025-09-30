@@ -354,43 +354,34 @@ function getAverageApotekWaitTime() {
 getAverageApotekWaitTime();
 
 // DataTable Antri Cepat
-function getDataKunjunganAntriCepat() {
-    fetch(`/dashboard/getdatakunjunganantricepat`)
-        .then((res) => res.json())
-        .then((data) => {
-            // console.log("Fetched Data:", response);
-            //       console.log("Fetched Data:", data); // lihat di console browser
-            // if (!Array.isArray(data)) {
-            //     console.error("Data bukan array! Format harus array of objects");
-            //     return;
-            // }
+$(function () {
+    const $tabel = $('#antriCepatTabel');
+    
+    // 1. Ambil URL dari atribut data-url
+    const dataUrl = $tabel.data('url'); 
 
-            const rows = data.data ? data.data : data;
-            // const rows = response.data || [];
-            $("#antriCepatTable").DataTable({
-                data: rows,
-                columns: [
-                    { data: "nama_pasien" },
-                    { data: "nama_tenaga_medis" },
-                    { data: "waktu_mulai_pemeriksaan" },
-                    { data: "status" },
-                ],
-                pageLength: 5,
-                lengthChange: false,
-                searching: true,
-                ordering: true,
-                destroy: true,
-                // responsive: true,
-                language: {
-                    emptyTable: "Tidak ada data kunjungan antri cepat",
-                },
-            });
-        })
-        .catch((error) => {
-            console.error("Error fetch data:", error);
+    if (dataUrl) {
+        $tabel.DataTable({
+            processing: true, 
+            responsive: true,
+
+            dom: '<"flex justify-between items-center mb-4"lf>rtip', 
+            
+            // 2. Gunakan URL yang sudah diproses oleh Blade
+            ajax: dataUrl, 
+            
+            columns: [
+                // {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false}, 
+                {data: 'nama', name: 'nama'},
+                {data: 'tenaga_medis', name: 'tenaga_medis'},
+                {data: 'jadwal', name: 'jadwal'},
+                {data: 'status', name: 'status'}, 
+            ]
         });
-}
-getDataKunjunganAntriCepat();
+    } else {
+        console.error("DataTables Error: Pastikan elemen tabel memiliki atribut 'data-url' dengan route Blade.");
+    }
+});
 
 // Pendapatan Bulanan
 

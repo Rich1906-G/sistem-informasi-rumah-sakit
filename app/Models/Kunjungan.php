@@ -30,6 +30,11 @@ class Kunjungan extends Model
         return $this->belongsTo(Poli::class, 'poli_id', 'id_poli');
     }
 
+    public function dataPenjamin(): BelongsTo
+    {
+        return $this->belongsTo(DataPenjamin::class, 'penjamin_id', 'id_penjamin');
+    }
+
     public function rekamMedis(): HasOne
     {
         return $this->hasOne(RekamMedis::class, 'kunjungan_id', 'id_kunjungan');

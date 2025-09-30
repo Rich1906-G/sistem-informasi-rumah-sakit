@@ -88,7 +88,7 @@
         <div class="grid grid-row-1 h-full">
 
             <!-- Main Content -->
-            <div class="flex p-6 gap-4">
+            <div class="flex p-6 gap-4" x-data="{ tabAktivitas: 'rawatJalanPoli' }">
                 <!-- Kiri: Menu Table -->
                 <div class="w-64 bg-white shadow rounded">
                     <ul class="divide-y divide-gray-200">
@@ -169,239 +169,105 @@
                     </ul>
                 </div>
 
-                <!-- Content Rawat Jalan Poli-->
+                {{-- Rawat jalan poli --}}
                 <div x-cloak x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan Poli</h2>
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
 
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
-                            </div>
-
-                            <div class="w-40">
-                                <label class="block text-sm text-gray-600">Poli</label>
-                                <select class="w-full mt-1 border rounded-md p-2 items-center">
-                                    <option selected>Semua Poli</option>
-                                    <option value="umum">Umum</option>
-                                    <option value="kecantikan">Kecantikan</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between w-full">
-                            <div class="grid grid-cols-2 gap-4 my-4">
-                                <div class="w-60">
-                                    <label for="default"
-                                        class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Tenaga
-                                        Medis</label>
-                                    <select id="default"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Semua Tenaga Medis</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                </div>
-
-                                <div class="w-60">
-                                    <label for="default"
-                                        class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Metode
-                                        Pembayaran</label>
-                                    <select id="default"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Semua Metode Pembayaran</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Rawat Jalan Poli</h2>
+                                <div class="flex items-center space-x-2">
+                                    <button class="text-gray-500 hover:text-gray-700"><i
+                                            class="fa fa-info-circle"></i></button>
+                                    <button class="btn btn-sm btn-light border">EXPORT</button>
+                                    <button class="text-gray-500 hover:text-gray-700"><i
+                                            class="fa fa-print"></i></button>
                                 </div>
                             </div>
 
-                            <div class="w-96">
-                                <form class="max-w-md mx-auto">
-                                    <label for="default-search"
-                                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                                    <div class="relative">
-                                        <div
-                                            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 20 20">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                            </svg>
-                                        </div>
-                                        <input type="search" id="default-search"
-                                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Search Mockups, Logos..." required />
-                                        <button type="submit"
-                                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
-                                </form>
-                            </div>
-                        </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
 
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Status</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Kunjungan</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Dibuat</th>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Poli</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Rencana Tindakan</th>
-                                        <th class="px-4 py-2 text-left">Rencana Paket</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $no = 1; @endphp
-                                    @foreach ($dataKunjungan as $items)
-                                        <tr class="border-t">
-                                            <td class="px-4 py-2">{{ $items->status }}</td>
-                                            <td class="px-4 py-2">{{ $items->tanggal_kunjungan }}</td>
-                                            <td class="px-4 py-2">{{ $items->tanggal_kunjungan }}</td>
-                                            <td class="px-4 py-2">{{ $items->kode_antrian }}</td>
-                                            <td class="px-4 py-2">{{ $items-> }}</td>
-                                            <td class="px-4 py-2">{{ $items-> }}</td>
-                                            <td class="px-4 py-2">{{ $items-> }}</td>
-                                            <td class="px-4 py-2">{{ $items-> }}</td>
-                                            
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Tenaga Medis</label>
+                                        <select id="filter_tenaga_medis"
+                                            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            <option value="">Semua Tenaga Medis</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Metode Pembayaran</label>
+                                        <select id="filter_pembayaran"
+                                            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            <option value="">Semua Metode Pembayaran</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Poli</label>
+                                        <select id="filter_poli"
+                                            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            <option value="">Semua Poli</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nama Pasien, Nomor
+                                            MR</label>
+                                        <div class="flex">
+                                            <input type="text" id="filter_pasien"
+                                                class="form-input block w-full rounded-l-md border-gray-300 shadow-sm"
+                                                placeholder="Cari...">
+                                            <button type="button" id="btn_search"
+                                                class="bg-indigo-600 text-white p-2 rounded-r-md hover:bg-indigo-700">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4">
+                                <table id="rawatJalanPoli" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdatarawatjalanpoli') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Status</th>
+                                            <th>Tanggal Kunjungan</th>
+                                            <th>Tanggal Dibuat</th>
+                                            <th>NO</th>
+                                            <th>Poli</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Rencana Tindakan</th>
+                                            {{-- <th>Rencana Paket</th> --}}
+                                            <th>Tenaga Medis</th>
+                                            <th>Tipe Bayar</th>
+                                            {{-- <th>Rujuk BPJS</th> --}}
                                         </tr>
-                                    @endForeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
+
 
                 <!-- Content Antri Cepat-->
                 <div x-cloak x-show="tabAktivitas === 'antriCepat' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antri Cepat</h2>
-
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
-                            </div>
-
-                            <div class="w-40">
-                                <label class="block text-sm text-gray-600">Poli</label>
-                                <select class="w-full mt-1 border rounded-md p-2 items-center">
-                                    <option selected>Semua Poli</option>
-                                    <option value="umum">Umum</option>
-                                    <option value="kecantikan">Kecantikan</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto my-5">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Tanggal Kunjungan</th>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Poli</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Rencana Tindakan</th>
-                                        <th class="px-4 py-2 text-left">Rencana Paket</th>
-                                        <th class="px-4 py-2 text-left">Tenaga Medis</th>
-                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
-                                        <th class="px-4 py-2 text-left">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
 
                 </div>
 
@@ -818,4 +684,8 @@
             </svg>
         </button>
     </div>
+
+    @push('scripts')
+        @vite(['resources/js/Admin/registrasi.js'])
+    @endpush
 </x-app-layout>

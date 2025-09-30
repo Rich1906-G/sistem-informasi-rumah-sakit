@@ -48,7 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('registrasi')->name('registrasi.')->group(function () {
         Route::get('/',                                     [RegistrasiController::class, 'index'])->name('index');
-        Route::get('/getallkunjungandata',                      [RegistrasiController::class, 'getAllKunjunganData'])->name('getallkunjungandata');
+        Route::get('/getdatarawatjalanpoli',                [RegistrasiController::class, 'getDataRawatJalanPoli'])->name('getdatarawatjalanpoli');
+        Route::get('/getdataantricepat',                    [RegistrasiController::class, 'getDataAntriCepat'])->name('getdataantricepat');
     });
 
 

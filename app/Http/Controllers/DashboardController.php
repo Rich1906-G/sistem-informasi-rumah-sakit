@@ -11,6 +11,7 @@ use App\Models\Pembayaran;
 use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
 use App\Models\PembelianObat;
+use Yajra\DataTables\Facades\DataTables;
 
 class DashboardController extends Controller
 {
@@ -354,34 +355,35 @@ class DashboardController extends Controller
 
     public function getDataKunjunganAntriCepat()
     {
-
-        $data = Kunjungan::with('pasien', 'tenagaMedis')
-            ->where('jenis_kunjungan', 'Antri Cepat')
-            ->select(
-                'id_kunjungan',
-                'pasien_id',
-                'tenaga_medis_id',
+        $data = Kunjungan::with('tenagaMedis', 'pasien')
+            ->select([
                 'waktu_mulai_pemeriksaan',
-                'jenis_kunjungan',
-                'status'
-            )
+                'status',
+                'pasien_id',
+                'tenaga_medis_id'
+            ])
             ->get();
 
-        // Memformat ulang data untuk mendapatkan nama lengkap dari relasi
-        $formattedData = $data->map(function ($item) {
-            return [
-                'id_kunjungan' => $item->id_kunjungan,
-                'jenis_kunjungan' => $item->jenis_kunjungan,
-                'nama_pasien' => optional($item->pasien)->nama_lengkap,
-                'nama_tenaga_medis' => optional($item->tenagaMedis)->nama_lengkap,
-                'waktu_mulai_pemeriksaan' => $item->waktu_mulai_pemeriksaan,
-                'status' => $item->status,
-            ];
-        });
 
-        return response()->json([
-            'data' => $formattedData,
-        ]);
+        return DataTables::of($data)
+            ->addIndexColumn()
+
+            ->addColumn('nama', function ($kunjungan) {
+                return $kunjungan->pasien->nama_lengkap ?? 'N/A';
+            })
+
+            ->addColumn('tenaga_medis', function ($kunjungan) {
+                return $kunjungan->tenagaMedis->nama_lengkap ?? 'N/A';
+            })
+
+            ->addColumn('jadwal', function ($kunjungan) {
+                return $kunjungan->waktu_mulai_pemeriksaan;
+            })
+
+            ->addColumn('status', function ($kunjungan) {
+                return $kunjungan->status;
+            })
+            ->make(true);
     }
 
     public function getPendapatanBulanan()

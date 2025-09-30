@@ -17,7 +17,7 @@
 
                     <div class="flex items-center p-6">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
+                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.svg') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>
@@ -404,13 +404,14 @@
                 </div>
 
                 {{-- Card Pasien Antri Cepat --}}
-                <div class="grid grid-cols-1 mt-5 rounded-lg p-4 bg-white w-full">
-                    <div class="p-6 ">
+                <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                    <div class="p-4">
                         <div class="mb-2">
                             <h2 class="text-xl font-semibold">Pasien Antri Cepat</h2>
                         </div>
 
-                        <table id="antriCepatTable" class="w-full text-left border-collapse">
+                        <table id="antriCepatTabel" class="table table-bordered"
+                            data-url="{{ route('dashboard.getdatakunjunganantricepat') }}">
                             <thead>
                                 <tr class="border-b">
                                     <th class="px-4 py-2 text-gray-500 font-normal">Nama</th>

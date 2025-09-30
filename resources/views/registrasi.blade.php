@@ -78,17 +78,11 @@
         </div>
         {{-- End Header --}}
 
-        <style>
-            [x-cloak] {
-                display: none
-            }
-        </style>
-
         {{-- Start Content --}}
         <div class="grid grid-row-1 h-full">
 
             <!-- Main Content -->
-            <div class="flex p-6 gap-4">
+            <div class="flex p-6 gap-4" x-data="{tabAktivitas: 'rawatJalanPoli'}">
                 <!-- Kiri: Menu Table -->
                 <div class="w-64 bg-white shadow rounded">
                     <ul class="divide-y divide-gray-200">

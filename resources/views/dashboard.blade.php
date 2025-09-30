@@ -410,7 +410,7 @@
                             <h2 class="text-xl font-semibold">Pasien Antri Cepat</h2>
                         </div>
 
-                        <table id="antriCepatTabel" class="table table-bordered"
+                        <table class="table table-bordered"
                             data-url="{{ route('dashboard.getdatakunjunganantricepat') }}">
                             <thead>
                                 <tr class="border-b">

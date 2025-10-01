@@ -43,7 +43,8 @@ Route::get('/initesyadariferdi/{kunjunganId}', [TestingController::class, 'getEm
 
 Route::get('/kunjungan', [RawatJalanController::class, 'kunjungan'])->name('kunjungan');
 Route::get('/kunjungan-store', [RawatJalanController::class, 'kunjungan'])->name('kunjungan.store');
-Route::get('/testing', function () {$tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')->get();
+Route::get('/testing', function () {
+    $tenagaMedis = TenagaMedis::where('job_medis', 'Dokter')->get();
 
     // mapping yang aman: pake getKey() untuk dapat primary key apapun namanya
     $dataDokter = $tenagaMedis->map(function ($medis) {
@@ -59,7 +60,7 @@ Route::get('/testing', function () {$tenagaMedis = TenagaMedis::where('job_medis
     return view('testing', compact('dataDokter'));
 });
 
-Route::get('/getDataTenagaMedis', [APIController::class,'getDataTenagaMedis']);
+Route::get('/getDataTenagaMedis', [APIController::class, 'getDataTenagaMedis']);
 
 
 
@@ -70,13 +71,9 @@ Route::prefix('testing')->name('testing.')->group(function () {
     Route::get('/getdetailjadwaldokter/{id}',           [TestingController::class, 'getDetailJadwalDokter'])->name('getdetailjadwaldokter');
 });
 
-// Route::get('/testing', function () {
-//     $user = User::get();
-
-//     dd($user);
-
-//     return view('testing', compact('user'));
-// })->name('testing');
+Route::prefix('testing-david')->group(function () {
+    Route::get('/calendar', [TestingController::class, 'testingCalendar'])->name('testing.calendar');
+});
 
 Route::get('/testing', [TestingController::class, 'HalamanTesting'])->name('testing');
 Route::post('/testing-lempar-data', [TestingController::class, 'Testing'])->name('test.lempar.data');

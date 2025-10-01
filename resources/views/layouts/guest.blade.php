@@ -14,10 +14,9 @@
 <body class="h-full">
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen bg-blue-100">
-            <a href="https://www.cbn.id/en/cbn-fiber"
-                class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            <button class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                 <img class="h-32 w-32" src="{{ asset('storage/assets/royal_klinik.png') }}" alt="Your Company">
-            </a>
+            </button>
             <div
                 class="w-full bg-white rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">

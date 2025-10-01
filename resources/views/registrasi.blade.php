@@ -165,7 +165,7 @@
 
                 {{-- Rawat jalan poli --}}
                 <div x-cloak x-show="tabAktivitas === 'rawatJalanPoli' " class="w-full">
-                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full ">
 
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}

@@ -19,7 +19,7 @@ class RawatJalanController extends Controller
         $namaHari = \Carbon\Carbon::parse($tanggal)->isoFormat('dddd');
 
         $jadwalPraktik = JadwalPraktik::with('tenagaMedis')
-            ->where('hari_praktik', $namaHari)
+            ->where('tanggal_praktik', $namaHari)
             ->get();
 
         return view('rawat_jalan', compact('dataDokter', 'tanggal', 'jadwalPraktik'));

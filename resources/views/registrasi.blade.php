@@ -271,7 +271,7 @@
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
-                                <h2 class="text-xl font-semibold text-blue-700">Rawat Jalan Poli</h2>
+                                <h2 class="text-xl font-semibold text-blue-700">Antri Cepat</h2>
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -293,6 +293,9 @@
                                         <select id="filter_poli_ac"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Poli</option>
+                                            @foreach ($poli as $pl)
+                                                <option value="{{ $pl->id_poli }}">{{ $pl->nama_poli }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 

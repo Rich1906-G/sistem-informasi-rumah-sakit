@@ -96,13 +96,26 @@ class RegistrasiController extends Controller
     }
 
 
-    public function getDataAntriCepat()
+    public function getDataAntriCepat(Request $request)
     {
-        $Data = Kunjungan::with('pasien', 'tenagaMedis', 'poli', 'dataPenjamin')
-            ->select(['id_kunjungan', 'pasien_id', 'tenaga_medis_id', 'poli_id', 'penjamin_id', 'status', 'tanggal_kunjungan', 'kode_antrian', 'jenis_perawatan',])
-            ->get();
+        $query = Kunjungan::with('pasien', 'tenagaMedis', 'poli', 'dataPenjamin')
+            ->select(['id_kunjungan', 'pasien_id', 'tenaga_medis_id', 'poli_id', 'penjamin_id', 'status', 'tanggal_kunjungan', 'kode_antrian', 'jenis_perawatan',]);
 
-        return DataTables::of($Data)
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_hingga);
+        }
+
+
+        // 4. Filter Poli
+        if ($request->filled('poli_id') && $request->poli_id != 'Semua Poli') {
+            $query->where('poli_id', $request->poli_id);
+        }
+
+        return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('tanggal_kunjungan', function ($kunjungan) {
                 return $kunjungan->tanggal_kunjungan;

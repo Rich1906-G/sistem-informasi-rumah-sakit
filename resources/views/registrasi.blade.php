@@ -87,7 +87,8 @@
                 <div class="w-64 bg-white shadow rounded">
                     <ul class="divide-y divide-gray-200">
                         <li>
-                            <button @click="tabAktivitas = (tabAktivitas === 'rawatJalanPoli') ? '' : 'rawatJalanPoli';"
+                            <button id="btnRawatJalanPoli"
+                                @click="tabAktivitas = (tabAktivitas === 'rawatJalanPoli') ? '' : 'rawatJalanPoli';"
                                 :class="tabAktivitas === 'rawatJalanPoli'
                                     ?
                                     'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
@@ -96,7 +97,8 @@
                             </button>
                         </li>
                         <li>
-                            <button @click="tabAktivitas = (tabAktivitas === 'antriCepat') ? '' : 'antriCepat' "
+                            <button id="btnAntriCepat"
+                                @click="tabAktivitas = (tabAktivitas === 'antriCepat') ? '' : 'antriCepat' "
                                 :class="tabAktivitas === 'antriCepat'
                                     ?
                                     'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
@@ -171,13 +173,6 @@
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="text-xl font-semibold text-blue-700">Rawat Jalan Poli</h2>
-                                <div class="flex items-center space-x-2">
-                                    <button class="text-gray-500 hover:text-gray-700"><i
-                                            class="fa fa-info-circle"></i></button>
-                                    <button class="btn btn-sm btn-light border">EXPORT</button>
-                                    <button class="text-gray-500 hover:text-gray-700"><i
-                                            class="fa fa-print"></i></button>
-                                </div>
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -185,36 +180,46 @@
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
-                                        <input type="date" id="filter_tgl_dari"
+                                        <input type="date" id="filter_tgl_dari_rjp"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
-                                        <input type="date" id="filter_tgl_hingga"
+                                        <input type="date" id="filter_tgl_hingga_rjp"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Tenaga Medis</label>
-                                        <select id="filter_tenaga_medis"
+                                        <select id="filter_tenaga_medis_rjp"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Tenaga Medis</option>
+                                            @foreach ($tenagaMedis as $tm)
+                                                <option value="{{ $tm->id_tenaga_medis }}">{{ $tm->nama_lengkap }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Metode Pembayaran</label>
-                                        <select id="filter_pembayaran"
+                                        <select id="filter_pembayaran_rjp"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Metode Pembayaran</option>
+                                            @foreach ($penjamin as $pj)
+                                                <option value="{{ $pj->id_penjamin }}">{{ $pj->nama_penjamin }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">Poli</label>
-                                        <select id="filter_poli"
+                                        <select id="filter_poli_rjp"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Poli</option>
+                                            @foreach ($poli as $pl)
+                                                <option value="{{ $pl->id_poli }}">{{ $pl->nama_poli }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -222,7 +227,7 @@
                                         <label class="block text-sm font-medium text-gray-700">Nama Pasien, Nomor
                                             MR</label>
                                         <div class="flex">
-                                            <input type="text" id="filter_pasien"
+                                            <input type="text" id="filter_pasien_rjp"
                                                 class="form-input block w-full rounded-l-md border-gray-300 shadow-sm"
                                                 placeholder="Cari...">
                                             <button type="button" id="btn_search"
@@ -259,10 +264,62 @@
                     </div>
                 </div>
 
-
                 <!-- Content Antri Cepat-->
                 <div x-cloak x-show="tabAktivitas === 'antriCepat' " class="w-full">
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
 
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Rawat Jalan Poli</h2>
+                            </div>
+
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari_ac"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga_ac"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Poli</label>
+                                        <select id="filter_poli_ac"
+                                            class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            <option value="">Semua Poli</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="p-4">
+                                <table id="antriCepat" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdataantricepat') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Tanggal Kunjungan</th>
+                                            <th>NO</th>
+                                            <th>Poli</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Rencana Tindakan</th>
+                                            {{-- <th>Rencana Paket</th> --}}
+                                            <th>Tipe Bayar</th>
+                                            <th>Tenaga Medis</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Content Gawat Darurat-->

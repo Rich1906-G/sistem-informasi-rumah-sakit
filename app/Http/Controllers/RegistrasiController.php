@@ -2,26 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poli;
 use App\Models\Kunjungan;
-use Illuminate\Http\Request;
 
-use function Pest\Laravel\json;
+use App\Models\TenagaMedis;
+use App\Models\DataPenjamin;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class RegistrasiController extends Controller
 {
     public function index()
     {
-        return view('registrasi');
+        $tenagaMedis   = TenagaMedis::all();
+        $penjamin      = DataPenjamin::all();
+        $poli          = Poli::all();
+        return view('registrasi', compact('tenagaMedis', 'penjamin', 'poli'));
     }
 
-    public function getDataRawatJalanPoli()
+    public function getDataRawatJalanPoli(Request $request)
     {
-        $Data = Kunjungan::with('pasien', 'tenagaMedis', 'poli', 'dataPenjamin')
-            ->select(['id_kunjungan', 'pasien_id', 'tenaga_medis_id', 'poli_id', 'penjamin_id', 'status', 'tanggal_kunjungan', 'created_at', 'kode_antrian', 'jenis_perawatan',])
-            ->get();
+        $query = Kunjungan::with('pasien', 'tenagaMedis', 'poli', 'dataPenjamin')
+            ->select(['id_kunjungan', 'pasien_id', 'tenaga_medis_id', 'poli_id', 'penjamin_id', 'status', 'tanggal_kunjungan', 'created_at', 'kode_antrian', 'jenis_perawatan',]);
 
-        return DataTables::of($Data)
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_hingga);
+        }
+
+        // 2. Filter Tenaga Medis
+        if ($request->filled('tenaga_medis_id') && $request->tenaga_medis_id != 'Semua Tenaga Medis') {
+            $query->where('tenaga_medis_id', $request->tenaga_medis_id);
+        }
+
+        // 3. Filter Metode Pembayaran (Asumsi ini adalah penjamin_id)
+        if ($request->filled('metode_pembayaran_id') && $request->metode_pembayaran_id != 'Semua Metode Pembayaran') {
+            $query->where('penjamin_id', $request->metode_pembayaran_id);
+        }
+
+        // 4. Filter Poli
+        if ($request->filled('poli_id') && $request->poli_id != 'Semua Poli') {
+            $query->where('poli_id', $request->poli_id);
+        }
+
+        // 5. Filter Nama Pasien atau Nomor MR
+        if ($request->filled('nama_pasien_mr')) {
+            $searchTerm = '%' . $request->nama_pasien_mr . '%';
+            $query->whereHas('pasien', function ($q) use ($searchTerm) {
+                $q->where('nama_lengkap', 'like', $searchTerm)
+                    ->orWhere('nomor_rm', 'like', $searchTerm);
+            });
+        }
+
+        return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('status', function ($kunjungan) {
                 return $kunjungan->status;

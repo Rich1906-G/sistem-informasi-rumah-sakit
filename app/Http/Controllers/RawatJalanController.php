@@ -16,7 +16,7 @@ class RawatJalanController extends Controller
 
         $tanggal = $request->query('date', now()->toDateString());
 
-        $namaHari = \Carbon\Carbon::parse($tanggal)->isoFormat('dddd');
+        $namaHari = Carbon::parse($tanggal)->isoFormat('dddd');
 
         $jadwalPraktik = JadwalPraktik::with('tenagaMedis')
             ->where('tanggal_praktik', $namaHari)

@@ -157,7 +157,6 @@ class DashboardController extends Controller
             $percentage = ($averageTotal > 0) ? 100 : 0;
         }
 
-
         // Format waktu ke format m s
         $minutes = floor($averageTotal);
         $seconds = round(($averageTotal - $minutes) * 60);
@@ -166,7 +165,7 @@ class DashboardController extends Controller
         return response()->json([
             'average_time' => $formattedTime,
             'percentage' => $percentage,
-            'compare_text' => $compareText
+            'compare_text' => $compareText,
         ]);
     }
 
@@ -223,6 +222,8 @@ class DashboardController extends Controller
         // Teks perbandingan
         $currentMonthName = now()->translatedFormat('F');
         $compareText = "dari bulan " . $currentMonthName;
+
+        // dd($registeredThisMonth);
 
         return response()->json([
             'total' => $registeredThisMonth,
@@ -363,7 +364,6 @@ class DashboardController extends Controller
                 'tenaga_medis_id'
             ])
             ->get();
-
 
         return DataTables::of($data)
             ->addIndexColumn()

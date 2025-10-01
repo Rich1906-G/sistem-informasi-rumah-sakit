@@ -156,8 +156,13 @@
                             {{-- Header Pendapatan Bulan Ini --}}
                             <label class="font-semibold">Pendapatan Bulan Ini</label>
 
+                            <div class="grid grid-rows-2 items-center justify-center text-center gap-2">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+
                             {{-- Content Pendapatan Bulan Ini --}}
-                            <div class="flex flex-col items-start justify-center h-full">
+                            {{-- <div class="flex flex-col items-start justify-center h-full">
                                 <div class="flex flex-row space-x-8 items-center">
                                     <label id="totalpendapatan" class="text-4xl font-bold">Rp0</label>
                                     <div class="">
@@ -174,7 +179,7 @@
                                             class="text-gray-400 text-md w-full"></label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
                         {{-- Card Pengeluaran Bulan Ini --}}
@@ -182,8 +187,14 @@
                             {{-- Header Pengeluaran Bulan Ini --}}
                             <label class="font-semibold">Pengeluaran Bulan Ini</label>
 
+                            
+                            <div class="grid grid-rows-2 items-center justify-center text-center gap-2">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+
                             {{-- Content Pengeluaran Bulan Ini --}}
-                            <div class="flex flex-col items-start justify-center h-full">
+                            {{-- <div class="flex flex-col items-start justify-center h-full">
                                 <div class="flex flex-row space-x-8 items-center">
                                     <label id="totalPengeluaran" class="text-4xl font-bold">Rp0</label>
                                     <div class="">
@@ -200,7 +211,7 @@
                                             class="text-gray-400 text-md w-full"></label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -228,7 +239,11 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Konsultasi</label>
-                                <label id="avgTimeDisplay">0 m 0 s</label>
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+                                {{-- <label id="avgTimeDisplay">0 m 0 s</label>
                                 <label id="avgPersenWrapper"
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -237,7 +252,7 @@
                                     </svg>
                                     <span id="avgPercentage">0 %</span>
                                 </label>
-                                <label id="avgCompareText" class="text-gray-400"></label>
+                                <label id="avgCompareText" class="text-gray-400"></label> --}}
                             </div>
                         </div>
                     </div>
@@ -261,7 +276,13 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Pasien Baru</label>
-                                <label id="newPatientsTotal">0 m 0 s</label>
+
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+
+                                {{-- <label id="newPatientsTotal">0 m 0 s</label>
                                 <label id="newPatientsWrapper"
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -271,7 +292,7 @@
                                     </svg>
                                     <span id="newPatientsPercentage">0%</span>
                                 </label>
-                                <label id="newPatientsCompareText" class="text-gray-400"></label>
+                                <label id="newPatientsCompareText" class="text-gray-400"></label> --}}
                             </div>
                         </div>
                     </div>
@@ -295,7 +316,11 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Pasien Terdaftar</label>
-                                <label id="registeredPatientsTotal">0 m 0 s</label>
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+                                {{-- <label id="registeredPatientsTotal">0 m 0 s</label>
                                 <label id="registeredPatientsWrapper"
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -305,7 +330,7 @@
                                     </svg>
                                     <span id="registeredPatientsPercentage">0%</span>
                                 </label>
-                                <label id="registeredPatientsCompareText" class="text-gray-400"></label>
+                                <label id="registeredPatientsCompareText" class="text-gray-400"></label> --}}
                             </div>
                         </div>
                     </div>
@@ -329,7 +354,11 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Tunggu Dokter</label>
-                                <label id="waitTimeDisplay">0 m 0 s</label>
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+                                {{-- <label id="waitTimeDisplay">0 m 0 s</label>
                                 <label id="waitTimeWrapper"
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -339,7 +368,7 @@
                                     </svg>
                                     <span id="waitTimePercentage">0%</span>
                                 </label>
-                                <label id="waitTimeCompareText" class="text-gray-400"></label>
+                                <label id="waitTimeCompareText" class="text-gray-400"></label> --}}
                             </div>
                         </div>
                     </div>
@@ -363,7 +392,11 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Obat Habis</label>
-                                <h1 id="countObatHabis">0</h1>
+                                {{-- <h1 id="countObatHabis">0</h1> --}}
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -387,7 +420,11 @@
                             </div>
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Tunggu Apotek</label>
-                                <label id="waitApotekTimeDisplay">0 m 0 s</label>
+                                <div class="grid items-center justify-center text-center my-4">
+                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                </div>
+                                {{-- <label id="waitApotekTimeDisplay">0 m 0 s</label>
                                 <label id="waitApotekTimeWrapper"
                                     class="flex items-center px-2 bg-green-300 rounded-lg space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -397,20 +434,28 @@
                                     </svg>
                                     <span id="waitApotekTimePercentage">0%</span>
                                 </label>
-                                <label id="waitApotekTimeCompareText" class="text-gray-400"></label>
+                                <label id="waitApotekTimeCompareText" class="text-gray-400"></label> --}}
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- Card Pasien Antri Cepat --}}
-                <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                <div class="grid grid-cols-1 mt-2 rounded-lg p-2 my-6 bg-white w-full">
                     <div class="p-4">
                         <div class="mb-2">
                             <h2 class="text-xl font-semibold">Pasien Antri Cepat</h2>
                         </div>
 
-                        <table class="table table-bordered"
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+    <div class="text-center">
+        <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+        <p class="text-lg text-gray-800 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+    </div>
+</section>
+
+                        {{-- @if() --}}
+                        {{-- <table class="table table-bordered"
                             data-url="{{ route('dashboard.getdatakunjunganantricepat') }}">
                             <thead>
                                 <tr class="border-b">
@@ -421,7 +466,7 @@
                                 </tr>
                             </thead>
                             <tbody></tbody>
-                        </table>
+                        </table> --}}
                     </div>
                 </div>
             </div>

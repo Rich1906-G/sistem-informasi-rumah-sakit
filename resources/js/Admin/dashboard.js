@@ -355,31 +355,33 @@ getAverageApotekWaitTime();
 
 // DataTable Antri Cepat
 $(function () {
-    const $tabel = $('#antriCepatTabel');
-    
+    const $tabel = $("#antriCepatTabel");
+
     // 1. Ambil URL dari atribut data-url
-    const dataUrl = $tabel.data('url'); 
+    const dataUrl = $tabel.data("url");
 
     if (dataUrl) {
         $tabel.DataTable({
-            processing: true, 
+            processing: true,
             responsive: true,
 
-            dom: '<"flex justify-between items-center mb-4"lf>rtip', 
-            
+            dom: '<"flex justify-between items-center mb-4"lf>rtip',
+
             // 2. Gunakan URL yang sudah diproses oleh Blade
-            ajax: dataUrl, 
-            
+            ajax: dataUrl,
+
             columns: [
-                // {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false}, 
-                {data: 'nama', name: 'nama'},
-                {data: 'tenaga_medis', name: 'tenaga_medis'},
-                {data: 'jadwal', name: 'jadwal'},
-                {data: 'status', name: 'status'}, 
-            ]
+                // {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                { data: "nama", name: "nama" },
+                { data: "tenaga_medis", name: "tenaga_medis" },
+                { data: "jadwal", name: "jadwal" },
+                { data: "status", name: "status" },
+            ],
         });
     } else {
-        console.error("DataTables Error: Pastikan elemen tabel memiliki atribut 'data-url' dengan route Blade.");
+        console.error(
+            "DataTables Error: Pastikan elemen tabel memiliki atribut 'data-url' dengan route Blade."
+        );
     }
 });
 

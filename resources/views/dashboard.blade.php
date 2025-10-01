@@ -17,7 +17,7 @@
 
                     <div class="flex items-center p-6">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
-                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.svg') }}"
+                            <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
                             <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
                         </div>

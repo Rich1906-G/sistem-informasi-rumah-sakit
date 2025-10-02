@@ -70,7 +70,17 @@
         </div>
         {{-- End Header --}}
 
-        <div class="grid grid-row-1">
+        <div class="p-6">
+            <section class="min-h-screen flex items-center justify-center bg-white text-gray-900 ">
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                    <p class="text-lg mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                        berikutnya!</p>
+                </div>
+            </section>
+        </div>
+
+        {{-- <div class="grid grid-row-1">
             <div class="flex p-6 gap-4 items-start">
                 <!-- Kiri: Menu Table -->
                 <div class="w-64 bg-white shadow rounded">
@@ -1356,5 +1366,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 </x-app-layout>

@@ -120,39 +120,6 @@
         </div>
         {{-- End Header --}}
 
-        {{-- <div class="my-10 flex " x-data="{ tombolHariIni: false }">
-            <div class="w-64 grid mx-6 gap-2">
-                <button class="flex items-center justify-between p-4 border border-slate-600 rounded-lg"
-                    @click="tombolHariIni = !tombolHariIni" type="button">
-                    Hari Ini
-                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-
-                <div class="grid border-2 border-slate-600 my-4 z-50  rounded-lg" x-show="tombolHariIni">
-                    <button class="p-2 hover:bg-slate-300 inline-flex">
-                        Hari Ini
-                    </button>
-                    <button class="p-2 hover:bg-slate-300 inline-flex">
-                        Semua
-                    </button>
-                </div>
-
-                <button class="flex items-center justify-between p-4 border border-slate-600 rounded-lg"
-                    @click="tombolHariIni = !tombolHariIni" type="button">
-                    Hari Ini
-                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-            </div>
-        </div> --}}
-
         <!-- sembunyikan elemen sebelum Alpine inisialisasi -->
         <style>
             [x-cloak] {
@@ -160,37 +127,28 @@
             }
         </style>
 
-        <div class="my-10 flex" x-data="{ tombolHariIni: false }">
-            <div class="w-64 mx-6">
-                <!-- wrapper tombol + dropdown -->
-                <div class="relative" @click.outside="tombolHariIni = false">
-                    <!-- tombol dropdown (pertama) -->
-                    {{-- <button
-                        class="flex items-center justify-between w-full p-4 border border-slate-600 rounded-lg bg-slate-100"
-                        @click="tombolHariIni = !tombolHariIni" :aria-expanded="tombolHariIni.toString()"
-                        type="button">
-                        Hari Ini
-                        <svg class="w-3 h-3 ml-3 transition-transform duration-200"
-                            :class="{ 'rotate-180': tombolHariIni }" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button> --}}
-
-
+        <div class="" x-data="{ tombolHariIni: false }">
+            <section class="min-h-screen flex items-center justify-center bg-white text-gray-900">
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                    <p class="text-lg mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                        berikutnya!</p>
+                </div>
+            </section>
+            {{-- <div class="w-64 mx-6"> --}}
+            <!-- wrapper tombol + dropdown -->
+            {{-- <div class="relative" @click.outside="tombolHariIni = false">
                     <button @click="tombolHariIni = !tombolHariIni" :aria-expanded="tombolHariIni.toString()"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-between w-full"
                         type="button">Hari ini
                         <svg class="w-3 h-3 ml-3 transition-transform duration-200"
                             :class="{ 'rotate-180': tombolHariIni }" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="m1 1 4 4 4-4" />
                         </svg>
                     </button>
 
-                    <!-- Dropdown menu -->
                     <div x-cloak x-show="tombolHariIni" x-transition
                         class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-full dark:bg-gray-700 absolute left-0 mt-2">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -206,32 +164,24 @@
                             </li>
                         </ul>
                     </div>
+                </div> --}}
 
-
-                    <!-- dropdown -->
-                    {{-- <div x-cloak x-show="tombolHariIni" x-transition
-                        class="absolute left-0 mt-2 w-full border border-slate-600 bg-white rounded-lg shadow-lg z-50">
-                        <button class="w-full text-left p-2 hover:bg-slate-200">Hari Ini</button>
-                        <button class="w-full text-left p-2 hover:bg-slate-200">Semua</button>
-                    </div> --}}
-                </div>
-
-                <!-- tombol paling bawah yang kamu maksud (tetap ada, bukan dropdown) -->
-                <button
+            <!-- tombol paling bawah yang kamu maksud (tetap ada, bukan dropdown) -->
+            {{-- <button
                     class="flex items-center justify-between w-full p-4 border border-slate-600 rounded-lg mt-4 bg-white text-red-500"
                     type="button">
                     Tidak ada antrian pasien
-                </button>
-            </div>
+                </button> --}}
+            {{-- </div> --}}
 
-            <div class="flex items-center justify-center w-full">
+            {{-- <div class="flex items-center justify-center w-full">
                 <div class="flex flex-col gap-8 items-center">
                     <img src="https://public-medicaboo.s3-ap-southeast-1.amazonaws.com/noPatient.png" alt="">
                     <label class="text-blue-600 text-3xl font-semibold">Tidak ada antrian pasien hari ini</label>
                     <label class="text-xl font-normal">Gunakan search bar atau advance search pada
                         pojok kiri atas untuk mencari pasien.</label>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <div class="fixed bottom-10 right-10">

@@ -86,8 +86,17 @@
         <div class="grid grid-row-1">
 
             <!-- Main Content -->
-            <div class="flex p-6 gap-4 items-start">
-                <!-- Kiri: Menu Table -->
+            <div class="p-6 gap-4 items-start">
+
+                <section class="min-h-screen flex items-center justify-center bg-white text-gray-900">
+                    <div class="text-center">
+                        <h1 class="text-5xl font-bold mb-4 animate-pulse">Coming Soon</h1>
+                        <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                            berikutnya!</p>
+                    </div>
+                </section>
+
+                {{-- <!-- Kiri: Menu Table -->
                 <div class="grid gap-4 h-auto self-start">
                     <div class="w-64 bg-white shadow rounded">
                         <ul class="divide-y divide-gray-200">
@@ -293,7 +302,6 @@
                 <!-- Content Penggunaan Obat -->
                 <div x-show="tabAktivitas === 'biayaBooking' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        {{-- Judul Kontent --}}
                         <h2 class="text-2xl font-semibold text-blue-600">Pembayaran Biaya Booking</h2>
 
                         <div class="flex items-center justify-end mb-6">
@@ -419,7 +427,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             {{-- End Content --}}
         </div>

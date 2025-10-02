@@ -328,7 +328,16 @@
                 <!-- Content Gawat Darurat-->
                 <div x-cloak x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
 
                         <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                         endDate = startDate"
@@ -392,7 +401,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -401,7 +410,16 @@
                 <!-- Content Kunjungan Sehat-->
                 <div x-cloak x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
 
                         <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                         endDate = startDate"
@@ -463,7 +481,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
 
 
@@ -472,7 +490,17 @@
                 <!-- Content Promotif Preventif-->
                 <div x-cloak x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
 
                         <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                         endDate = startDate"
@@ -532,14 +560,23 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 <!-- Content Kegiatan Kelompok-->
                 <div x-cloak x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
 
                         <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                         endDate = startDate"
@@ -612,14 +649,23 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 <!-- Content Antrian Awal-->
                 <div x-cloak x-show="tabAktivitas === 'antrianAwal' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Awal</h2>
 
                             <div class="flex gap-4 items-center">
@@ -671,14 +717,21 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 <!-- Content Screen Antrian-->
                 <div x-cloak x-show="tabAktivitas === 'screenAntrian' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+                        {{-- <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Screen Antrian</h2>
 
                             <div class="flex gap-4 items-center">
@@ -720,7 +773,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

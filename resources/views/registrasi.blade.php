@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
     <div x-data="{ tabAktivitas: '', dataRawatJalan: [], }" class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
@@ -32,7 +36,7 @@
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -65,13 +69,9 @@
 
                 <div class="flex items-center justify-between">
                     <div class="mx-6 mb-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Registrasi') }}
-                        </div>
+                        <x-header>{{ $header }}</x-header>
 
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,8 @@
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga
+                                            tanggal</label>
                                         <input type="date" id="filter_tgl_hingga_rjp"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
@@ -202,12 +203,14 @@
                                     </div>
 
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Metode Pembayaran</label>
+                                        <label class="block text-sm font-medium text-gray-700">Metode
+                                            Pembayaran</label>
                                         <select id="filter_pembayaran_rjp"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Metode Pembayaran</option>
                                             @foreach ($penjamin as $pj)
-                                                <option value="{{ $pj->id_penjamin }}">{{ $pj->nama_penjamin }}</option>
+                                                <option value="{{ $pj->id_penjamin }}">{{ $pj->nama_penjamin }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -283,7 +286,8 @@
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga
+                                            tanggal</label>
                                         <input type="date" id="filter_tgl_hingga_ac"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>

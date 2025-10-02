@@ -96,6 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('rawat_jalan')->name('rawat_jalan.')->group(function () {
         Route::get('/',                                     [RawatJalanController::class, 'index'])->name('index');
+        Route::get('/getDataPasien',[RawatJalanController::class, 'getDataPasien'])->name('getDataPasien');
     });
 
     Route::prefix('registrasi')->name('registrasi.')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\JadwalPraktik;
 use App\Models\Kunjungan;
+use App\Models\Pasien;
 use App\Models\TenagaMedis;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,9 @@ class RawatJalanController extends Controller
     {
         $dataDokter = TenagaMedis::where('job_medis', 'Dokter')->get();
 
+        // $dataKunjungan = Kunjungan::all();
+
+        // dd($dataKunjungan);
         $tanggal = $request->query('date', now()->toDateString());
 
         $namaHari = Carbon::parse($tanggal)->isoFormat('dddd');
@@ -22,7 +26,15 @@ class RawatJalanController extends Controller
             ->where('tanggal_praktik', $namaHari)
             ->get();
 
-        return view('rawat_jalan', compact('dataDokter', 'tanggal', 'jadwalPraktik'));
+        return view(
+            'rawat_jalan',
+            compact('dataDokter', 'tanggal', 'jadwalPraktik'),
+            [
+                'title' => 'Rawat Jalan || Royal Klinik',
+                'header' => 'Rawat Jalan',
+                'subHeader' => 'Royal Klinik',
+            ]
+        );
     }
 
     public function getJadwalDokter(Request $request)
@@ -66,5 +78,12 @@ class RawatJalanController extends Controller
             ->get();
 
         return response()->json($tenaga_medis_dan_jadwal);
+    }
+
+    public function getDataPasien()
+    {
+        $dataPasien = Pasien::with('kunjungan')->get();
+
+        return response()->json($dataPasien);
     }
 }

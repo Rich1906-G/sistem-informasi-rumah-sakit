@@ -17,9 +17,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $title = 'Dashboard';
-        $subTitle = 'Royal Prima';
-
         // Get the count for each jenis_kunjungan
         $jenisKunjungan = Kunjungan::select('jenis_kunjungan')
             ->selectRaw('count(*) as total')
@@ -32,13 +29,15 @@ class DashboardController extends Controller
         $tipePasien = Kunjungan::select('tipe_pasien')->distinct()->get();
 
         // Mengirim semua data ke view dashboard
-        return view('dashboard', compact(
-            'jenisKunjungan',
-            'totalPasien',
-            'tipePasien',
-            'title',
-            'subTitle'
-        ));
+        return view(
+            'dashboard',
+            compact('jenisKunjungan', 'totalPasien', 'tipePasien'),
+            [
+                'title' => 'Dashboard || Royal Klinik',
+                'header' => 'Dashboard',
+                'subHeader' => 'Royal Klinik',
+            ]
+        );
     }
 
     public function getChartKunjungan(Request $request)

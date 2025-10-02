@@ -1,4 +1,8 @@
 <x-app-layout>
+
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
     <div class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
@@ -32,7 +36,7 @@
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -65,13 +69,8 @@
 
                 <div class="flex items-center justify-between">
                     <div class="mx-6 mb-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Electronic Medical Record') }}
-                        </div>
-
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-header>{{ $header }}</x-header>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
 
 

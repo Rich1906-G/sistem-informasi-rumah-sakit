@@ -8,6 +8,6 @@ class OfficeController extends Controller
 {
     public function index()
     {
-        return view('office');
+        return view('office', ['title' => 'Office || Royal Klinik', 'header' => 'Office', 'subHeader' => 'Royal Klinik']);
     }
 }

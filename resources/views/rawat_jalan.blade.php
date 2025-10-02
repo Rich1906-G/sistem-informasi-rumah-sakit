@@ -1,5 +1,10 @@
 <x-app-layout>
-    <div class="p-4 sm:ml-64 lg:p-0 ">
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
+
+    <div class="p-4 sm:ml-64 lg:p-0 " x-data="searchComponent(), dataPasien: []" >
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
@@ -46,34 +51,169 @@
                             </div>
 
                             <!-- Modal Pendaftaran Baru -->
-                            <div x-show="openModal === 'Pendaftaran Baru'" x-cloak x-transition
+                            <div x-show="openModal === 'Pendaftaran Baru'" x-cloak x-transition x-data="functionsearch()"
                                 class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
                                 x-transition>
+                                <form action="#">
                                 <div
-                                    class="bg-white w-full max-w-6xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+                                    class="bg-white w-full max-w-7xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh] px-8 py-4">
                                     <!-- Header -->
                                     <div class="flex justify-between items-center px-6 pt-6 pb-3 w-full">
-                                        <h2 class="text-xl font-semibold text-blue-700">Daftar Kunjungan</h2>
+                                        <h2 class="text-2xl font-semibold text-blue-700">Daftar Kunjungan</h2>
                                         <h2 class="text-lg font-semibold text-yellow-500">Tanda * wajib diisi!</h2>
                                         <button @click="openModal = false"
                                             class="text-red-500 hover:text-red-700 text-xl">&times;</button>
                                     </div>
 
-                                    <div class="px-6 py-3 grid grid-cols-2 col-span-2 gap-4 w-full">
+                                    <!-- Fitur Search -->
+                                    <div class="px-6 py-3 grid grid-cols-2 gap-4 w-full">
+                                            <!-- Input Pencarian -->
                                         <div class="relative z-0 w-full group">
-                                            <input type="email" name="floating_email" id="floating_email"
-                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-400 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                                placeholder=" " required />
-                                            <label for="floating_email"
-                                                class="peer-focus:font-medium absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cari
-                                                Data Pasien </label>
+                                            <input type="text" x-model="searchTerm" placeholder=" "
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                @input="onSearch()" required />
+                                            <label
+                                                class="peer-focus:font-medium absolute text-md text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-600">
+                                                Cari Data Pasien
+                                            </label>
                                         </div>
 
+                                        <!-- Tombol Adv Search -->
                                         <div>
                                             <button class="px-2 py-3 bg-blue-600 rounded-md text-white text-md">Adv.
                                                 Search</button>
                                         </div>
+
+                                        <!-- List hasil pencarian, tampil jika pasien belum dipilih -->
+                                        <div class="col-span-2" x-show="selectedPatient === null">
+                                            <template x-for="item in filteredPatients()" :key="item.id_pasien">
+                                                <div @click="selectPatient(item)"
+                                                    class="cursor-pointer border p-3 rounded hover:bg-blue-100 mb-2">
+                                                    <h3 x-text="item.nama_lengkap"></h3>
+                                                    <p>Nomor RM: <span x-text="item.nomor_rm"></span></p>
+                                                    <p>Tempat, Tanggal Lahir: <span x-text="item.tempat_lahir"></span>,
+                                                        <span x-text="item.tanggal_lahir"></span>
+                                                    </p>
+                                                </div>
+                                            </template>
+                                            <template x-if="searchTerm.length > 0 && filteredPatients().length === 0">
+                                                <p class="text-red-500 font-semibold">Data pasien tidak ditemukan.</p>
+                                            </template>
+                                        </div>
+
+                                        <!-- Detail Pasien dan Upload Foto, tampil jika pasien sudah dipilih -->
+                                        <div class="w-full px-6 py-3 grid grid-cols-[1fr_1fr_2fr] gap-4 col-span-2"
+                                            x-show="selectedPatient !== null" x-data="imageUploader()"
+                                            style="display:none;">
+                                            <!-- Upload / Preview Foto -->
+                                            <div class="flex items-center justify-center w-full ">
+                                                <template x-if="!preview">
+                                                    <label for="dropzone-file"
+                                                        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                                                        <div
+                                                            class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                            <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 20 16">
+                                                                <path stroke="currentColor" stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                    d="M13 13h3a3 3 0 0 0 0-6..." />
+                                                            </svg>
+                                                            <p class="mb-2 text-sm text-gray-500"><span
+                                                                    class="font-semibold">Click to upload</span> or drag
+                                                                and drop</p>
+                                                            <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX.
+                                                                800x400px)</p>
+                                                        </div>
+                                                        <input id="dropzone-file" type="file" class="hidden"
+                                                            name="foto_pasien" @change="previewImage"
+                                                            accept="image/*" />
+                                                    </label>
+                                                </template>
+                                                <template x-if="preview">
+                                                    <div class="relative w-full h-64">
+                                                        <img :src="preview" alt="Uploaded Image"
+                                                            class="w-full h-full rounded-lg border object-cover object-center" />
+                                                        <button type="button" @click="removeImage"
+                                                            class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow">Hapus</button>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <!-- Info Pasien -->
+                                            <div class="grid text-gray-900 font-semibold text-lg gap-2">
+                                                <label>Nama Lengkap</label>
+                                                <label>Tanggal Lahir</label>
+                                                <label>Jenis Kelamin</label>
+                                                <label>Alamat</label>
+                                                <label>Nomor Kartu BPJS</label>
+                                                <label>PPK Umum</label>
+                                                <label>Nomor KTP</label>
+                                                <label>Tags</label>
+                                            </div>
+
+                                            <div class="grid gap-2">
+                                                <p x-text="selectedPatient.nama_lengkap"></p>
+                                                <p x-text="selectedPatient.tanggal_lahir"></p>
+                                                <p x-text="selectedPatient.jenis_kelamin"></p>
+                                                <p x-text="selectedPatient.alamat_rumah"></p>
+                                                <p x-text="selectedPatient.nomor_bpjs || '-'"></p>
+                                                <p x-text="selectedPatient.ppk_umum || '-'"></p>
+                                                <p x-text="selectedPatient.nomor_ktp"></p>
+                                                <p><!-- Tag atau info lain --></p>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <script>
+                                        function searchComponent() {
+                                            return {
+                                                searchTerm: '',
+                                                patients: [],
+                                                selectedPatient: null,
+                                                filteredPatients() {
+                                                    if (this.searchTerm.length === 0) return [];
+                                                    const term = this.searchTerm.toLowerCase();
+                                                    return this.patients.filter(p =>
+                                                        p.nama_lengkap.toLowerCase().includes(term) ||
+                                                        p.nomor_rm.toLowerCase().includes(term)
+                                                    );
+                                                },
+                                                onSearch() {
+                                                    this.selectedPatient = null;
+                                                },
+                                                selectPatient(patient) {
+                                                    this.selectedPatient = patient;
+                                                },
+                                                init() {
+                                                    fetch('{{ route('rawat_jalan.getDataPasien') }}')
+                                                        .then(res => res.json())
+                                                        .then(data => {
+                                                            this.patients = data;
+                                                        })
+                                                        .catch(e => console.error("Gagal memuat data pasien:", e));
+                                                }
+                                            }
+                                        }
+
+                                        function imageUploader() {
+                                            return {
+                                                preview: null,
+                                                previewImage(event) {
+                                                    const file = event.target.files[0];
+                                                    if (file) {
+                                                        const reader = new FileReader();
+                                                        reader.onload = e => this.preview = e.target.result;
+                                                        reader.readAsDataURL(file);
+                                                    }
+                                                },
+                                                removeImage() {
+                                                    this.preview = null;
+                                                    document.getElementById('dropzone-file').value = "";
+                                                }
+                                            }
+                                        }
+                                    </script>
 
                                     <div class="px-6 py-3 w-full">
                                         <div class="flex flex-col gap-2">
@@ -159,7 +299,8 @@
                                             <select class="p-2 rounded-md border-red-600 w-full">
                                                 <option selected></option>
                                             </select>
-                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter, silahkan
+                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter,
+                                                silahkan
                                                 lengkapi Informasi Tenaga Medis di Settings</label>
                                         </div>
                                     </div>
@@ -246,7 +387,6 @@
 
                                     <!-- Accordion Wrapper -->
                                     <div class="mt-2 space-y-3 px-6">
-
                                         <!-- Vital Sign -->
                                         <div x-data="{ open: false }" class="border border-blue-600 rounded-lg">
                                             <button @click="open = !open"
@@ -519,7 +659,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
 
@@ -535,7 +676,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
 
@@ -551,7 +693,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
                                             </div>
@@ -633,7 +776,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih Lebih
+                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih
+                                                                Lebih
                                                                 dari Satu Opsi</p>
                                                         </div>
                                                     </div>
@@ -661,7 +805,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -689,7 +834,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -717,7 +863,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -766,6 +913,7 @@
                                             class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">SIMPAN</button>
                                     </div>
                                 </div>
+                                </form>
                             </div>
 
                             <!-- Modal Pasien Baru -->
@@ -774,14 +922,15 @@
                                 x-transition>
 
                                 <div
-                                    class="bg-white w-full max-w-7xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+                                    class="bg-white w-full max-w-7xl rounded-lg shadow-lg overflow-y-auto max-h-[90vh] px-8 py-4">
                                     <form action="#" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <!-- Header -->
                                         <div
                                             class="relative flex items-center justify-center px-6 py-3 w-full border-b">
                                             <!-- Judul -->
-                                            <h2 class="text-3xl font-semibold text-blue-700">Tambah Pasien Baru</h2>
+                                            <h2 class="text-3xl font-semibold text-blue-700">Tambah Pasien Baru
+                                            </h2>
 
                                             <!-- Tombol X -->
                                             <button @click="openModal = false"
@@ -819,7 +968,8 @@
                                                                 </svg>
                                                                 <p
                                                                     class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                                                    <span class="font-semibold">Click to upload</span>
+                                                                    <span class="font-semibold">Click to
+                                                                        upload</span>
                                                                     or drag and drop
                                                                 </p>
                                                                 <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -839,8 +989,7 @@
 
                                                             <!-- Tombol hapus -->
                                                             <button type="button" @click="removeImage"
-                                                                class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 
-                       text-white text-xs px-3 py-1 rounded shadow">
+                                                                class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded shadow">
                                                                 Hapus
                                                             </button>
                                                         </div>
@@ -848,9 +997,11 @@
                                                 </div>
 
                                                 <!-- Info tambahan -->
-                                                <h2 class="text-lg font-semibold text-yellow-500">Tanda * wajib diisi!
+                                                <h2 class="text-lg font-semibold text-yellow-500">Tanda * wajib
+                                                    diisi!
                                                 </h2>
-                                                <h2 class="text-lg font-semibold text-gray-500">Nomor RM terakhir yang
+                                                <h2 class="text-lg font-semibold text-gray-500">Nomor RM terakhir
+                                                    yang
                                                     dimasukan 12345</h2>
                                             </div>
 
@@ -1094,7 +1245,8 @@
                       peer-focus:scale-75 peer-focus:-translate-y-6">
                                                         Email
                                                     </label>
-                                                    <p class="mt-1 text-xs text-gray-500">Gunakan email yang aktif</p>
+                                                    <p class="mt-1 text-xs text-gray-500">Gunakan email yang aktif
+                                                    </p>
                                                 </div>
 
                                                 <!-- Tanggal Pertama Obat -->
@@ -1439,7 +1591,8 @@
                                             <select class="p-2 rounded-md border-red-600 w-full">
                                                 <option selected></option>
                                             </select>
-                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter, silahkan
+                                            <label class="text-red-600 text-sm">Anda belum memiliki Dokter,
+                                                silahkan
                                                 lengkapi Informasi Tenaga Medis di Settings</label>
                                         </div>
                                     </div>
@@ -1799,7 +1952,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
 
@@ -1815,7 +1969,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
 
@@ -1831,7 +1986,8 @@
                                                     </div>
                                                     <!-- Keterangan -->
                                                     <p class="text-xs text-gray-400 mt-1">Masukkan nilai yang
-                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes, Asma
+                                                        dipisahkan koma. Contoh pengisian dua penyakit: Diabetes,
+                                                        Asma
                                                     </p>
                                                 </div>
                                             </div>
@@ -1913,7 +2069,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih Lebih
+                                                            <p class="text-xs text-gray-500 mt-3">Bisa Memilih
+                                                                Lebih
                                                                 dari Satu Opsi</p>
                                                         </div>
                                                     </div>
@@ -1941,7 +2098,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1969,7 +2127,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1997,7 +2156,8 @@
                                                             </div>
 
                                                             <!-- Helper text -->
-                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi</p>
+                                                            <p class="text-xs text-gray-500 mt-3">Pilih Satu Opsi
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2054,7 +2214,7 @@
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto"
                                 src="{{ asset('storage/assets/royal_klinik.png') }}" alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -2087,13 +2247,8 @@
 
                 <div class="flex items-center justify-between">
                     <div class="p-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Rawat Jalan') }}
-                        </div>
-
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-header>{{ $header }}</x-header>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
 
                     <div class="flex gap-4">
@@ -2191,7 +2346,188 @@
 
         @if ($dataDokter)
             {{-- Start Content --}}
-            <div class="grid grid-row-1 h-full" x-data="{ tabAktivitas: 'all' }">
+
+            <div class="flex p-6 gap-4">
+                <!-- Kiri: Menu Table -->
+                <div class="w-64 bg-white shadow rounded">
+                    <ul class="divide-y divide-gray-200">
+                        <li>
+                            <button @click="tabAktivitas = 'all'"
+                                class="w-full text-start px-4 py-3 font-bold text-xl"
+                                :class="tabAktivitas === 'all'
+                                    ?
+                                    'bg-blue-600 text-white' :
+                                    'bg-white text-gray-800'">
+                                All Doctor
+                            </button>
+                        </li>
+                        @foreach ($dataDokter as $dokter)
+                            <li>
+                                <button
+                                    @click="tabAktivitas = (tabAktivitas === {{ $dokter->nama_lengkap }} ) ? '' : '{{ $dokter->nama_lengkap }}' "
+                                    class="w-full text-start px-4 py-3"
+                                    :class="tabAktivitas === {{ $dokter->nama_lengkap }} ?
+                                        'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
+                                        'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium '">
+                                    {{ $dokter->nama_lengkap }}
+                                </button>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <!-- Content Rawat Jalan Poli-->
+                <div class="w-full">
+                    @foreach ($dataDokter as $dokter)
+                        <div x-cloak x-show="tabAktivitas === '{{ $dokter->nama_lengkap }}' " class="w-full">
+                            <div class="bg-white px-6 py-4 rounded-md">
+                                <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan Poli</h2>
+
+                                <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                                endDate = startDate"
+                                    class="flex items-start justify-between w-full">
+
+                                    <!-- Jika belum klik + -->
+                                    <div x-show="!showRange" class="flex flex-row gap-4">
+                                        <div>
+                                            <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
+                                            <input type="date" x-model="startDate"
+                                                class="w-full mt-1 border rounded p-2" />
+                                        </div>
+
+                                        <button @click="showRange = true"
+                                            class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <!-- Jika sudah klik + -->
+                                    <div x-show="showRange" class="flex flex-row gap-4 items-center">
+                                        <div>
+                                            <label class="text-sm text-gray-600">Dari tanggal</label>
+                                            <input type="date" x-model="startDate"
+                                                class="w-full mt-1 border rounded p-2" />
+                                        </div>
+
+                                        <span class="">-</span>
+
+                                        <div>
+                                            <label class="text-sm text-gray-600">Hingga tanggal</label>
+                                            <input type="date" x-model="endDate"
+                                                class="w-full mt-1 border rounded p-2" />
+                                        </div>
+
+                                        <button @click="showRange = false"
+                                            class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
+                                            ✕
+                                        </button>
+                                    </div>
+
+                                    <div class="w-40">
+                                        <label class="block text-sm text-gray-600">Poli</label>
+                                        <select class="w-full mt-1 border rounded-md p-2 items-center">
+                                            <option selected>Semua Poli</option>
+                                            <option value="umum">Umum</option>
+                                            <option value="kecantikan">Kecantikan</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between w-full">
+                                    <div class="grid grid-cols-2 gap-4 my-4">
+                                        <div class="w-60">
+                                            <label for="default"
+                                                class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Tenaga
+                                                Medis</label>
+                                            <select id="default"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Semua Tenaga Medis</option>
+                                                <option value="US">United States</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="FR">France</option>
+                                                <option value="DE">Germany</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="w-60">
+                                            <label for="default"
+                                                class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Metode
+                                                Pembayaran</label>
+                                            <select id="default"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Semua Metode Pembayaran</option>
+                                                <option value="US">United States</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="FR">France</option>
+                                                <option value="DE">Germany</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-96">
+                                        <form class="max-w-md mx-auto">
+                                            <label for="default-search"
+                                                class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none" viewBox="0 0 20 20">
+                                                        <path stroke="currentColor" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="2"
+                                                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                                    </svg>
+                                                </div>
+                                                <input type="search" id="default-search"
+                                                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Search Mockups, Logos..." required />
+                                                <button type="submit"
+                                                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="bg-white shadow rounded overflow-x-auto">
+                                    <table class="min-w-full text-sm">
+                                        <thead class="bg-blue-100">
+                                            <tr>
+                                                <th class="px-4 py-2 text-left">Status</th>
+                                                <th class="px-4 py-2 text-left">Tanggal Kunjungan</th>
+                                                <th class="px-4 py-2 text-left">Tanggal Dibuat</th>
+                                                <th class="px-4 py-2 text-left">No</th>
+                                                <th class="px-4 py-2 text-left">Poli</th>
+                                                <th class="px-4 py-2 text-left">Nama Pasien</th>
+                                                <th class="px-4 py-2 text-left">Rencana Tindakan</th>
+                                                <th class="px-4 py-2 text-left">Rencana Paket</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-t">
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                                <td class="px-4 py-2">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+
+            {{-- <div class="grid grid-row-1 h-full" x-data="{ tabAktivitas: 'all' }">
 
                 <section class="min-h-screen flex items-center justify-center bg-white ">
                     <div class="text-center">
@@ -2212,191 +2548,12 @@
                     TAMBAH
                     DATA TENAGA
                     MEDIS</button> --}}
-            </div>
-
-
+    </div> --}}
     </div>
     {{-- End Content --}}
 @else
     <!-- Main Content -->
-    <div class="flex p-6 gap-4">
-        <!-- Kiri: Menu Table -->
-        <div class="w-64 bg-white shadow rounded">
-            <ul class="divide-y divide-gray-200">
-                <li>
-                    <button @click="tabAktivitas = 'all'" class="w-full text-start px-4 py-3 font-bold text-xl"
-                        :class="tabAktivitas === 'all'
-                            ?
-                            'bg-blue-600 text-white' :
-                            'bg-white text-gray-800'">
-                        All Doctor
-                    </button>
-                </li>
-                @foreach ($dataDokter as $dokter)
-                    <li>
-                        <button
-                            @click="tabAktivitas = (tabAktivitas === {{ $dokter->nama_lengkap }} ) ? '' : '{{ $dokter->nama_lengkap }}' "
-                            class="w-full text-start px-4 py-3"
-                            :class="tabAktivitas === {{ $dokter->nama_lengkap }} ?
-                                'w-full text-start px-4 py-3 bg-blue-600 text-white font-medium' :
-                                'w-full text-start px-4 py-3 bg-white text-gray-800 font-medium '">
-                            {{ $dokter->nama_lengkap }}
-                        </button>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
 
-        <!-- Content Rawat Jalan Poli-->
-        <div class="w-full">
-            @foreach ($dataDokter as $dokter)
-                <div x-cloak x-show="tabAktivitas === '{{ $dokter->nama_lengkap }}' " class="w-full">
-                    <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan Poli</h2>
-
-                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
-                        endDate = startDate"
-                            class="flex items-start justify-between w-full">
-
-                            <!-- Jika belum klik + -->
-                            <div x-show="!showRange" class="flex flex-row gap-4">
-                                <div>
-                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = true"
-                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
-                                    +
-                                </button>
-                            </div>
-
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate"
-                                        class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
-                            </div>
-
-                            <div class="w-40">
-                                <label class="block text-sm text-gray-600">Poli</label>
-                                <select class="w-full mt-1 border rounded-md p-2 items-center">
-                                    <option selected>Semua Poli</option>
-                                    <option value="umum">Umum</option>
-                                    <option value="kecantikan">Kecantikan</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between w-full">
-                            <div class="grid grid-cols-2 gap-4 my-4">
-                                <div class="w-60">
-                                    <label for="default"
-                                        class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Tenaga
-                                        Medis</label>
-                                    <select id="default"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Semua Tenaga Medis</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                </div>
-
-                                <div class="w-60">
-                                    <label for="default"
-                                        class="block mb-2 text-sm font-medium text-gray-600 dark:text-white">Metode
-                                        Pembayaran</label>
-                                    <select id="default"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Semua Metode Pembayaran</option>
-                                        <option value="US">United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
-                                        <option value="DE">Germany</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="w-96">
-                                <form class="max-w-md mx-auto">
-                                    <label for="default-search"
-                                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                                    <div class="relative">
-                                        <div
-                                            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 20 20">
-                                                <path stroke="currentColor" stroke-linecap="round"
-                                                    stroke-linejoin="round" stroke-width="2"
-                                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                            </svg>
-                                        </div>
-                                        <input type="search" id="default-search"
-                                            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="Search Mockups, Logos..." required />
-                                        <button type="submit"
-                                            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- Table -->
-                        <div class="bg-white shadow rounded overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead class="bg-blue-100">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left">Status</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Kunjungan</th>
-                                        <th class="px-4 py-2 text-left">Tanggal Dibuat</th>
-                                        <th class="px-4 py-2 text-left">No</th>
-                                        <th class="px-4 py-2 text-left">Poli</th>
-                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
-                                        <th class="px-4 py-2 text-left">Rencana Tindakan</th>
-                                        <th class="px-4 py-2 text-left">Rencana Paket</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                        <td class="px-4 py-2">-</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-
-                </div>
-            @endforeach
-        </div>
-
-    </div>
     @endif
 
     </div>
@@ -2410,4 +2567,8 @@
             </svg>
         </button>
     </div>
+
+    @push('scripts')
+        @vite(['resources/js/Admin/rawat_jalan.js'])
+    @endpush
 </x-app-layout>

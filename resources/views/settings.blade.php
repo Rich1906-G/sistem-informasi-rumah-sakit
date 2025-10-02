@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
     <div class="p-6">
         <section class="min-h-screen flex items-center justify-center bg-white text-gray-900">
             <div class="text-center">

@@ -16,7 +16,7 @@ class EMRController extends Controller
 
         // dd($dataPasien);
 
-        return view('emr', compact('dataPasien', 'pasienSatu'));
+        return view('emr', compact('dataPasien', 'pasienSatu'), ['title' => 'EMR || Royal Klinik', 'header' => 'Electronic Medical Record (EMR)', 'subHeader' => 'Royal Klinik']);
     }
 
     public function store(Request $request)

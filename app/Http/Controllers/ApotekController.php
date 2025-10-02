@@ -15,6 +15,6 @@ class ApotekController extends Controller
         // Hitung persentase progress
         $progress = $totalAntrian > 0 ? ($sudahDitangani / $totalAntrian) * 100 : 0;
 
-        return view('apotek', compact('totalAntrian', 'sudahDitangani', 'progress'));
+        return view('apotek', compact('totalAntrian', 'sudahDitangani', 'progress'), ['title'  => 'Apotek || Royal Klinikl', 'header'  => 'Apotek', 'subHeader'  => 'Royal Klinik']);
     }
 }

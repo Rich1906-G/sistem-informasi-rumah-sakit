@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
+
     <div x-data="{ tabAktivitas: '' }" class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
@@ -10,7 +15,7 @@
                         <div class="flex flex-row gap-5 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-3">
@@ -43,13 +48,8 @@
 
                 <div class="flex items-center justify-between">
                     <div class="mx-6 mb-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Apotek') }}
-                        </div>
-
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-header>{{ $header }}</x-header>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
                 </div>
             </div>
@@ -60,9 +60,16 @@
         <div class="grid grid-row-1 h-full">
 
             <!-- Main Content -->
-            <div class="flex p-6 gap-4">
+            <div class="p-6">
+                <section class="min-h-screen flex items-center justify-center bg-white text-gray-900">
+                    <div class="text-center">
+                        <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                        <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                            berikutnya!</p>
+                    </div>
+                </section>
                 <!-- Kiri: Menu Table -->
-                <div class="grid gap-4">
+                {{-- <div class="grid gap-4">
                     <div class="w-64 bg-white shadow rounded">
                         <ul class="divide-y divide-gray-200">
                             <li>
@@ -209,7 +216,7 @@
                             <a href="#" class="text-blue-500 hover:text-orange-300 hover:underline">Restok</a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <style>
                     [x-cloak] {
@@ -218,7 +225,7 @@
                 </style>
 
                 <!-- Content Antrian Hari Ini-->
-                <div x-show="tabAktivitas === 'antrianHariIni' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'antrianHariIni' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Hari Ini</h2>
 
@@ -263,10 +270,10 @@
                             <label>Tidak Ada </label>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Obat -->
-                <div x-show="tabAktivitas === 'obat' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'obat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 ">
                             <!-- Bagian Judul dan Last Update -->
@@ -303,18 +310,18 @@
                                 </button>
                             </div>
                         </div>
-                        
+
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Penggunaan Obat -->
-                <div x-show="tabAktivitas === 'penggunaanObat' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'penggunaanObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        {{-- Judul Kontent --}}
+
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Penggunaan Obat</h2>
 
                         <div class="flex gap-8">
-                            {{-- Tanggal --}}
+
                             <div x-data="{ startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                             endDate = startDate"
                                 class="flex items-start justify-between w-full">
@@ -386,10 +393,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Kadaluarsa Obat -->
-                <div x-show="tabAktivitas === 'kadaluarsaObat' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'kadaluarsaObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="grid gap-4">
                             <div>
@@ -470,10 +477,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Data Stok Bahan Habis Pakai -->
-                <div x-show="tabAktivitas === 'bahanHabisPakai' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'bahanHabisPakai' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 ">
                             <!-- Bagian Judul dan Last Update -->
@@ -558,15 +565,14 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Penggunaan BHP-->
-                <div x-show="tabAktivitas === 'penggunaanBPH' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'penggunaanBPH' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <h2 class="text-2xl font-semibold mb-4 text-blue-600">Penggunaan BHP</h2>
 
                         <div class="flex gap-8">
-                            {{-- Tanggal --}}
                             <div x-data="{ startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                             endDate = startDate"
                                 class="flex items-start justify-between w-full">
@@ -634,10 +640,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Kadaluarsa Bahan Habis Pakai-->
-                <div x-show="tabAktivitas === 'kadaluarsaBahanHabisPakai' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'kadaluarsaBahanHabisPakai' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="grid gap-4">
                             <div>
@@ -721,16 +727,16 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Content Resep Obat -->
-                <div x-show="tabAktivitas === 'resepObat' " class="w-full" x-cloak>
+                {{-- <div x-show="tabAktivitas === 'resepObat' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Cetak Resep Obat</h2>
+                        <h2 class="text-2xl font-semibold mb-4 text-blue-600">Cetak Resep Obat</h2> --}}
 
-                        <form action="#">
-                            {{-- Tanggal --}}
-                            <div x-data="{ startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                {{-- <form action="#"> --}}
+                {{-- Tanggal --}}
+                {{-- <div x-data="{ startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
                             endDate = startDate"
                                 class="flex items-start justify-between w-full">
 
@@ -742,9 +748,9 @@
                                             class="w-full mt-1 border rounded p-2" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            {{-- <div class="my-6 grid grid-cols-2 gap-4">
+                {{-- <div class="my-6 grid grid-cols-2 gap-4">
                                 <div class="bg-red-200">
                                     <label for="underline_select" class="sr-only">Pilih Dokter</label>
                                     <select id="underline_select"
@@ -780,7 +786,7 @@
                                 </div>
                             </div> --}}
 
-                            {{-- <div class="flex gap-4 w-full my-6">
+                {{-- <div class="flex gap-4 w-full my-6">
                                 <!-- Dropdown Pilih Dokter -->
                                 <select
                                     class="w-1/2 border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
@@ -804,9 +810,9 @@
                                 </div>
                             </div> --}}
 
-                            <div class="flex gap-4 w-full my-6">
-                                <!-- Dropdown Pilih Dokter (Underline Select) -->
-                                <div class="w-1/2">
+                {{-- <div class="flex gap-4 w-full my-6"> --}}
+                <!-- Dropdown Pilih Dokter (Underline Select) -->
+                {{-- <div class="w-1/2">
                                     <label for="dokter_select" class="sr-only">Pilih Dokter</label>
                                     <select id="dokter_select"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 
@@ -816,10 +822,10 @@
                                         <option value="B">Dr. B</option>
                                         <option value="C">Dr. C</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
-                                <!-- Input Search Cari Pasien -->
-                                <div class="relative w-1/2">
+                <!-- Input Search Cari Pasien -->
+                {{-- <div class="relative w-1/2">
                                     <input type="text" placeholder="Cari Pasien"
                                         class="w-full border border-gray-300 rounded-md px-10 py-2 text-gray-700  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" />
                                     <!-- Icon Search -->
@@ -829,12 +835,12 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
                                     </svg>
-                                </div>
-                            </div>
+                                </div> --}}
+                {{-- </div> --}}
 
-                            <div class="flex gap-4 w-full my-6">
-                                <!-- Dropdown Pilih Resep -->
-                                <div class="w-1/3">
+                {{-- <div class="flex gap-4 w-full my-6"> --}}
+                <!-- Dropdown Pilih Resep -->
+                {{-- <div class="w-1/3">
                                     <label for="dokter_select" class="sr-only">Tipe Resep</label>
                                     <select id="dokter_select"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 
@@ -844,10 +850,10 @@
                                         <option value="resep_b">Resep B</option>
                                         <option value="resep_c">Resep C</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
-                                <!-- Input Umur -->
-                                <div class="relative z-0 w-1/6 group">
+                <!-- Input Umur -->
+                {{-- <div class="relative z-0 w-1/6 group">
                                     <input name="umur" id="umur"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 
                    border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 
@@ -862,10 +868,10 @@
                    peer-focus:scale-75 peer-focus:-translate-y-6">
                                         Umur
                                     </label>
-                                </div>
+                                </div> --}}
 
-                                <!-- Input Search Cari Pasien -->
-                                <div class="relative w-1/2">
+                <!-- Input Search Cari Pasien -->
+                {{-- <div class="relative w-1/2">
                                     <input type="text" placeholder="Cari Pasien"
                                         class="w-full border border-gray-300 rounded-md px-10 py-2 text-gray-700 
                    focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500" />
@@ -876,19 +882,19 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
                                     </svg>
-                                </div>
-                            </div>
+                                </div> --}}
+                {{-- </div> --}}
 
-                            <div class="relative z-0 w-full mb-5 group">
+                {{-- <div class="relative z-0 w-full mb-5 group">
                                 <input type="email" name="floating_email" id="floating_email"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     placeholder=" " required />
                                 <label for="floating_email"
                                     class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alamat</label>
-                            </div>
+                            </div> --}}
 
-                            <!-- Input Search Cari Pasien -->
-                            <div class="w-full grid grid-cols-3 gap-4">
+                <!-- Input Search Cari Pasien -->
+                {{-- <div class="w-full grid grid-cols-3 gap-4">
                                 <!-- Search Pasien -->
                                 <div class="relative">
                                     <input type="text" placeholder="Cari Pasien"
@@ -929,21 +935,21 @@
                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
                    peer-focus:scale-75 peer-focus:-translate-y-6">Detur</label>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="my-4 flex items-center justify-between">
+                {{-- <div class="my-4 flex items-center justify-between">
                                 <button class="px-5 py-2.5 rounded-md text-center text-primary-500">
                                     + Tambah Obat
                                 </button>
 
                                 <button class="px-5 py-2.5 bg-red-400 text-white rounded-md">PRINT</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                            </div> --}}
+                </form>
+            </div>
+            {{-- </div> --}}
 
-                <!-- Content Restock & Return -->
-                <div x-show="tabAktivitas === 'reStock' " class="w-full" x-cloak>
+            <!-- Content Restock & Return -->
+            {{-- <div x-show="tabAktivitas === 'reStock' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 ">
                             <!-- Bagian Judul dan Last Update -->
@@ -1023,10 +1029,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <!-- Content Depot -->
-                <div x-show="tabAktivitas === 'depot' " class="w-full" x-cloak>
+            <!-- Content Depot -->
+            {{-- <div x-show="tabAktivitas === 'depot' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="grid items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Depot</h2>
@@ -1076,10 +1082,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <!-- Content Pesanan & Stok Masuk -->
-                <div x-show="tabAktivitas === 'pesananStokMasuk' " class="w-full" x-cloak>
+            <!-- Content Pesanan & Stok Masuk -->
+            {{-- <div x-show="tabAktivitas === 'pesananStokMasuk' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
                         <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Pesanan & Stok Masuk</h2>
@@ -1128,11 +1134,10 @@
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> --}}
         </div>
-        {{-- End Content --}}
     </div>
+    {{-- End Content --}}
 
     <div class="fixed bottom-10 right-10">
         <button class="bg-blue-700 flex items-center px-4 py-2 rounded-md shadow-lg">

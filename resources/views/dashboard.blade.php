@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
     <div class="p-4 sm:ml-64 lg:p-0">
 
         {{-- Start Header --}}
@@ -6,20 +10,15 @@
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
                 <div class="flex items-center justify-between">
                     <div class="p-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Dashboard') }}
-                        </div>
-
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-header>{{ $header }}</x-header>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
 
                     <div class="flex items-center p-6">
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -158,8 +157,9 @@
 
                             <div class="grid grid-rows-2 items-center justify-center text-center gap-2">
                                 <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
-                                </div>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
 
                             {{-- Content Pendapatan Bulan Ini --}}
                             {{-- <div class="flex flex-col items-start justify-center h-full">
@@ -187,11 +187,12 @@
                             {{-- Header Pengeluaran Bulan Ini --}}
                             <label class="font-semibold">Pengeluaran Bulan Ini</label>
 
-                            
+
                             <div class="grid grid-rows-2 items-center justify-center text-center gap-2">
                                 <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
-                                </div>
+                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
 
                             {{-- Content Pengeluaran Bulan Ini --}}
                             {{-- <div class="flex flex-col items-start justify-center h-full">
@@ -240,8 +241,9 @@
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Konsultasi</label>
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
                                 {{-- <label id="avgTimeDisplay">0 m 0 s</label>
                                 <label id="avgPersenWrapper"
@@ -278,8 +280,9 @@
                                 <label>Pasien Baru</label>
 
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
 
                                 {{-- <label id="newPatientsTotal">0 m 0 s</label>
@@ -317,8 +320,9 @@
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Pasien Terdaftar</label>
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
                                 {{-- <label id="registeredPatientsTotal">0 m 0 s</label>
                                 <label id="registeredPatientsWrapper"
@@ -355,8 +359,9 @@
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Tunggu Dokter</label>
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
                                 {{-- <label id="waitTimeDisplay">0 m 0 s</label>
                                 <label id="waitTimeWrapper"
@@ -394,8 +399,9 @@
                                 <label>Obat Habis</label>
                                 {{-- <h1 id="countObatHabis">0</h1> --}}
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
                             </div>
                         </div>
@@ -421,8 +427,9 @@
                             <div class="flex flex-col gap-1 items-center justify-center font-semibold">
                                 <label>Rata-Rata Waktu Tunggu Apotek</label>
                                 <div class="grid items-center justify-center text-center my-4">
-                                <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
-                                <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
+                                    <h1 class="text-lg font-bold animate-pulse ">🚀 Coming Soon</h1>
+                                    <p class="text-lg text-gray-300 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                        Nantikan update berikutnya!</p>
                                 </div>
                                 {{-- <label id="waitApotekTimeDisplay">0 m 0 s</label>
                                 <label id="waitApotekTimeWrapper"
@@ -448,13 +455,13 @@
                         </div>
 
                         <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
-    <div class="text-center">
-        <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
-        <p class="text-lg text-gray-800 mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update berikutnya!</p>
-    </div>
-</section>
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg text-gray-800 mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
 
-                        {{-- @if() --}}
                         {{-- <table class="table table-bordered"
                             data-url="{{ route('dashboard.getdatakunjunganantricepat') }}">
                             <thead>

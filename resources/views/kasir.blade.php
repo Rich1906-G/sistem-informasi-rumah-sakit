@@ -1,4 +1,8 @@
 <x-app-layout>
+
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
     <div x-data="{ tabAktivitas: '' }" class="p-4 sm:ml-64 lg:p-0">
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
@@ -8,7 +12,7 @@
                         <div class="flex flex-row gap-8 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-10">
@@ -41,13 +45,9 @@
 
                 <div class="flex items-center justify-between ">
                     <div class="p-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Kasir') }}
-                        </div>
+                        <x-header>{{ $header }}</x-header>
 
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
                     <div class="p-6 flex items-center gap-4">
                         <button
@@ -86,8 +86,17 @@
         <div class="grid grid-row-1">
 
             <!-- Main Content -->
-            <div class="flex p-6 gap-4 items-start">
-                <!-- Kiri: Menu Table -->
+            <div class="p-6 gap-4 items-start">
+
+                <section class="min-h-screen flex items-center justify-center bg-white text-gray-900">
+                    <div class="text-center">
+                        <h1 class="text-5xl font-bold mb-4 animate-pulse">Coming Soon</h1>
+                        <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                            berikutnya!</p>
+                    </div>
+                </section>
+
+                {{-- <!-- Kiri: Menu Table -->
                 <div class="grid gap-4 h-auto self-start">
                     <div class="w-64 bg-white shadow rounded">
                         <ul class="divide-y divide-gray-200">
@@ -293,7 +302,6 @@
                 <!-- Content Penggunaan Obat -->
                 <div x-show="tabAktivitas === 'biayaBooking' " class="w-full" x-cloak>
                     <div class="bg-white px-6 py-4 rounded-md">
-                        {{-- Judul Kontent --}}
                         <h2 class="text-2xl font-semibold text-blue-600">Pembayaran Biaya Booking</h2>
 
                         <div class="flex items-center justify-end mb-6">
@@ -419,7 +427,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             {{-- End Content --}}
         </div>

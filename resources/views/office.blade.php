@@ -1,4 +1,7 @@
 <x-app-layout>
+
+    <x-slot:title>{{ $title }}</x-slot:title>
+
     <div x-data="{ tabAktivitas: '' }" class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
@@ -24,7 +27,7 @@
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -57,20 +60,25 @@
 
                 <div class="flex items-center justify-between">
                     <div class="mx-6 mb-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Office') }}
-                        </div>
-
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-header>{{ $header }}</x-header>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
                 </div>
             </div>
         </div>
         {{-- End Header --}}
 
-        <div class="grid grid-row-1">
+        <div class="p-6">
+            <section class="min-h-screen flex items-center justify-center bg-white text-gray-900 ">
+                <div class="text-center">
+                    <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                    <p class="text-lg mb-6">Fitur ini sedang dalam tahap pengembangan. Nantikan update
+                        berikutnya!</p>
+                </div>
+            </section>
+        </div>
+
+        {{-- <div class="grid grid-row-1">
             <div class="flex p-6 gap-4 items-start">
                 <!-- Kiri: Menu Table -->
                 <div class="w-64 bg-white shadow rounded">
@@ -1356,5 +1364,5 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 </x-app-layout>

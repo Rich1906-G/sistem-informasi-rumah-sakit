@@ -19,7 +19,11 @@ class RegistrasiController extends Controller
         $tenagaMedis   = TenagaMedis::all();
         $penjamin      = DataPenjamin::all();
         $poli          = Poli::all();
-        return view('registrasi', compact('tenagaMedis', 'penjamin', 'poli'));
+        return view('registrasi', compact('tenagaMedis', 'penjamin', 'poli'), [
+            'title' => 'Registrasi || Royal Klinik',
+            'header' => 'Registrasi',
+            'subHeader' => 'Royal Klinik'
+        ]);
     }
 
     public function getDataRawatJalanPoli(Request $request)

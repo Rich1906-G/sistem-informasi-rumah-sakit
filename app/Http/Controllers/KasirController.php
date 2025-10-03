@@ -8,6 +8,6 @@ class KasirController extends Controller
 {
     public function index()
     {
-        return view('kasir');
+        return view('kasir', ['title' => 'Kasir || Royal Klinik', 'header' => 'Kasir', 'subHeader' => 'Royal Klinik']);
     }
 }

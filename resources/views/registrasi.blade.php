@@ -1,4 +1,8 @@
 <x-app-layout>
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+
     <div x-data="{ tabAktivitas: '', dataRawatJalan: [], }" class="p-4 sm:ml-64 lg:p-0 ">
 
         {{-- Start Header --}}
@@ -32,7 +36,7 @@
                         <div class="flex flex-row gap-x-3 mx-4 items-center">
                             <img class="rounded-md h-[70px] w-auto" src="{{ asset('storage/assets/royal_klinik.png') }}"
                                 alt="foto_bang">
-                            <button class="p-4 bg-blue-600 text-white rounded-md">Royal Prima</button>
+                            <button class="p-4 bg-blue-600 text-white rounded-md">{{ $subHeader }}</button>
                         </div>
 
                         <div class="grid grid-cols-3 gap-x-3">
@@ -65,13 +69,9 @@
 
                 <div class="flex items-center justify-between">
                     <div class="mx-6 mb-6">
-                        <div class="font-normal text-2xl text-sky-700 dark:text-gray-200 leading-tight">
-                            {{ __('Registrasi') }}
-                        </div>
+                        <x-header>{{ $header }}</x-header>
 
-                        <h2 class="font-light text-lg text-sky-500 dark:text-gray-200 leading-tight">
-                            {{ __('Royal Prima Medan') }}
-                        </h2>
+                        <x-sub-header>{{ $subHeader }}</x-sub-header>
                     </div>
                 </div>
             </div>
@@ -184,7 +184,8 @@
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga
+                                            tanggal</label>
                                         <input type="date" id="filter_tgl_hingga_rjp"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
@@ -202,12 +203,14 @@
                                     </div>
 
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Metode Pembayaran</label>
+                                        <label class="block text-sm font-medium text-gray-700">Metode
+                                            Pembayaran</label>
                                         <select id="filter_pembayaran_rjp"
                                             class="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                             <option value="">Semua Metode Pembayaran</option>
                                             @foreach ($penjamin as $pj)
-                                                <option value="{{ $pj->id_penjamin }}">{{ $pj->nama_penjamin }}</option>
+                                                <option value="{{ $pj->id_penjamin }}">{{ $pj->nama_penjamin }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -282,7 +285,8 @@
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga
+                                            tanggal</label>
                                         <input type="date" id="filter_tgl_hingga_ac"
                                             class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                                     </div>
@@ -326,11 +330,42 @@
 
                 <!-- Content Gawat Darurat-->
                 <div x-cloak x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
+<<<<<<< HEAD
                     <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="text-xl font-semibold text-blue-700">Gawat Darurat</h2>
+=======
+                    <div class="bg-white px-6 py-4 rounded-md">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Rawat Jalan UGD</h2>
+
+                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                        endDate = startDate"
+                            class="flex items-start justify-between w-full">
+
+                            <!-- Jika belum klik + -->
+                            <div x-show="!showRange" class="flex flex-row gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
+                                    <input type="date" x-model="startDate"
+                                        class="w-full mt-1 border rounded p-2" />
+                                </div>
+
+                                <button @click="showRange = true"
+                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
+                                    +
+                                </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -349,6 +384,7 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             <div class="p-4">
                                 <table id="gawatDarurat" class="table table-bordered"
                                     data-url="{{ route('registrasi.getdatagawatdarurat') }}">
@@ -365,16 +401,72 @@
                                 </table>
                             </div>
                         </div>
+=======
+                        <!-- Table -->
+                        <div class="bg-white shadow rounded overflow-x-auto my-5">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-blue-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">Tanggal</th>
+                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
+                                        <th class="px-4 py-2 text-left">Traise</th>
+                                        <th class="px-4 py-2 text-left">Tanggal Pulang</th>
+                                        <th class="px-4 py-2 text-left">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 
                 <!-- Content Kunjungan Sehat-->
                 <div x-cloak x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
+<<<<<<< HEAD
                     <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="text-xl font-semibold text-blue-700">Kunjungan Sehat</h2>
+=======
+                    <div class="bg-white px-6 py-4 rounded-md">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kunjungan Sehat</h2>
+
+                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                        endDate = startDate"
+                            class="flex items-start justify-between w-full">
+
+                            <!-- Jika belum klik + -->
+                            <div x-show="!showRange" class="flex flex-row gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
+                                    <input type="date" x-model="startDate"
+                                        class="w-full mt-1 border rounded p-2" />
+                                </div>
+
+                                <button @click="showRange = true"
+                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
+                                    +
+                                </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -393,6 +485,7 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             <div class="p-4">
                                 <table id="kunjunganSehat" class="table table-bordered"
                                     data-url="{{ route('registrasi.getdatakunjungansehat') }}">
@@ -408,16 +501,71 @@
                                 </table>
                             </div>
                         </div>
+=======
+                        <!-- Table -->
+                        <div class="bg-white shadow rounded overflow-x-auto my-5">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-blue-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">Tanggal</th>
+                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
+                                        <th class="px-4 py-2 text-left">Aktivitas</th>
+                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 
                 <!-- Content Promotif Preventif-->
                 <div x-cloak x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
+<<<<<<< HEAD
                     <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="text-xl font-semibold text-blue-700">Promotif Preventif</h2>
+=======
+                    <div class="bg-white px-6 py-4 rounded-md">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Promotif Preventif</h2>
+
+                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                        endDate = startDate"
+                            class="flex items-start justify-between w-full">
+
+                            <!-- Jika belum klik + -->
+                            <div x-show="!showRange" class="flex flex-row gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
+                                    <input type="date" x-model="startDate"
+                                        class="w-full mt-1 border rounded p-2" />
+                                </div>
+
+                                <button @click="showRange = true"
+                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
+                                    +
+                                </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -436,6 +584,7 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             <div class="p-4">
                                 <table id="promotifPreventif" class="table table-bordered"
                                     data-url="{{ route('registrasi.getdatapromotifpreventif') }}">
@@ -450,16 +599,68 @@
                                 </table>
                             </div>
                         </div>
+=======
+                        <!-- Table -->
+                        <div class="bg-white shadow rounded overflow-x-auto my-5">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-blue-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">Tanggal</th>
+                                        <th class="px-4 py-2 text-left">Nama Pasien</th>
+                                        <th class="px-4 py-2 text-left">Tipe Bayar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 
                 <!-- Content Kegiatan Kelompok-->
                 <div x-cloak x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
+<<<<<<< HEAD
                     <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
                                 <h2 class="text-xl font-semibold text-blue-700">Kegiatan kelompok</h2>
+=======
+                    <div class="bg-white px-6 py-4 rounded-md">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <h2 class="text-2xl font-semibold mb-4 text-blue-600">Kegiatan Kelompok</h2>
+
+                        <div x-data="{ showRange: false, startDate: '', endDate: '' }" x-init="startDate = new Date().toISOString().split('T')[0];
+                        endDate = startDate"
+                            class="flex items-start justify-between w-full">
+
+                            <!-- Jika belum klik + -->
+                            <div x-show="!showRange" class="flex flex-row gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Tanggal Kunjungan</label>
+                                    <input type="date" x-model="startDate"
+                                        class="w-full mt-1 border rounded p-2" />
+                                </div>
+
+                                <button @click="showRange = true"
+                                    class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
+                                    +
+                                </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
                             <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
@@ -495,13 +696,51 @@
                                 </table>
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+
+                        <!-- Table -->
+                        <div class="bg-white shadow rounded overflow-x-auto my-5">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-blue-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">Tanggal Dibuat</th>
+                                        <th class="px-4 py-2 text-left">Tanggal Pelaksaan</th>
+                                        <th class="px-4 py-2 text-left">Nama Club</th>
+                                        <th class="px-4 py-2 text-left">Pembicara</th>
+                                        <th class="px-4 py-2 text-left">Biaya</th>
+                                        <th class="px-4 py-2 text-left">Jumlah Peserta</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t">
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                        <td class="px-4 py-2">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 
                 <!-- Content Antrian Awal-->
                 <div x-cloak x-show="tabAktivitas === 'antrianAwal' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
+
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+
+                        {{-- <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Antrian Awal</h2>
 
                             <div class="flex gap-4 items-center">
@@ -553,14 +792,21 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 <!-- Content Screen Antrian-->
                 <div x-cloak x-show="tabAktivitas === 'screenAntrian' " class="w-full">
                     <div class="bg-white px-6 py-4 rounded-md">
-                        <div class="flex items-center justify-between">
+                        <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
+                            <div class="text-center">
+                                <h1 class="text-5xl font-bold mb-4 animate-pulse">🚀 Coming Soon</h1>
+                                <p class="text-lg  mb-6">Fitur ini sedang dalam tahap pengembangan.
+                                    Nantikan update berikutnya!</p>
+                            </div>
+                        </section>
+                        {{-- <div class="flex items-center justify-between">
                             <h2 class="text-2xl font-semibold mb-4 text-blue-600">Screen Antrian</h2>
 
                             <div class="flex gap-4 items-center">
@@ -602,7 +848,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -36,7 +36,8 @@ class PoliSeeder extends Seeder
             'Poli Onkologi',
             'Poli Psikologi',
             'Poli Akupunktur',
-            'Poli Gigi dan Mulut'
+            'Poli Gigi dan Mulut',
+            'Poli UGD'
         ];
 
         foreach ($poliList as $poli) {

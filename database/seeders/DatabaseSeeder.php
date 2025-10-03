@@ -47,6 +47,8 @@ class DatabaseSeeder extends Seeder
             DetailPembayaranObatSeeder::class,
             DetailPembayaranLayananSeeder::class,
             TenagaMedisPoliSeeder::class,
+            KegiatanKelompokSeeder::class,
+            DetailPesertaKegiatanSeeder::class,
         ]);
 
         // User::factory(10)->create();

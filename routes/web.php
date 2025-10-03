@@ -1,24 +1,27 @@
 <?php
 
-use App\Http\Controllers\APIController;
-use App\Http\Controllers\ApotekController;
-use App\Http\Controllers\UserController;
+use App\Models\User;
+use App\Models\TenagaMedis;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\APIController;
 use App\Http\Controllers\EMRController;
-use App\Http\Controllers\KasirController;
-use App\Http\Controllers\MessageCenterController;
-use App\Http\Controllers\OfficeController;
-use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\PKSController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\KasirController;
+use App\Http\Controllers\ApotekController;
+use App\Http\Controllers\OfficeController;
+use App\Http\Controllers\PasienController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestingController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\RawatJalanController;
 use App\Http\Controllers\RegistrasiController;
-use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\MessageCenterController;
 use App\Http\Controllers\TelekonsultasiController;
-use App\Http\Controllers\TestingController;
-use App\Models\TenagaMedis;
-use App\Models\User;
+
+
 
 Route::get('/', function () {
     return view('login');
@@ -63,14 +66,6 @@ Route::get('/testing', function () {
 Route::get('/getDataTenagaMedis', [APIController::class, 'getDataTenagaMedis']);
 
 
-
-// testing jimy
-Route::prefix('testing')->name('testing.')->group(function () {
-    Route::get('/',                                     [TestingController::class, 'index'])->name('index');
-    Route::get('/getjadwaldokter',                      [TestingController::class, 'getJadwalDokter'])->name('getjadwaldokter');
-    Route::get('/getdetailjadwaldokter/{id}',           [TestingController::class, 'getDetailJadwalDokter'])->name('getdetailjadwaldokter');
-});
-
 Route::prefix('testing-david')->group(function () {
     Route::get('/calendar', [TestingController::class, 'testingCalendar'])->name('testing.calendar');
 });
@@ -102,6 +97,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/',                                     [RegistrasiController::class, 'index'])->name('index');
         Route::get('/getdatarawatjalanpoli',                [RegistrasiController::class, 'getDataRawatJalanPoli'])->name('getdatarawatjalanpoli');
         Route::get('/getdataantricepat',                    [RegistrasiController::class, 'getDataAntriCepat'])->name('getdataantricepat');
+        Route::get('/getdatagawatdarurat',                  [RegistrasiController::class, 'getDataGawatDarurat'])->name('getdatagawatdarurat');
+        Route::get('/getdatakunjungansehat',                [RegistrasiController::class, 'getDataKunjunganSehat'])->name('getdatakunjungansehat');
+        Route::get('/getdatapromotifpreventif',             [RegistrasiController::class, 'getDataPromotifPreventif'])->name('getdatapromotifpreventif');
+        Route::get('/getdatakegiatankelompok',              [RegistrasiController::class, 'getDataKegiatanKelompok'])->name('getdatakegiatankelompok');
+    });
+
+    Route::prefix('/pasien')->name('pasien.')->group(function () {
+        Route::get('/',                     [PasienController::class, 'index'])->name('index');
+        Route::get('/data',                 [PasienController::class, 'data'])->name('data');
+        Route::post('/store',               [PasienController::class, 'store'])->name('store');
+        Route::get('/show/{id}',            [PasienController::class, 'show'])->name('show');
+        Route::post('/update/{id}',         [PasienController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}',      [PasienController::class, 'destroy'])->name('destroy');
     });
 
 

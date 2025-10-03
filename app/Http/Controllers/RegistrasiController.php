@@ -8,6 +8,8 @@ use App\Models\Kunjungan;
 use App\Models\TenagaMedis;
 use App\Models\DataPenjamin;
 use Illuminate\Http\Request;
+use App\Models\KegiatanKelompok;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class RegistrasiController extends Controller
@@ -143,6 +145,133 @@ class RegistrasiController extends Controller
             })
             ->addColumn('status', function ($kunjungan) {
                 return $kunjungan->status;
+            })
+            ->make(true);
+    }
+
+    public function getDataGawatDarurat(Request $request)
+    {
+        $query = Kunjungan::with('pasien')
+            ->select(['id_kunjungan', 'pasien_id', 'status', 'tanggal_kunjungan', 'tingkat_triase', 'tanggal_pulang']);
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_hingga);
+        }
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('tanggal_kunjungan', function ($kunjungan) {
+                return $kunjungan->tanggal_kunjungan;
+            })
+            ->addColumn('nama_pasien', function ($kunjungan) {
+                return $kunjungan->pasien->nama_lengkap;
+            })
+
+            ->addColumn('tingkat_triase', function ($kunjungan) {
+                return $kunjungan->tingkat_triase;
+            })
+
+            ->addColumn('tanggal_pulang', function ($kunjungan) {
+                return $kunjungan->tanggal_pulang;
+            })
+
+            ->addColumn('status', function ($kunjungan) {
+                return $kunjungan->status;
+            })
+            ->make(true);
+    }
+
+    public function getDataKunjunganSehat(Request $request)
+    {
+        $query = Kunjungan::with('pasien', 'dataPenjamin')
+            ->select(['id_kunjungan', 'pasien_id', 'tanggal_kunjungan', 'penjamin_id', 'aktivitas_kunjungan']);
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_hingga);
+        }
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('tanggal_kunjungan', function ($kunjungan) {
+                return $kunjungan->tanggal_kunjungan;
+            })
+            ->addColumn('nama_pasien', function ($kunjungan) {
+                return $kunjungan->pasien->nama_lengkap;
+            })
+            ->addColumn('aktivitas_kunjungan', function ($kunjungan) {
+                return $kunjungan->pasien->nama_lengkap;
+            })
+            ->addColumn('tipe_bayar', function ($kunjungan) {
+                return $kunjungan->dataPenjamin->nama_penjamin;
+            })
+
+            ->make(true);
+    }
+
+    public function getDataPromotifPreventif(Request $request)
+    {
+        $query = Kunjungan::with('pasien', 'dataPenjamin')
+            ->select(['id_kunjungan', 'tanggal_kunjungan', 'pasien_id', 'penjamin_id']);
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_kunjungan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_kunjungan', '<=', $request->tanggal_hingga);
+        }
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('tanggal_kunjungan', function ($kunjungan) {
+                return $kunjungan->tanggal_kunjungan;
+            })
+            ->addColumn('nama_pasien', function ($kunjungan) {
+                return $kunjungan->pasien->nama_lengkap;
+            })
+            ->addColumn('tipe_bayar', function ($kunjungan) {
+                return $kunjungan->dataPenjamin->nama_penjamin;
+            })
+
+            ->make(true);
+    }
+
+    public function getDataKegiatanKelompok(Request $request)
+    {
+        $query = KegiatanKelompok::with('tenagaMedis')
+            ->withCount('peserta');
+
+        if ($request->filled('tanggal_dari')) {
+            $query->whereDate('tanggal_pelaksanaan', '>=', $request->tanggal_dari);
+        }
+        if ($request->filled('tanggal_hingga')) {
+            $query->whereDate('tanggal_pelaksanaan', '<=', $request->tanggal_hingga);
+        }
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('tanggal_dibuat', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->created_at;
+            })
+            ->addColumn('tanggal_pelaksanaan', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->tanggal_pelaksanaan;
+            })
+            ->addColumn('nama_club', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->nama_club;
+            })
+            ->addColumn('pembicara', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->tenagaMedis->nama_lengkap ?? '-';
+            })
+            ->addColumn('biaya', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->biaya;
+            })
+            ->addColumn('jumlah_peserta', function ($kegiatanKelompok) {
+                return $kegiatanKelompok->peserta_count;
             })
             ->make(true);
     }

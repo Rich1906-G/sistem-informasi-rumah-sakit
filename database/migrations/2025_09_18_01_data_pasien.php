@@ -20,11 +20,11 @@ return new class extends Migration
             $table->date('tanggal_lahir')->nullable();
             $table->string('nomor_ktp')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
-            $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
-            $table->enum('status', ['Belum Menikah', 'Menikah', 'Cerai Hidup', 'Cerai Mati'])->nullable();
-            $table->enum('golongan_darah', ['A', 'B', 'AB', 'O'])->nullable();
-            $table->enum('pendidikan_terakhir', ['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister'])->nullable();
-            $table->string('pekerjaan')->nullable();
+            $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu', 'Lainnya'])->nullable();
+            $table->enum('status', ['Belum Menikah', 'Menikah', 'Cerai Hidup', 'Cerai Mati', 'Lainnya'])->nullable();
+            $table->enum('golongan_darah', ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-', 'Lainnya'])->nullable();
+            $table->enum('pendidikan_terakhir', ['SMP dan Sebelumnya', 'SMA', 'Diploma(D3)', 'Sarjana(S1)', 'Master(2)', 'Lainnya'])->nullable();
+            $table->enum('pekerjaan', ['Pengacara', 'Notaris', 'Dokter', 'Bidan', 'perawat', 'Apoteker', 'Psikiater', 'Psikolog', 'Petani', 'Nelayan', 'Honorer', 'Lainnya', 'Tidak Bekerja'])->nullable();
             $table->string('no_tlp')->nullable();
             $table->string('email')->nullable();
             $table->date('tanggal_pendaftaran')->nullable();

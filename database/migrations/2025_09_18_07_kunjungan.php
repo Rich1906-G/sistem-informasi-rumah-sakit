@@ -29,6 +29,11 @@ return new class extends Migration
             $table->enum('status', ['Pending', 'Confirmed', 'Waiting', 'Engaged', 'Succeed'])->default('Pending');
             $table->string('slot')->nullable();
             $table->integer('lama_durasi_menit')->nullable();
+            $table->enum('tingkat_triase', ['Merah', 'Kuning', 'Hijau', 'Hitam', 'Putih'])->nullable();
+            // $table->enum('aktivitas_kunjungan', ['Imunisasi', 'Konsultasi Gizi', 'Check-up', 'Skrining'])->nullable();
+            $table->string('aktivitas_kunjungan')->nullable();
+            $table->dateTime('tanggal_pulang')->nullable();
+
             $table->timestamps();
         });
     }

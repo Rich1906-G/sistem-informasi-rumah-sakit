@@ -270,7 +270,6 @@
                 <!-- Content Antri Cepat-->
                 <div x-cloak x-show="tabAktivitas === 'antriCepat' " class="w-full">
                     <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
-
                         <div class="p-4">
                             {{-- Header dan Tombol Aksi --}}
                             <div class="flex justify-between items-start mb-4">
@@ -331,6 +330,13 @@
 
                 <!-- Content Gawat Darurat-->
                 <div x-cloak x-show="tabAktivitas === 'gawatDarurat' " class="w-full">
+<<<<<<< HEAD
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Gawat Darurat</h2>
+=======
                     <div class="bg-white px-6 py-4 rounded-md">
 
                         <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
@@ -359,30 +365,43 @@
                                     class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
                                     +
                                 </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari_gd"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga_gd"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
                                 </div>
+                            </div>
 
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
+<<<<<<< HEAD
+                            <div class="p-4">
+                                <table id="gawatDarurat" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdatagawatdarurat') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Tanggal Kunjungan</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Triase</th>
+                                            <th>Tanggal Pulang</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
-
+=======
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto my-5">
                             <table class="min-w-full text-sm">
@@ -406,13 +425,19 @@
                                 </tbody>
                             </table>
                         </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
-
-
                 </div>
 
                 <!-- Content Kunjungan Sehat-->
                 <div x-cloak x-show="tabAktivitas === 'kunjunganSehat' " class="w-full">
+<<<<<<< HEAD
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Kunjungan Sehat</h2>
+=======
                     <div class="bg-white px-6 py-4 rounded-md">
 
                         <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
@@ -441,30 +466,42 @@
                                     class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
                                     +
                                 </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari_ks"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga_ks"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
                                 </div>
+                            </div>
 
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
+<<<<<<< HEAD
+                            <div class="p-4">
+                                <table id="kunjunganSehat" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdatakunjungansehat') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Tanggal</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Aktivitas</th>
+                                            <th>Tipe Bayar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
-
+=======
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto my-5">
                             <table class="min-w-full text-sm">
@@ -486,13 +523,19 @@
                                 </tbody>
                             </table>
                         </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
-
-
                 </div>
 
                 <!-- Content Promotif Preventif-->
                 <div x-cloak x-show="tabAktivitas === 'promotifPreventif' " class="w-full">
+<<<<<<< HEAD
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Promotif Preventif</h2>
+=======
                     <div class="bg-white px-6 py-4 rounded-md">
 
                         <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
@@ -522,30 +565,41 @@
                                     class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
                                     +
                                 </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari_pp"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga_pp"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
                                 </div>
+                            </div>
 
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
+<<<<<<< HEAD
+                            <div class="p-4">
+                                <table id="promotifPreventif" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdatapromotifpreventif') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Tanggal</th>
+                                            <th>Nama Pasien</th>
+                                            <th>Tipe Bayar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
-
+=======
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto my-5">
                             <table class="min-w-full text-sm">
@@ -565,11 +619,19 @@
                                 </tbody>
                             </table>
                         </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 
                 <!-- Content Kegiatan Kelompok-->
                 <div x-cloak x-show="tabAktivitas === 'kegiatanKelompok' " class="w-full">
+<<<<<<< HEAD
+                    <div class="grid grid-cols-1 mt-2 rounded-lg p-2 bg-white w-full">
+                        <div class="p-4">
+                            {{-- Header dan Tombol Aksi --}}
+                            <div class="flex justify-between items-start mb-4">
+                                <h2 class="text-xl font-semibold text-blue-700">Kegiatan kelompok</h2>
+=======
                     <div class="bg-white px-6 py-4 rounded-md">
 
                         <section class="min-h-screen flex items-center justify-center bg-white text-gray-800">
@@ -598,36 +660,44 @@
                                     class="text-2xl px-2 text-gray-600 hover:text-blue-600 flex items-center">
                                     +
                                 </button>
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                             </div>
 
-                            <!-- Jika sudah klik + -->
-                            <div x-show="showRange" class="flex flex-row gap-4 items-center">
-                                <div>
-                                    <label class="text-sm text-gray-600">Dari tanggal</label>
-                                    <input type="date" x-model="startDate"
-                                        class="w-full mt-1 border rounded p-2" />
+                            <div class="filter-controls p-4 bg-gray-50 rounded-lg mb-4">
+                                <div class="grid grid-cols-6 gap-4">
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Dari tanggal</label>
+                                        <input type="date" id="filter_tgl_dari_kk"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Hingga tanggal</label>
+                                        <input type="date" id="filter_tgl_hingga_kk"
+                                            class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                    </div>
                                 </div>
-
-                                <span class="">-</span>
-
-                                <div>
-                                    <label class="text-sm text-gray-600">Hingga tanggal</label>
-                                    <input type="date" x-model="endDate" class="w-full mt-1 border rounded p-2" />
-                                </div>
-
-                                <button @click="showRange = false"
-                                    class="text-2xl px-2 text-gray-600 hover:text-red-600 flex items-center">
-                                    ✕
-                                </button>
                             </div>
 
-                            <div>
-                                <button
-                                    class="px-2 py-4 bg-green-700 hover:bg-green-500 text-white rounded-md font-semibold text-md">
-                                    <span>+ TAMBAH KEGIATAN BARU</span>
-                                </button>
+                            <div class="p-4">
+                                <table id="kegiatanKelompok" class="table table-bordered"
+                                    data-url="{{ route('registrasi.getdatakegiatankelompok') }}">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th>Tanggal Dibuat</th>
+                                            <th>Tanggal Pelaksanaan</th>
+                                            <th>Nama Club</th>
+                                            <th>Pembicara</th>
+                                            <th>Biaya</th>
+                                            <th>Jumlah Peserta</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
 
                         <!-- Table -->
                         <div class="bg-white shadow rounded overflow-x-auto my-5">
@@ -654,6 +724,7 @@
                                 </tbody>
                             </table>
                         </div> --}}
+>>>>>>> f0fe355f3a33e4acbe17a4b9d096f0f00022c8e2
                     </div>
                 </div>
 

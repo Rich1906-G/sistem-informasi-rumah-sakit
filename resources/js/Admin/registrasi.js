@@ -159,3 +159,266 @@ $(document).ready(function() {
 });
 
 
+// gawat darurat
+$(document).ready(function() {
+    
+    const $tabel = $('#gawatDarurat');
+    const dataUrl = $tabel.data('url');
+    let table = $tabel.DataTable({
+        processing: true,
+        serverSide: true, 
+        searching:false,
+        ajax: {
+            url: dataUrl,
+            data: function (d) {
+                // Semua data filter diambil dari input dan dikirim ke server
+                d.tanggal_dari         = $('#filter_tgl_dari_gd').val();
+                d.tanggal_hingga       = $('#filter_tgl_hingga_gd').val();
+            }
+        },
+        order: [[0, 'asc']],
+        columns: [
+            { data: 'tanggal_kunjungan', name: 'tanggal_kunjungan' },
+            { data: 'nama_pasien', name: 'nama_pasien' },
+            { data: 'tingkat_triase', name: 'tingkat_triase' },
+            { data: 'tanggal_pulang', name: 'tanggal_pulang' },
+            { data: 'status', name: 'status' },
+        ],
+        dom: '<"flex flex-wrap items-center justify-between mb-2"' +
+             '<"flex items-center"l><"flex-grow text-center"f>>' +
+             'rt' +
+             '<"flex flex-wrap items-center justify-between mt-2"' +
+             '<"flex items-center"i><"flex-grow text-center"p>>',
+        language: {
+            search: "",
+            searchPlaceholder: "Cari...",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                first: "Awal",
+                last: "Akhir",
+                next: "Berikutnya",
+                previous: "Sebelumnya"
+            },
+            processing: '<div class="spinner">Loading...</div>'
+        }
+    });
+
+      // 🔹 fungsi reset filter
+    function resetFilter() {
+        $('#filter_tgl_dari_gd, #filter_tgl_hingga_gd')
+            .val('');
+        table.ajax.reload();
+    }
+
+    // 🔹 tombol reset filter
+    $('#reset_filter_gd').on('click', function () {
+        resetFilter();
+    });
+
+    // 🔹 reload saat filter dropdown / date berubah
+    $('#filter_tgl_dari_gd, #filter_tgl_hingga_gd')
+        .on('change', function () {
+            table.ajax.reload();
+        });
+    
+});
+
+
+// kujungan sehat
+$(document).ready(function() {
+    
+    const $tabel = $('#kunjunganSehat');
+    const dataUrl = $tabel.data('url');
+    let table = $tabel.DataTable({
+        processing: true,
+        serverSide: true, 
+        searching:false,
+        ajax: {
+            url: dataUrl,
+            data: function (d) {
+                // Semua data filter diambil dari input dan dikirim ke server
+                d.tanggal_dari         = $('#filter_tgl_dari_ks').val();
+                d.tanggal_hingga       = $('#filter_tgl_hingga_ks').val();
+            }
+        },
+        order: [[0, 'asc']],
+        columns: [
+            { data: 'tanggal_kunjungan', name: 'tanggal_kunjungan' },
+            { data: 'nama_pasien', name: 'nama_pasien' },
+            { data: 'aktivitas_kunjungan', name: 'aktivitas_kunjungan' },
+            { data: 'tipe_bayar', name: 'tipe_bayar' },
+            
+        ],
+        dom: '<"flex flex-wrap items-center justify-between mb-2"' +
+             '<"flex items-center"l><"flex-grow text-center"f>>' +
+             'rt' +
+             '<"flex flex-wrap items-center justify-between mt-2"' +
+             '<"flex items-center"i><"flex-grow text-center"p>>',
+        language: {
+            search: "",
+            searchPlaceholder: "Cari...",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                first: "Awal",
+                last: "Akhir",
+                next: "Berikutnya",
+                previous: "Sebelumnya"
+            },
+            processing: '<div class="spinner">Loading...</div>'
+        }
+    });
+
+      // 🔹 fungsi reset filter
+    function resetFilter() {
+        $('#filter_tgl_dari_ks, #filter_tgl_hingga_ks')
+            .val('');
+        table.ajax.reload();
+    }
+
+    // 🔹 tombol reset filter
+    $('#reset_filter_ks').on('click', function () {
+        resetFilter();
+    });
+
+    // 🔹 reload saat filter dropdown / date berubah
+    $('#filter_tgl_dari_ks, #filter_tgl_hingga_ks')
+        .on('change', function () {
+            table.ajax.reload();
+        });
+    
+});
+
+// promotif preventif
+$(document).ready(function() {
+    
+    const $tabel = $('#promotifPreventif');
+    const dataUrl = $tabel.data('url');
+    let table = $tabel.DataTable({
+        processing: true,
+        serverSide: true, 
+        searching:false,
+        ajax: {
+            url: dataUrl,
+            data: function (d) {
+                // Semua data filter diambil dari input dan dikirim ke server
+                d.tanggal_dari         = $('#filter_tgl_dari_pp').val();
+                d.tanggal_hingga       = $('#filter_tgl_hingga_pp').val();
+            }
+        },
+        order: [[0, 'asc']],
+        columns: [
+            { data: 'tanggal_kunjungan', name: 'tanggal_kunjungan' },
+            { data: 'nama_pasien', name: 'nama_pasien' },
+            { data: 'tipe_bayar', name: 'tipe_bayar' },
+            
+        ],
+        dom: '<"flex flex-wrap items-center justify-between mb-2"' +
+             '<"flex items-center"l><"flex-grow text-center"f>>' +
+             'rt' +
+             '<"flex flex-wrap items-center justify-between mt-2"' +
+             '<"flex items-center"i><"flex-grow text-center"p>>',
+        language: {
+            search: "",
+            searchPlaceholder: "Cari...",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                first: "Awal",
+                last: "Akhir",
+                next: "Berikutnya",
+                previous: "Sebelumnya"
+            },
+            processing: '<div class="spinner">Loading...</div>'
+        }
+    });
+
+      // 🔹 fungsi reset filter
+    function resetFilter() {
+        $('#filter_tgl_dari_pp, #filter_tgl_hingga_pp')
+            .val('');
+        table.ajax.reload();
+    }
+
+    // 🔹 tombol reset filter
+    $('#reset_filter_pp').on('click', function () {
+        resetFilter();
+    });
+
+    // 🔹 reload saat filter dropdown / date berubah
+    $('#filter_tgl_dari_pp, #filter_tgl_hingga_pp')
+        .on('change', function () {
+            table.ajax.reload();
+        });
+    
+});
+
+// kegiatan kelompok
+$(document).ready(function() {
+    
+    const $tabel = $('#kegiatanKelompok');
+    const dataUrl = $tabel.data('url');
+    let table = $tabel.DataTable({
+        processing: true,
+        serverSide: true, 
+        searching:false,
+        ajax: {
+            url: dataUrl,
+            data: function (d) {
+                // Semua data filter diambil dari input dan dikirim ke server
+                d.tanggal_dari         = $('#filter_tgl_dari_kk').val();
+                d.tanggal_hingga       = $('#filter_tgl_hingga_kk').val();
+            }
+        },
+        order: [[0, 'asc']],
+        columns: [
+            { data: 'tanggal_dibuat', name: 'tanggal_dibuat' },
+            { data: 'tanggal_pelaksanaan', name: 'tanggal_pelaksanaan' },
+            { data: 'nama_club', name: 'nama_club' },
+            { data: 'pembicara', name: 'tenagaMedis.nama_lengkap' },
+            { data: 'biaya', name: 'biaya'},
+            { data: 'jumlah_peserta', name: 'jumlah_peserta', orderable: false,searchable: false},
+            
+        ],
+        dom: '<"flex flex-wrap items-center justify-between mb-2"' +
+             '<"flex items-center"l><"flex-grow text-center"f>>' +
+             'rt' +
+             '<"flex flex-wrap items-center justify-between mt-2"' +
+             '<"flex items-center"i><"flex-grow text-center"p>>',
+        language: {
+            search: "",
+            searchPlaceholder: "Cari...",
+            lengthMenu: "Tampilkan _MENU_ data",
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            paginate: {
+                first: "Awal",
+                last: "Akhir",
+                next: "Berikutnya",
+                previous: "Sebelumnya"
+            },
+            processing: '<div class="spinner">Loading...</div>'
+        }
+    });
+
+      // 🔹 fungsi reset filter
+    function resetFilter() {
+        $('#filter_tgl_dari_kk, #filter_tgl_hingga_kk')
+            .val('');
+        table.ajax.reload();
+    }
+
+    // 🔹 tombol reset filter
+    $('#reset_filter_kk').on('click', function () {
+        resetFilter();
+    });
+
+    // 🔹 reload saat filter dropdown / date berubah
+    $('#filter_tgl_dari_kk, #filter_tgl_hingga_kk')
+        .on('change', function () {
+            table.ajax.reload();
+     });
+    
+});
+
+

@@ -13,17 +13,18 @@ class PasienSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         $jenisKelamin = ['Laki-laki', 'Perempuan'];
-        $agama = ['Islam', 'Kristen Katholik', 'Kristen Protestan', 'Hindu', 'Buddha', 'Konghucu'];
+        $agama = ['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'];
         $statusKawin = ['Belum Menikah', 'Menikah', 'Cerai Hidup', 'Cerai Mati'];
-        $golonganDarah = ['A', 'B', 'AB', 'O'];
-        $pendidikan = ['SD', 'SMP', 'SMA', 'Diploma', 'Sarjana', 'Magister'];
+        $golonganDarah = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
+        $pendidikan = ['SMP dan Sebelumnya', 'SMA', 'Diploma(D3)', 'Sarjana(S1)', 'Master(2)'];
+        $jobTitle = ['Pengacara', 'Notaris', 'Dokter', 'Bidan', 'perawat', 'Apoteker', 'Psikiater', 'Psikolog', 'Petani', 'Nelayan', 'Honorer', 'Lainnya', 'Tidak Bekerja'];
 
         for ($i = 0; $i < 20; $i++) {
             $jenisKelaminAcak = $faker->randomElement($jenisKelamin);
             $namaLengkap = ($jenisKelaminAcak === 'Laki-laki') ? $faker->name('male') : $faker->name('female');
 
             DB::table('pasien')->insert([
-                'pas_foto' => $faker->imageUrl(), // Biarkan null, atau gunakan $faker->imageUrl() jika Anda ingin dummy URL
+                'pas_foto' => $faker->imageUrl(),
                 'nama_lengkap' => $namaLengkap,
                 'nomor_rm' => $faker->unique()->randomNumber(8),
                 'tempat_lahir' => $faker->city,
@@ -34,7 +35,7 @@ class PasienSeeder extends Seeder
                 'status' => $faker->randomElement($statusKawin),
                 'golongan_darah' => $faker->randomElement($golonganDarah),
                 'pendidikan_terakhir' => $faker->randomElement($pendidikan),
-                'pekerjaan' => $faker->jobTitle,
+                'pekerjaan' => $faker->randomElement($jobTitle),
                 'no_tlp' => $faker->phoneNumber,
                 'email' => $faker->unique()->safeEmail,
                 'tanggal_pendaftaran' => $faker->dateTimeThisYear(), // Tanggal pendaftaran di tahun ini

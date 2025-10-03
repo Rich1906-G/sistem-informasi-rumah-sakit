@@ -6,12 +6,12 @@ use Carbon\Carbon;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\Kunjungan;
-use App\Models\RekamMedis;
-use App\Models\Pembayaran;
 
 class KunjunganSeeder extends Seeder
 {
+    /**
+     * Run the migrations.
+     */
     public function run(): void
     {
         $faker = Faker::create('id_ID');
@@ -19,36 +19,86 @@ class KunjunganSeeder extends Seeder
         $now = now();
 
         // Asumsi ID yang sudah ada di tabel relasi
-        $maxPasienId = 10; // Asumsi ada 10 pasien
-        $maxTenagaMedisId = 4; // Asumsi ada 4 dokter
-        $poliIds = [1, 2, 3, 4, 5]; // Asumsi ID Poli (1=Umum, 2=Gigi, 3=Anak, 4=Jantung, 5=Mata)
-        $penjaminIds = [1, 2, 3, 4, 5]; // Asumsi ID Penjamin (1=Pribadi, 2=BPJS, 3+=Asuransi/Perusahaan)
+        $maxPasienId = 10;
+        $maxTenagaMedisId = 4;
+        $poliIds = [1, 2, 3, 4, 5]; // ID Poli umum (misalnya 1=Umum, 2=Gigi, dst.)
+        $poliUgdId = 21; // ID Poli UGD
+        $poliKunjunganSehatId = 1; // Asumsi Kunjungan Sehat sering di Poli Umum (ID 1)
+        $penjaminIds = [1, 2, 3, 4, 5];
 
-        for ($i = 1; $i <= 20; $i++) {
+        $totalRecords = 30; // Meningkatkan jumlah total untuk variasi data UGD dan Sehat
+
+        for ($i = 1; $i <= $totalRecords; $i++) {
+
+            // Tentukan jenis kunjungan dengan bobot (Rawat Jalan Biasa paling banyak)
+            $kunjunganType = $faker->randomElement([
+                'UGD',
+                'Sehat',
+                'Biasa',
+                'Biasa',
+                'Biasa',
+                'Biasa',
+                'Biasa',
+                'Promotif Preventif'
+            ]);
+
             $pasienId = $faker->numberBetween(1, $maxPasienId);
             $tenagaMedisId = $faker->numberBetween(1, $maxTenagaMedisId);
-            $poliId = $faker->randomElement($poliIds);
+            $status = $faker->randomElement(['Succeed', 'Succeed', 'Confirmed', 'Pending', 'Waiting']);
+            $isDone = ($status == 'Succeed');
+
+            $tingkatTriase = null;
+            $aktivitasKunjungan = null; // Inisialisasi field baru
+
+            // --- Logika Penentuan Jenis Kunjungan & Poli ---
+            if ($kunjunganType == 'UGD') {
+                $poliId = $poliUgdId;
+                $jenisKunjungan = 'Gawat Darurat';
+                $jenisPerawatan = 'IGD';
+                $tingkatTriase = $faker->randomElement(['Merah', 'Kuning', 'Hijau', 'Hitam', 'Putih']);
+            } elseif ($kunjunganType == 'Sehat') {
+                $poliId = $poliKunjunganSehatId;
+                $jenisKunjungan = 'Kunjungan Sehat';
+                $jenisPerawatan = 'Rawat Jalan';
+                $aktivitasKunjungan = $faker->randomElement(['Check-up Rutin', 'Imunisasi', 'Konsultasi Gizi', 'Skrining']); // Isi aktivitas
+
+            } elseif ($kunjunganType == 'Promotif Preventif') {
+                $poliId = $poliKunjunganSehatId;
+                $jenisKunjungan = 'Promotif Preventif';
+                $jenisPerawatan = 'Rawat Jalan';
+            } else { // Biasa (Rawat Jalan Poli atau Antri Cepat)
+                $poliId = $faker->randomElement($poliIds);
+                $jenisKunjungan = $faker->randomElement(['Rawat Jalan Poli', 'Antri Cepat']);
+                $jenisPerawatan = 'Rawat Jalan';
+            }
+
 
             // Logika Tipe Pasien
-            $tipePasien = $faker->randomElement(['Non Rujuk', 'Non Rujuk', 'Rujuk']); // 2/3 Non Rujuk
+            $tipePasien = $faker->randomElement(['Non Rujuk', 'Non Rujuk', 'Rujuk']);
             $isRujuk = ($tipePasien == 'Rujuk');
 
             $namaRSPerujuk = $isRujuk ? $faker->randomElement(['RSUD Bunda', 'Puskesmas Sehat', 'Klinik Medika']) : null;
             $namaDokterPerujuk = $isRujuk ? 'Dr. ' . $faker->lastName . ', Sp.' . $faker->randomElement(['A', 'PD', 'THT']) : null;
 
             // Logika Penjamin
-            $penjaminId = $faker->randomElement([1, 1, 1, 2, 2, 3, 4, 5]); // Proporsi lebih banyak Pribadi dan BPJS
+            $penjaminId = $faker->randomElement([1, 1, 1, 2, 2, 3, 4, 5]);
 
-            // Logika Status dan Waktu Pemeriksaan
-            $status = $faker->randomElement(['Succeed', 'Succeed', 'Confirmed', 'Pending', 'Waiting']);
-            $isDone = ($status == 'Succeed' || $status == 'Engaged');
-
-            $waktuKunjungan = Carbon::parse($faker->dateTimeBetween('-5 days', '+3 days'));
+            // Logika Waktu
+            $waktuKunjungan = Carbon::parse($faker->dateTimeBetween('-5 days', 'now'));
             $jamKunjungan = $waktuKunjungan->format('H:i:s');
 
-            $waktuMulaiPemeriksaan = $isDone
+            $waktuMulaiPemeriksaan = ($status == 'Confirmed' || $isDone)
                 ? Carbon::parse($waktuKunjungan)->addMinutes($faker->numberBetween(5, 30))
                 : null;
+
+            $tanggalPulang = $isDone
+                ? Carbon::parse($waktuMulaiPemeriksaan)->addMinutes($faker->numberBetween(30, 120))
+                : null;
+
+            // Pastikan kunjungan yang belum selesai tidak punya tanggal pulang
+            if ($status != 'Succeed') {
+                $tanggalPulang = null;
+            }
 
             $records[] = [
                 'pasien_id' => $pasienId,
@@ -59,14 +109,17 @@ class KunjunganSeeder extends Seeder
                 'nama_rs_perujuk' => $namaRSPerujuk,
                 'nama_dokter_perujuk' => $namaDokterPerujuk,
                 'penjamin_id' => $penjaminId,
-                'jenis_kunjungan' => $faker->randomElement(['Rawat Jalan Poli', 'Antri Cepat', 'Kunjungan Sehat']),
-                'jenis_perawatan' => 'Rawat Jalan',
+                'jenis_kunjungan' => $jenisKunjungan,
+                'jenis_perawatan' => $jenisPerawatan,
                 'tanggal_kunjungan' => $waktuKunjungan->toDateString(),
                 'jam_kunjungan' => $jamKunjungan,
                 'waktu_mulai_pemeriksaan' => $waktuMulaiPemeriksaan,
                 'status' => $status,
                 'slot' => $faker->randomElement(['Pagi', 'Siang', 'Sore']),
                 'lama_durasi_menit' => $faker->numberBetween(15, 60),
+                'tingkat_triase' => $tingkatTriase,
+                'tanggal_pulang' => $tanggalPulang,
+                'aktivitas_kunjungan' => $aktivitasKunjungan, // FIELD BARU UNTUK KUNJUNGAN SEHAT
                 'created_at' => $now,
                 'updated_at' => $now,
             ];

@@ -4,7 +4,7 @@
     </x-slot:title>
 
 
-    <div class="p-4 sm:ml-64 lg:p-0 " x-data="searchComponent(), dataPasien: []" >
+    <div class="p-4 sm:ml-64 lg:p-0 " x-data="searchComponent()" >
         {{-- Start Header --}}
         <div class="w-full sm:px-6 lg:px-0 shadow-md">
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg lg:rounded-none">
